@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>TAPS</title>
+		<link rel="stylesheet" href="/static/main.css">
+	</head>
+	<body>
+		<div id='div_npc_chat' class='resizable'>
+			<div class='resizers'>
+				<div class='resizer top-left'></div>
+				<div class='resizer top-right'></div>
+				<div class='resizer bottom-left'></div>
+				<div class='resizer bottom-right'></div>
+
+				<div class="chat-wrapper">
+					<form id="npc_chat-form">
+						<input id="npc_chat" autocomplete="off" title="chat"/>
+						<button id="npc_say">Say</button>
+					</form>
+				</div>
+				<ul id="npc_events"></ul>
+			</div>
+		</div>
+
+		<div id='div_player_chat' class='resizable' style='height: 200px; width: 400px; top: 60%; left: 60%'>
+			<div class='resizers'>
+				<div class='resizer top-left'></div>
+				<div class='resizer top-right'></div>
+				<div class='resizer bottom-left'></div>
+				<div class='resizer bottom-right'></div>
+
+				<div class="chat-wrapper">
+					<form id="player_chat-form">
+						<input id="player_chat" autocomplete="off" title="chat"/>
+						<button id="player_say">Say</button>
+					</form>
+				</div>
+				<ul id="player_events"></ul>
+			</div>
+		</div>
+
+		<script src="/static/socket.io/socket.io.js"></script>
+		<script src="/static/client.js"></script>
+	</body>
+</html>
