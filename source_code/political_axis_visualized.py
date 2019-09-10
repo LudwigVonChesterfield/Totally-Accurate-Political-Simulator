@@ -54,7 +54,6 @@ def get_points_from_political_axis(political_axis):
     axises = political_axis.keys()
     i = 0
     for axis in axises:
-        print(axis, political_axis[axis])
         dist = translate(political_axis[axis], -100, 100, -width / 3, width / 3)
 
         radians = axis_radians[i]
@@ -64,7 +63,7 @@ def get_points_from_political_axis(political_axis):
         if(dist > 0):
             points[i] = pt
         elif(dist < 0):
-            points[(i + int(axis_count / 2) - 1)] = pt
+            points[(i + int(axis_count / 2))] = pt
         i += 1
 
     return points
@@ -81,7 +80,7 @@ def get_points_from_input():
         if(dist > 0):
             points[axis] = pt
         elif(dist < 0):
-            points[(axis + int(axis_count / 2) - 1)] = pt
+            points[(axis + int(axis_count / 2))] = pt
 
     return points
     
@@ -163,7 +162,8 @@ def draw_ideologies():
 
         points = get_points_from_political_axis(ideology_params["Axis"])
         draw_political_hedgehog(points, line_color='blue', dot_color='red', dot_radius=5)
-        time.sleep(2) 
+        time.sleep(2)
+        pause = input()
 
 def draw_users_and_their_ideologies():
     for user_name, user_params in PRESET_CITIZENS.items():
@@ -171,10 +171,11 @@ def draw_users_and_their_ideologies():
         draw_background()
 
         political_axis = {}
-        for element, sub_element in user_params.items():
+
+        for element, sub_element in user_params["Axis"].items():
             if(type(sub_element) is dict):
                 for sub_sub_element in element:
-                    political_axis[element] = user_params[element]["Value"]
+                    political_axis[element] = user_params["Axis"][element]["Value"]
 
         ideology_name = get_closest_ideology(political_axis)
 
@@ -194,8 +195,10 @@ def draw_users_and_their_ideologies():
         points = get_points_from_political_axis(IDEOLOGIES_CLASSIFICATION[ideology_name]["Axis"])
         draw_political_hedgehog(points, line_color='blue', dot_color='yellow', dot_radius=5)
 
+        pause = input()
         time.sleep(2)
 
 draw_background()
 w = input()
+# draw_ideologies()
 draw_users_and_their_ideologies()

@@ -20,48 +20,14 @@ body {
   overflow: hidden;
 }
 
-.resizable .resizers {
-  width: 100%;
-  height: 100%;
+.resizers {
+  width: 99%;
+  height: 99%;
   border: 3px solid #4286f4;
   box-sizing: border-box;
-}
-
-.resizers {
-  padding: 10px 10px 10px 10px;
-}
-
-.resizable .resizers .resizer {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%; /* Magic to turn square into circle. */
-  background: white;
-  border: 3px solid #4286f4;
   position: absolute;
-}
 
-.resizable .resizers .resizer.top-left {
-  left: -5px;
-  top: -5px;
-  cursor: nwse-resize;
-}
-
-.resizable .resizers .resizer.top-right {
-  right: -5px;
-  top: -5px;
-  cursor: nesw-resize;
-}
-
-.resizable .resizers .resizer.bottom-left {
-  left: -5px;
-  bottom: -5px;
-  cursor: nesw-resize;
-}
-
-.resizable .resizers .resizer.bottom-right {
-  right: -5px;
-  bottom: -5px;
-  cursor: nwse-resize;
+  padding: 7px 7px 7px 7px;
 }
 
 input {
@@ -152,4 +118,46 @@ button.turn:hover {
 #player_events li {
   padding: 10px 10px 10px 10px;
   color: white;
+}
+
+/* CHAT RELATED STUFF */
+.ui_element {
+  font-family: "Lucida Console", monospace;
+  color: dodgerblue;
+}
+
+.speech_wrapper {
+  font-family: "Lucida Console", monospace;
+  color: cyan;
+}
+
+.speech_verb {
+  font-family: "Lucida Console", monospace;
+  color: cyan;
+  font-style: italic;
+}
+
+.speech_name {
+  font-family: "Lucida Console", monospace;
+  color: cyan;
+  font-weight: bold;
+}
+
+.emote {
+  font-family: "Lucida Console", monospace;
+  color: dodgerblue;
+  font-style: italic;
+}
+
+.emote_name {
+  font-family: "Lucida Console", monospace;
+  color: dodgerblue;
+  font-weight: bold;
+}
+
+.warn_player {
+  font-family: "Lucida Console", monospace;
+  color: red;
+  font-weight: bold;
+  font-style: italic;
 }

@@ -71,6 +71,8 @@ Before we even try to parse anything we check if we didn't screw up with the cod
 class Start_Check_Failed(Exception):
     pass
 
+pre_load_messages = []
+
 def before_start_check(CONFIG_REQUEST):
     retVal = type(CONFIG) is dict and type(CONFIG_REQUEST) is dict and len(CONFIG_REQUEST) > 0
 
@@ -111,7 +113,7 @@ def before_start_check(CONFIG_REQUEST):
             prohibited_values = CONFIG_REQUEST[config]["prohibited_values"]
 
         CONFIG[config] = config_value(config, cfg_type, def_value, min_val, max_val, possible_values, prohibited_values)
-        print_debug("Set to default: " + config + " " + str(CONFIG[config].value) + " " + str(type(CONFIG[config].value)))
+        pre_load_messages.append("Set to default: " + config + " " + str(CONFIG[config].value) + " " + str(type(CONFIG[config].value)))
 
     if(not retVal):
         raise Start_Check_Failed
@@ -215,16 +217,16 @@ class config_value:
 
         if(self.possible_values):
             if(self.value not in self.possible_values):
-                print_debug("SOME VALUE WAS NOT ALLOWED, RESETTING TO DEFAULT.")
+                print_debug(self.name + " VALUE WAS NOT ALLOWED, RESETTING TO DEFAULT.")
                 self.value = self.def_value
 
         if(self.prohibited_values):
             if(self.value in self.prohibited_values):
-                print_debug("SOME VALUE WAS ACTUALLY PROHIBITED, RESETTING TO DEFAULT.")
+                print_debug(self.name + " VALUE WAS PROHIBITED, RESETTING TO DEFAULT.")
                 self.value = self.def_value
 
         if(self.overriden):
-            print_debug("SOME VALUE HAS BEEN OVERRIDEN MULTIPLE TIMES FROM: " + old_value + " TO: " + self.value)
+            print_debug(self.name + " HAS BEEN OVERRIDEN MULTIPLE TIMES FROM: " + old_value + " TO: " + self.value)
 
         CONFIG_VALUES[self.name] = self.value
         self.overriden = True
@@ -243,7 +245,7 @@ CONFIG_VALUES = {}  # This contants only values of config_value objects.
 
 
 def print_debug(message):
-    if("DEBUG" in CONFIG and CONFIG["DEBUG"].value):
+    if("DEBUG" in CONFIG_VALUES.keys() and CONFIG_VALUES["DEBUG"]):
         print(message)
 
 def main(CONFIG_REQUEST=None):
@@ -282,13 +284,19 @@ def main(CONFIG_REQUEST=None):
                             constant_value = line[sep_pos + 1:line_len]
                             constant_value = constant_value.strip()
 
+                            prev_val = CONFIG[constant_name].value
+
                             config_val = CONFIG[constant_name]
                             try:
                                 config_val.parse_value_from_string(constant_value)
                             except Exception as e:
                                 print_debug(str(e))
 
-                            print_debug("Loaded from config: " + constant_name + " " + str(config_val.value) + " " + str(type(config_val.value)))
+                            if(prev_val != config_val.value):
+                                if(config_val.name == "DEBUG"):
+                                    for pre_load_message in pre_load_messages:
+                                        print_debug(pre_load_message)
+                                print_debug("Loaded from config: " + constant_name + " " + str(config_val.value) + " " + str(type(config_val.value)))
 
     except Start_Check_Failed:
         print_debug("Could not start Config Loader due to improper setup.")

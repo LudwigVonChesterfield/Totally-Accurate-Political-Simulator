@@ -161,7 +161,11 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Industrialism": EN_INDUSTRIALISM_WORDS, "Primitivism": EN_PRIMITIVISM_WORDS,
                  "Industrialism_Offensive": EN_INDUSTRIALISM_OFFENSIVE_WORDS, "Primitivism_Offensive": EN_PRIMITIVISM_OFFENSIVE_WORDS,
 
+                 "Book_Titles": ["The %s Manifesto", "The Book of %s", "The %s Book", "A Short Guide to %s", "%s Manual"],
+
                  "Announcement_end": "",  # A very specific feature for latin.
+
+                 "Reads": "reads", "Writes": "writes", "Gives": "gives",
 
                  "Says": "says", "Mumbles": "mumbles", "Exclaims": "exclaims", "Asks": "asks",
                  "All": "all",
@@ -174,38 +178,72 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "None": "None",
                  "Distaste": "Distaste", "Hate": "Hate", "Feud": "Feud",
 
+                 "cry": "cries", "cry_target": "cries because of",
+                 "lecture": "lectures", "lecture_target": "lectures",
+                 "awe": "is in awe", "awe_target": "is in awe of",
+                 "praise": "praises", "praise_target": "praises",
+                 "dissapointment": "is dissapointed", "dissapointment_target": "is dissapointed in",
+                 "curse": "curses", "curse_target": "curses",
+                 "preach": "preaches", "preach_target": "preaches",
+
+                 # """Centrists""".
                  "Centrism": "Centrism",
-                 "Bolshevism": "Bolshevism",
+
+                 # Communists.
+                 "Communism": "Communism",
+                 "Anarcho-communism": "Anarcho-communism",
                  "Trotskyism": "Trotskyism",
+                 "Anarcho-trotskyism": "Anarcho-trotskyism",
                  "Posadism": "Posadism",
+                 "Anarcho-posadism": "Anarcho-posadism",
+
+                 # Capitalists.
+                 "Capitalism": "Capitalism",
+                 "Liberal capitalism": "Liberal capitalism",
+                 "Anarcho-capitalism": "Anarcho-capitalism",
+
+                 # Fascists.
+                 "Fascism": "Fascism",
+                 "Anarcho-fascism": "Anarcho-fascism",
+                 "Strasserism": "Strasserism",
+                 "Ecofascism": "Ecofascism",
+                 "Esoteric fascism": "Esoteric fascism",
+                 "Techno-fascism": "Techno-fascism",
+
+                 # Syndicalists.
+                 "Syndicalism": "Syndicalism",
+                 "Anarcho-syndicalism": "Anarcho-syndicalism",
+                 "Fascist syndicalism": "Fascist syndicalism",
+
+                 # Government enthusiasts.
                  "Statism": "Statism",
                  "Minarchism": "Minarchism",
                  "Social democracy": "Social democracy",
+
+                 # Peaceful protesters.
                  "Agorism": "Agorism",
-                 "Strasserism": "Strasserism",
+
+                 # "Greens".
                  "Green politics": "Green politics",
-                 "Anarcho-communism": "Anarcho-communism",
-                 "Anarcho-trotskyism": "Anarcho-trotskyism",
-                 "Anarcho-posadism": "Anarcho-posadism",
-                 "Anarcho-capitalism": "Anarcho-capitalism",
                  "Anarcho-primitivism": "Anarcho-primitivism",
+
+                 # EGO.
                  "Anarcho-individualism": "Anarcho-individualism",
-                 "Anarcho-fascism": "Anarcho-fascism",
+                 "Meritocracy": "Meritocracy",
+                 "Technocracy": "Technocracy",
+
+                 # Spiritualists.
+                 "Theocracy": "Theocracy",
+                 "Liberation theology": "Liberation theology",
+
+                 # Radicals vulgaris.
+                 "Liberalism": "Liberalism",
+
+                 # Extremes vulgaris.
                  "Anarchism": "Anarchism",
-                 "Communism": "Communism",
-                 "Liberal capitalism": "Liberal capitalism",
-                 "Capitalism": "Capitalism",
                  "Conservatism": "Conservatism",
                  "Accelerationism": "Accelerationism",
-                 "Liberalism": "Liberalism",
-                 "Fascism": "Fascism",
-                 "Liberation theology": "Liberation theology",
-                 "Theocracy": "Theocracy",
-                 "Esoteric fascism": "Esoteric fascism",
                  "Transhumanism": "Transhumanism",
-                 "Techno-fascism": "Techno-fascism",
-                 "Meritocracy": "Meritocracy",
-                 "Technocracy": "Technocracy"
                 },
 
           "ru": {"Liberty": RU_LIBERTY_WORDS, "Authority": RU_AUTHORITY_WORDS,
@@ -221,7 +259,11 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Industrialism": RU_INDUSTRIALISM_WORDS, "Primitivism": RU_PRIMITIVISM_WORDS,
                  "Industrialism_Offensive": RU_INDUSTRIALISM_OFFENSIVE_WORDS, "Primitivism_Offensive": RU_PRIMITIVISM_OFFENSIVE_WORDS,
 
+                 "Book_Titles": ["Манифест %s", "Книга о %s", "Книга %s", "Краткое Пособие к %s", "Мануал %s"],
+
                  "Announcement_end": "",  # A very specific feature for latin.
+
+                 "Reads": "читает", "Writes": "пишет", "Gives": "даёт",
 
                  "Says": "говорит", "Mumbles": "бубнит", "Exclaims": "восклицает", "Asks": "спрашивает",
                  "All": "все",
@@ -233,38 +275,72 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "None": "Никакое",
                  "Distaste": "Неприязнь", "Hate": "Ненависть", "Feud": "Вражда",
 
+                 "cry": "плачет", "cry_target": "плачет из-за",
+                 "lecture": "отчитывает", "lecture_target": "отчитывает",
+                 "awe": "восхищён", "awe_target": "восхищён",
+                 "praise": "фанатично почитает", "praise_target": "фанатично почитает",
+                 "dissapointment": "разочарован", "dissapointment_target": "разочарован в",
+                 "curse": "проклинает", "curse_target": "проклинает",
+                 "preach": "поучает", "preach_target": "поучает",
+
+                 # """Centrists""".
                  "Centrism": "Центризм",
-                 "Bolshevism": "Большевизм",
+
+                 # Communists.
+                 "Communism": "Коммунизм",
+                 "Anarcho-communism": "Анархо-коммунизм",
                  "Trotskyism": "Троцкизм",
+                 "Anarcho-trotskyism": "Анархо-троцкизм",
                  "Posadism": "Посадизм",
+                 "Anarcho-posadism": "Анархо-посадизм",
+
+                 # Capitalists.
+                 "Capitalism": "Капитализм",
+                 "Liberal capitalism": "Либеральный капитализм",
+                 "Anarcho-capitalism": "Анархо-капитализм",
+
+                 # Fascists.
+                 "Fascism": "Фашизм",
+                 "Anarcho-fascism": "Анархо-фашизм",
+                 "Strasserism": "Штрассеризм",
+                 "Ecofascism": "Экофашизм",
+                 "Esoteric fascism": "Эзотерический фашизм",
+                 "Techno-fascism": "Техно-фашизм",
+
+                 # Syndicalists.
+                 "Syndicalism": "Синдикализм",
+                 "Anarcho-syndicalism": "Анархо-синдикализм",
+                 "Fascist syndicalism": "Фашистский синдикализм",
+
+                 # Government enthusiasts.
                  "Statism": "Этатизм",
                  "Minarchism": "Минархизм",
                  "Social democracy": "Социальная-демократия",
+
+                 # Peaceful protesters.
                  "Agorism": "Агоризм",
-                 "Strasserism": "Штрассеризм",
+
+                 # "Greens".
                  "Green politics": "Зелёная политика",
-                 "Anarcho-communism": "Анархо-коммунизм",
-                 "Anarcho-trotskyism": "Анархо-троцкизм",
-                 "Anarcho-posadism": "Анархо-посадизм",
-                 "Anarcho-capitalism": "Анархо-капитализм",
-                 "Anarcho-individualism": "Анархо-индивидуализм",
                  "Anarcho-primitivism": "Анархо-примитивизм",
-                 "Anarcho-fascism": "Анархо-фашизм",
+
+                 # EGO.
+                 "Anarcho-individualism": "Анархо-индивидуализм",
+                 "Meritocracy": "Меритократия",
+                 "Technocracy": "Технократия",
+
+                 # Spiritualists.
+                 "Theocracy": "Теократия",
+                 "Liberation theology": "Теология освобождения",
+
+                 # Radicals vulgaris.
+                 "Liberalism": "Либерализм",
+
+                 # Extremes vulgaris.
                  "Anarchism": "Анархизм",
-                 "Communism": "Коммунизм",
-                 "Liberal capitalism": "Либеральный капитализм",
-                 "Capitalism": "Капитализм",
                  "Conservatism": "Консерватизм",
                  "Accelerationism": "Акселерационизм",
-                 "Liberalism": "Либерализм",
-                 "Fascism": "Фашизм",
-                 "Liberation theology": "Теология освобождения",
-                 "Theocracy": "Теократия",
-                 "Esoteric fascism": "Эзотерический фашизм",
                  "Transhumanism": "Трансгуманизм",
-                 "Techno-fascism": "Техно-фашизм",
-                 "Meritocracy": "Меритократия",
-                 "Technocracy": "Технократия"
                 },
 
           "la": {"Liberty": LA_LIBERTY_WORDS, "Authority": LA_AUTHORITY_WORDS,
@@ -280,7 +356,11 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Industrialism": LA_INDUSTRIALISM_WORDS, "Primitivism": LA_PRIMITIVISM_WORDS,
                  "Industrialism_Offensive": LA_INDUSTRIALISM_OFFENSIVE_WORDS, "Primitivism_Offensive": LA_PRIMITIVISM_OFFENSIVE_WORDS,
 
+                 "Book_Titles": ["Манифест %s", "Книга о %s", "Книга %s", "Краткое Пособие к %s", "Мануал %s"],
+
                  "Announcement_end": " est",  # A very specific feature for latin.
+
+                 "Reads": "читает", "Writes": "пишет", "Gives": "даёт",
 
                  "Says": "dicit", "Mumbles": "murmurit", "Exclaims": "clamit", "Asks": "quaerit",
                  "All": "omnia",
@@ -292,37 +372,71 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "None": "Nihili",
                  "Distaste": "Inimitia", "Hate": "Odium", "Feud": "Hostilitas",
 
+                 "cry": "flarit", "cry_target": "flarit ob",
+                 "lecture": "citatit", "lecture_target": "vituperarit",
+                 "awe": "in admirationem", "awe_target": "in admirationem ab",
+                 "praise": "veneratit", "praise_target": "veneratit",
+                 "dissapointment": "non dulcedit", "dissapointment_target": "non dulcedit ad",
+                 "curse": "vomicit", "curse_target": "vomicit",
+                 "preach": "поучает", "preach_target": "поучает",
+
+                 # """Centrists""".
                  "Centrism": "Centrismus",
-                 "Bolshevism": "Bolshevismus",
-                 "Trotskyism": "Trotskyismus",
-                 "Posadism": "Posadismus",
-                 "Statism": "Civitismus",
-                 "Minarchism": "Минархизм",
-                 "Social democracy": "Populiauctorismus socialis",
-                 "Agorism": "Agorismus",
-                 "Strasserism": "Strasserismus",
-                 "Green politics": "Politica virida",
-                 "Anarcho-communism": "Communismus irauctoris",
-                 "Anarcho-trotskyism": "Trotskyismus irauctoris",
-                 "Anarcho-posadism": "Posadismus irauctoris",
-                 "Anarcho-capitalism": "Capitalismus irauctoris",
-                 "Anarcho-individualism": "Primitivismus irauctoris",
-                 "Anarcho-primitivism": "Pascismus irauctoris",
-                 "Anarcho-fascism": "Fascismus irauctoris",
-                 "Anarchism": "Irauctorismus",
+
+                 # Communists.
                  "Communism": "Communismus",
-                 "Liberal capitalism": "Capitalismus liberalis",
+                 "Anarcho-communism": "Communismus irauctoris",
+                 "Trotskyism": "Trotskyismus",
+                 "Anarcho-trotskyism": "Trotskyismus irauctoris",
+                 "Posadism": "Posadismus",
+                 "Anarcho-posadism": "Posadismus irauctoris",
+
+                 # Capitalists.
                  "Capitalism": "Capitalismus",  # Capitalismus vulgaris. As in, classical Capitalism. Change to this if you want to be more fancy.
+                 "Liberal capitalism": "Capitalismus liberalis",
+                 "Anarcho-capitalism": "Capitalismus irauctoris",
+
+                 # Fascists.
+                 "Fascism": "Fascismus",
+                 "Anarcho-fascism": "Fascismus irauctoris",
+                 "Strasserism": "Strasserismus",
+                 "Ecofascism": "Domofascismus",
+                 "Esoteric fascism": "Fascismus immaterialis",
+                 "Techno-fascism": "Arsi-fascismus",
+
+                 # Syndicalists.
+                 "Syndicalism": "Syndicalismus",
+                 "Anarcho-syndicalism": "Syndicalismus irauctoris",
+                 "Fascist syndicalism": "Syndicalismus fascistis",
+
+                 # Government enthusiasts.
+                 "Statism": "Civitismus",
+                 "Minarchism": "Minauctorismus",
+                 "Social democracy": "Populiauctorismus socialis",
+
+                 # Peaceful protesters.
+                 "Agorism": "Agorismus",
+
+                 # "Greens".
+                 "Green politics": "Politica virida",
+                 "Anarcho-individualism": "Primitivismus irauctoris",
+
+                 # EGO.
+                 "Anarcho-individualism": "Primitivismus irauctoris",
+                 "Meritocracy": "Dignauctoria",
+                 "Technocracy": "Arsauctoria",
+
+                 # Spiritualists.
+                 "Theocracy": "Deiauctoria",
+                 "Liberation theology": "Deiscientia liberatae",
+
+                 # Radicals vulgaris.
+                 "Liberalism": "Liberalismus",
+
+                 # Extremes vulgaris.
+                 "Anarchism": "Irauctorismus",
                  "Conservatism": "Conservatismus",
                  "Accelerationism": "Accelerationismus",
-                 "Liberalism": "Liberalismus",
-                 "Fascism": "Fascismus",
-                 "Liberation theology": "Теология освобождения",
-                 "Theocracy": "Deiauctoria",
-                 "Esoteric fascism": "Fascismus immaterialis",
                  "Transhumanism": "Transhumanismus",
-                 "Techno-fascism": "Arsi-fascismus",
-                 "Meritocracy": "Меритократия",
-                 "Technocracy": "Технократия"
                 }
 }
