@@ -431,4 +431,128 @@ PRESET_CITIZENS = {
 
      "Tolerancy": 0.0,
      "Vocal" : 0.5},
+
+    "Garry_Mensky":
+    {"Axis":
+        {
+        "Liberty-Authority": {"Value": -100, "Stubborness": 1.0, "Persuasiveness": 0.5},
+        "Pacifism-Militarism": {"Value": -25, "Stubborness": 0.75, "Persuasiveness": 0.1},
+        "Materialism-Spiritualism": {"Value": 0, "Stubborness": 0.75, "Persuasiveness": 0.0},
+        "Individualism-Collectivism": {"Value": 100, "Stubborness": 1.0, "Persuasiveness": 0.9},
+        "Reformism-Revolutionism": {"Value": -100, "Stubborness": 0.7, "Persuasiveness": 0.1},
+        "Industrialism-Primitivism": {"Value": 100, "Stubborness": 1.0, "Persuasiveness": 0.9},
+        },
+
+     "Emotionality": 1.0,
+
+     "Tolerancy": 0.0,
+     "Vocal" : 0.5},
+
+    "Getup1":
+    {"Axis":
+        {
+        "Liberty-Authority": {"Value": 100, "Stubborness": 1.0, "Persuasiveness": 0.5},
+        "Pacifism-Militarism": {"Value": 100, "Stubborness": 0.9, "Persuasiveness": 0.75},
+        "Materialism-Spiritualism": {"Value": 50, "Stubborness": 0.75, "Persuasiveness": 0.5},
+        "Individualism-Collectivism": {"Value": -100, "Stubborness": 1.0, "Persuasiveness": 0.7},
+        "Reformism-Revolutionism": {"Value": -75, "Stubborness": 0.5, "Persuasiveness": 0.75},
+        "Industrialism-Primitivism": {"Value": 50, "Stubborness": 1.0, "Persuasiveness": 0.5},
+        },
+ 
+     "Emotionality": 0.75,
+     "Reactions":
+     {
+        "1":  # offensive
+        {
+            "Provoker":
+            {
+                "Type": "Curse",
+                "Trig": 0.9
+            }
+        },
+ 
+        "2":  # persuasive
+        {
+            "Speaker":
+            {
+                "Type": "Ignore",
+                "Trig": 1.0
+            }
+        },
+       
+        "4":  # defensive
+        {
+            "Speaker":
+            {
+                "Type": "Quote",
+                "Trig": 1.0
+            }
+        },
+       
+        "8":  # parent
+        {
+            "Speaker":
+            {
+                "Type": "Quote",
+                "Trig": 0.5
+            }
+        },
+       
+        "16":  # awe
+        {
+            "Speaker":
+            {
+                "Type": "Offensive",
+                "Trig": 0.5
+            }
+        },
+   
+        "32":  # praise
+        {
+            "Speaker":
+            {
+                "Type": "Ignore",
+                "Trig": 1.0
+            }
+        },
+   
+        "64":  # disappointment
+        {
+            "Speaker":
+            {
+                "Type": "Parent",
+                "Trig": 0.75
+            }
+        },
+   
+        "128":  # curse
+        {
+            "Speaker":
+            {
+                "Type": "Offensive",
+                "Trig": 0.65
+            }
+        },
+   
+        "256":  # shout
+        {
+            "Speaker":
+            {
+                "Type": "Quote",
+                "Trig": 1.0
+            }
+        },
+       
+        "512":  
+        {
+            "Speaker":
+            {
+                "Type": "Ignore",
+                "Trig": 1.0
+            }
+        }
+     },
+ 
+     "Tolerancy": 0.025,
+     "Vocal" : 0.25},
 }

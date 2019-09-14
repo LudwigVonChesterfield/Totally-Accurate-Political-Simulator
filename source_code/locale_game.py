@@ -167,7 +167,7 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
 
                  "Reads": "reads", "Writes": "writes", "Gives": "gives",
 
-                 "Says": "says", "Mumbles": "mumbles", "Exclaims": "exclaims", "Asks": "asks",
+                 "Says": "says", "Mumbles": "mumbles", "Exclaims": "exclaims", "Asks": "asks", "Quotes": "quotes",
                  "All": "all",
                  "Convinced": "convinced",
                  "Changed Ideology From": "has changed their ideology from",
@@ -265,7 +265,7 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
 
                  "Reads": "читает", "Writes": "пишет", "Gives": "даёт",
 
-                 "Says": "говорит", "Mumbles": "бубнит", "Exclaims": "восклицает", "Asks": "спрашивает",
+                 "Says": "говорит", "Mumbles": "бубнит", "Exclaims": "восклицает", "Asks": "спрашивает", "Quotes": "цитирует",
                  "All": "все",
                  "Convinced": "убедил", "Changed Ideology From": "сменил свою идеологию с",
 
@@ -362,7 +362,7 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
 
                  "Reads": "читает", "Writes": "пишет", "Gives": "даёт",
 
-                 "Says": "dicit", "Mumbles": "murmurit", "Exclaims": "clamit", "Asks": "quaerit",
+                 "Says": "dicit", "Mumbles": "murmurit", "Exclaims": "clamit", "Asks": "quaerit", "Quotes": "цитирует",
                  "All": "omnia",
                  "Convinced": "persuasit", "Changed Ideology From": "vertit ille doctrina ab",
 

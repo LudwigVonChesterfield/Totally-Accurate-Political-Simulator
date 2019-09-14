@@ -13,6 +13,7 @@ ANY AND ALL SIMILARITIES ARE COMPLETELY COINCIDENTAL.
 """
 
 import os
+import sys
 import time
 import random
 import re
@@ -173,6 +174,9 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 def clamp(n, smallest, largest):
     return max(smallest, min(n, largest))
 
+def str_to_class(classname):
+    return getattr(sys.modules[__name__], classname)
+
 def get_closest_ideology(political_axis):
     closest_approximations = {}
     for ideology_name, ideology_axis in IDEOLOGIES_CLASSIFICATION.items():
@@ -257,21 +261,7 @@ def generate_reaction(emotionality, possible_trigger, speaker=True, load_from=di
 
         if(target_type in load_from["Reactions"][str(possible_trigger)].keys()):
             reaction_handler = load_from["Reactions"][str(possible_trigger)][target_type]
-            react_type = reaction_handler["Type"]
-            if(react_type == "Absent"):
-                reaction_class = Absent
-            elif(react_type == "Ignore"):
-                reaction_class = Ignore
-            elif(react_type == "Offensive"):
-                reaction_class = Offensive
-            elif(react_type == "Defensive"):
-                reaction_class = Defensive
-            elif(react_type == "Parent"):
-                reaction_class = Parent
-            elif(react_type == "Awe"):
-                reaction_class = Awe
-            elif(react_type == "Praise"):
-                reaction_class = Praise
+            reaction_class = str_to_class(reaction_handler["Type"])
             if("Trig" in reaction_handler.keys()):
                 trigger_hapiness = reaction_handler["Trig"]
 
@@ -351,6 +341,8 @@ class Citizen:
         self.favour_word_uppercase = {}
         self.dislike_word_uppercase = {}
         self.generate_uppercase_relation()
+
+        self.to_quote = []  # Things this very citizen would like to quote in the future, whenever they can.
 
         self.relationships = {}
         for citizen in citizens:
@@ -538,7 +530,7 @@ class Citizen:
 
         return True
 
-    def queue_hear(self, speaker, verb, sentence, predetermined_triggers, on_hear_done=None, on_hear_done_args=None):
+    def queue_hear(self, speaker, verb, sentence, predetermined_triggers, proxy_speaker=None, on_hear_done=None, on_hear_done_args=None):
         global reactions_queue
 
         reactions_queue.appendleft(
@@ -549,17 +541,22 @@ class Citizen:
                 "verb": verb,
                 "sentence": sentence,
                 "predetermined_triggers": predetermined_triggers,
+                "proxy_speaker": proxy_speaker,
                 "on_hear_done": on_hear_done,
                 "on_hear_done_args": on_hear_done_args
             })
 
-    def hear(self, speaker, verb, sentence, predetermined_triggers, on_hear_done=None, on_hear_done_args=None):
+    def hear(self, speaker, verb, sentence, predetermined_triggers, proxy_speaker=None, on_hear_done=None, on_hear_done_args=None):
+        """
+        speaker is who said the sentence.
+        proxy_speaker is used in quoting, it's the original author of the quote. We change relationship to him, and to speaker.
+        """
         message_triggers = predetermined_triggers
 
         intonation_delimeter = sentence[len(sentence) - 1]
 
-        delimeters_to_remove = "".join(DELIMETERS)
-        sentence_stripped = re.sub("[" + delimeters_to_remove + "]", "", sentence)
+        delimeters_to_remove = "[" + "".join(DELIMETERS) + "]"
+        sentence_stripped = re.sub(delimeters_to_remove, "", sentence)
         sentence_stripped = sentence_stripped.strip()  # Remove trailing spaces.
         words = []
         if(len(sentence_stripped) > 0):
@@ -609,8 +606,9 @@ class Citizen:
 
         shifted_viewpoints = {}
         relationship_shift = 0
+        proxy_relationship_shift = 0
         for word in words:
-            retVal = self.react_word(speaker, verb, intonation_delimeter, word)
+            retVal = self.react_word(speaker, verb, intonation_delimeter, word, proxy_speaker)
             if(retVal["Viewpoint"] != ""):
                 if(retVal["Viewpoint"] in shifted_viewpoints):
                     shifted_viewpoints[retVal["Viewpoint"]] += retVal["Viewpoint_Shift_Value"]
@@ -690,6 +688,8 @@ class Citizen:
                         "<span class='emote'>" + LOCALE[LOCALE_LANGUAGE]["Announcement_end"])
 
         to_chat_relationship_shift(self, speaker, self.adjust_relationship_value(speaker, relationship_shift))
+        if(proxy_speaker and proxy_speaker != self and proxy_speaker != speaker):
+            to_chat_relationship_shift(self, proxy_speaker, self.adjust_relationship_value(proxy_speaker, relationship_shift))
 
         old_relationship_title = LOCALE[LOCALE_LANGUAGE][self.relationships[speaker.name].title]
         old_relationship_title_color = self.relationships[speaker.name].title_color
@@ -710,19 +710,18 @@ class Citizen:
 
         interupt_reply = False
         if(prob(self.emotions.emotionality * 100)):
-            interupt_reply = self.emotions.react_to_triggers(self, speaker, None, message_triggers)  # Nobody provoked us to speak, thus None as provoker.     
+            interupt_reply = self.emotions.react_to_triggers(self, speaker, None, message_triggers, text=sentence)  # Nobody provoked us to speak, thus None as provoker.     
         if(not interupt_reply):
             self.queue_say(predetermined_targets=[speaker])
 
         if(on_hear_done is not None):
             on_hear_done(on_hear_done_args)
 
-    def react_word(self, speaker, verb, intonation_delimeter, word):
+    def react_word(self, speaker, verb, intonation_delimeter, word, proxy_speaker=None):
         """
         How self reacts to speaker's word.
         Returns what viewpoint changed, and by how much in format {"Viewpoint": viewpoint_name, "Value": value_changed}.
         """
-
         # Currently used to determine which emotions this or that message can provoke. See define.py.
         message_triggers = MESSAGE_TRIGGER_NONE
 
@@ -942,10 +941,114 @@ class Citizen:
         book.pickup(self)
         return book
 
-    def read_book(self, book, predetermined_triggers=MESSAGE_TRIGGER_NONE):
+    # book, predetermined_triggers=MESSAGE_TRIGGER_NONE
+    def read_book(self, args):
+        book = args["book"]
+        predetermined_triggers = args["predetermined_triggers"]
         sentence = book.text
 
-        verb = LOCALE[LOCALE_LANGUAGE]["Reads"] + " " + book.name
+        my_ideology_fg = IDEOLOGIES_CLASSIFICATION[self.ideology_name]["Foreground"]
+        my_ideology_bg = IDEOLOGIES_CLASSIFICATION[self.ideology_name]["Background"]
+
+        if(args["quote"]):
+            self.quote(book.created_by, sentence, verb=LOCALE[LOCALE_LANGUAGE]["Quotes"] + " " + book.name,
+                       predetermined_triggers=predetermined_triggers, fg_color=my_ideology_fg, bg_color=my_ideology_bg)
+        else:
+            verb = LOCALE[LOCALE_LANGUAGE]["Reads"] + " " + book.name
+
+            to_chat("<span class='speech_name'>" + self.name + "</span>" +
+                "<span style='color: " + my_ideology_bg + "'>(</span>" +
+                "<span style='color: " + my_ideology_fg + "'>" + LOCALE[LOCALE_LANGUAGE][self.ideology_name] + "</span>" +
+                "<span style='color: " + my_ideology_bg + "'>)</span>" +
+                "<span class='speech_verb'> " + verb + ", </span>" +
+                "<span class='speech_wrapper'><span style='color: " + my_ideology_bg + "'>\"</span></span>" +
+                "<span style='color: " + my_ideology_fg + "'>" + sentence + "</span>" +
+                "<span class='speech_wrapper'><span style='color: " + my_ideology_bg + "'>\"</span></span>")
+
+            to_hear = citizens.copy()
+            to_hear.remove(self)
+            random.shuffle(to_hear)
+
+            for citizen in to_hear:
+                if(book.can_use(self, citizen)):
+                    citizen.queue_hear(self, verb, sentence, predetermined_triggers,
+                                       proxy_speaker=book.created_by,
+                                       on_hear_done=book.read_by_names.append,
+                                       on_hear_done_args=citizen)
+
+        return True
+
+    def quote(self, speaker, sentence, verb=None, predetermined_targets=[], predetermined_triggers=MESSAGE_TRIGGER_QUOTE, fg_color='white', bg_color='cyan'):
+        """
+        Strips all the words we do not agree with from sentence, and then says them.
+        """
+        delimeters_to_remove = "[" + "".join(DELIMETERS) + "]"
+        sentence_stripped = re.sub(delimeters_to_remove, "", sentence)
+        sentence_stripped = sentence_stripped.strip()  # Remove trailing spaces.
+        words = []
+        new_words = []
+
+        if(len(sentence_stripped) > 0):
+            words = sentence.split(" ")
+
+        first_word = True
+
+        for word in words:
+            word_stripped = re.sub(delimeters_to_remove, "", word)
+            word_stripped = word_stripped.strip()  # Remove trailing spaces.
+
+            if(len(word_stripped) <= 0):
+                continue
+
+            clean_word = word_stripped.lower()
+            if(clean_word in taken_clean_citizen_names):
+                continue
+            if(clean_word == LOCALE[LOCALE_LANGUAGE]["All"].lower()):
+                continue
+
+            if(clean_word in viewpoints_by_word.keys() and (sign(self.political_view.viewpoints[viewpoints_by_word[clean_word]["Viewpoint"]].value) != sign(viewpoints_by_word[clean_word]["Value"]))):
+                continue
+
+            if(clean_word in offensive_to_viewpoint.keys() and (sign(self.political_view.viewpoints[offensive_to_viewpoint[clean_word]["Viewpoint"]].value) == sign(offensive_to_viewpoint[clean_word]["Value"]))):
+                continue
+
+            if(first_word):
+               word = word.capitalize()
+               first_word = False
+
+            last_symbol = word[len(word) - 1]
+            if(last_symbol in DELIMETERS_SENTENCE_END):
+               first_word = True
+
+            new_words.append(word)
+
+        sentence = " ".join(new_words)
+        sentence_len = len(sentence)
+
+        if(sentence_len <= 0):
+            return False
+
+        targets_object = self.get_targets(predetermined_targets)
+        targets_amount = targets_object["targets_amount"]
+        targets = targets_object["targets"]
+
+        targets_text = self.get_targets_text(targets_amount, targets)
+
+        last_symbol = sentence[sentence_len - 1]
+        if(last_symbol not in DELIMETERS_SENTENCE_END):
+            if(last_symbol in DELIMETERS):
+                sentence = sentence[:-1]
+                sentence += random.choice(DELIMETERS_SENTENCE_END)
+            else:
+                sentence += random.choice(DELIMETERS_SENTENCE_END)
+
+        if(verb is None):
+            verb = LOCALE[LOCALE_LANGUAGE]["Quotes"] + " <span class='speech_name'>" + speaker.name + "</span>"
+
+        print_sentence = sentence
+        sentence = targets_text + sentence
+        if(print_say_target):
+            print_sentence = targets_text + print_sentence
 
         my_ideology_fg = IDEOLOGIES_CLASSIFICATION[self.ideology_name]["Foreground"]
         my_ideology_bg = IDEOLOGIES_CLASSIFICATION[self.ideology_name]["Background"]
@@ -955,19 +1058,16 @@ class Citizen:
                 "<span style='color: " + my_ideology_fg + "'>" + LOCALE[LOCALE_LANGUAGE][self.ideology_name] + "</span>" +
                 "<span style='color: " + my_ideology_bg + "'>)</span>" +
                 "<span class='speech_verb'> " + verb + ", </span>" +
-                "<span class='speech_wrapper'><span style='color: " + my_ideology_bg + "'>\"</span></span>" +
-                "<span style='color: " + my_ideology_fg + "'>" + sentence + "</span>" +
-                "<span class='speech_wrapper'><span style='color: " + my_ideology_bg + "'>\"</span></span>")
+                "<span class='speech_wrapper'><span style='color: " + bg_color + "'>\"</span></span>" +
+                "<span style='color: " + fg_color + "'>" + print_sentence + "</span>" +
+                "<span class='speech_wrapper'><span style='color: " + bg_color + "'>\"</span></span>")
 
         to_hear = citizens.copy()
         to_hear.remove(self)
         random.shuffle(to_hear)
 
         for citizen in to_hear:
-            if(book.can_use(self, citizen)):
-                citizen.queue_hear(self, verb, sentence, predetermined_triggers,
-                                   on_hear_done=book.read_by_names.append,
-                                   on_hear_done_args=citizen)
+            citizen.queue_hear(self, verb, sentence, predetermined_triggers, proxy_speaker=speaker)
 
         return True
 
@@ -979,6 +1079,7 @@ class Citizen:
         if(sentence_len == 0):
             retVal = LOCALE[LOCALE_LANGUAGE]["Mumbles"]
             return retVal
+
         last_symbol = sentence[sentence_len - 1]
         if(last_symbol == "."):
             retVal = LOCALE[LOCALE_LANGUAGE]["Says"]
@@ -1090,6 +1191,16 @@ class Citizen:
                 triggers = triggers | trigger
 
         if(not self.say(predetermined_targets=None, predetermined_triggers=triggers, fg_color=my_ideology_fg, bg_color=my_ideology_bg)):  # Political broadcasts don't have predetermined targets.
+            if(len(self.to_quote) > 0):
+                to_quote_obj = random.choice(to_quote)
+                to_quote.remove(to_quote_obj)
+
+                speaker = to_quote_obj["speaker"]
+                sentence = to_quote_obj["text"]
+
+                self.quote(speaker, sentence, predetermined_targets=None, predetermined_triggers=triggers|MESSAGE_TRIGGER_QUOTE, fg_color=my_ideology_fg, bg_color=my_ideology_bg)
+                return
+
             # We are seemingly silent, but seem to have a book in our inventory. Why not read it/give it out?
             for book in self.inventory:
                 if(book.can_use(self, self)):  # Can we read it?
@@ -1140,9 +1251,9 @@ class Player(Citizen):
             if(last_symbol not in DELIMETERS_SENTENCE_END):
                 if(last_symbol in DELIMETERS):
                     sentence = sentence[:-1]
-                    sentence += "."
+                    sentence += random.choice(DELIMETERS_SENTENCE_END)
                 else:
-                    sentence += "."
+                    sentence += random.choice(DELIMETERS_SENTENCE_END)
             return sentence
 
 
@@ -1375,7 +1486,7 @@ class Emotions:
             self.reactions_provoker[str(possible_trigger)] = generate_reaction(self.emotionality, possible_trigger, load_from)
             self.trigger_severity[str(possible_trigger)] = random.uniform(-1.0, 1.0)
 
-    def react_to_triggers(self, us, speaker, provoker, triggers):
+    def react_to_triggers(self, us, speaker, provoker, triggers, text=""):
         """
         Return True to interupt default reaction - speech.
 
@@ -1391,14 +1502,16 @@ class Emotions:
         for possible_trigger in check_triggers:
             if(triggers & possible_trigger):
                 if(self.reactions_speaker[str(possible_trigger)].react_check(us, speaker)):
-                    retVal = self.reactions_speaker[str(possible_trigger)].invoke(us, speaker) or retVal
+                    retVal = self.reactions_speaker[str(possible_trigger)].invoke(us, speaker, text=text) or retVal
                 # Do not react to those who provoked, if they are ourselves... TODO: Add insanity.
                 if(provoker is not None and provoker is not us and self.reactions_provoker[str(possible_trigger)].react_check(us, provoker)):
-                    retVal = self.reactions_provoker[str(possible_trigger)].invoke(us, provoker) or retVal
+                    retVal = self.reactions_provoker[str(possible_trigger)].invoke(us, provoker, text=text) or retVal
         return retVal
 
 
 class Reaction:
+    incompatibile_tags = []
+
     def __init__(self, emotionality, trigger_hapiness):
         self.emotionality = emotionality
         self.trigger_hapiness = trigger_hapiness
@@ -1407,14 +1520,14 @@ class Reaction:
         # The min 99 is required as to prevent infinite reaction loops...
         return prob(min((self.emotionality * self.trigger_hapiness) * 100 + us.relationships[speaker.name].get_reaction_modifier(us, speaker), 99))
 
-    def invoke(self, us, speaker):
+    def invoke(self, us, speaker, text=""):
         """
         us - is the Citizen reacting.
         speaker - is the Citizen, that emitted the emotion, or the citizen who provoked some other Citizen to react in one way or the other.
         """
-        return self.on_invoke(us, speaker)
+        return self.on_invoke(us, speaker, text=text)
 
-    def on_invoke(self, us, speaker):
+    def on_invoke(self, us, speaker, text):
         """
         Return True to interupt default reaction - speech.
         """
@@ -1422,42 +1535,56 @@ class Reaction:
 
 
 class Absent(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         return False
 
 
 class Ignore(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         return True  # Absent is no reaction, ignore is not even talk back.
 
 
 class Offensive(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_say(predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_OFFENSIVE)
         return True  # We already said something. Mostly, an offensive word.
 
 
 class Defensive(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_emote("cry", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_DEFENSIVE)
         return False
 
 
 class Parent(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_emote("lecture", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PARENT)
         return False
 
 
 class Awe(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_emote("awe", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_AWE,
                        on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
         return False
 
 
 class Praise(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_emote("praise", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PRAISE,
                        on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
         us.queue_say(predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_PRAISE)
@@ -1465,14 +1592,18 @@ class Praise(Reaction):
 
 
 class Dissapointment(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_emote("dissapointment", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_DISSAPOINTMENT,
                        on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, -CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
         return False
 
 
 class Curse(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         us.queue_emote("curse", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_CURSE,
                        on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, -CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
         us.queue_say(predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_CURSE)
@@ -1480,7 +1611,9 @@ class Curse(Reaction):
 
 
 class Write(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         total_stubborness = 0.0
         viewpoint_names = us.political_view.viewpoints.keys()
         viewpoints_amount = len(viewpoint_names)
@@ -1495,7 +1628,9 @@ class Write(Reaction):
 
 
 class Criticize(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         total_stubborness = 0.0
         viewpoint_names = us.political_view.viewpoints.keys()
         viewpoints_amount = len(viewpoint_names)
@@ -1511,13 +1646,62 @@ class Criticize(Reaction):
 
 
 class Preach(Reaction):
-    def on_invoke(self, us, speaker):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
         for book in us.inventory:
             if(book.ideology == us.ideology_name):
                 us.queue_emote("preach", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PARENT,
                                on_emote_done=us.read_book,
-                               on_emote_done_args=book)
+                               on_emote_done_args={"book": book, "predetermined_triggers": MESSAGE_TRIGGER_PARENT, "quote": False})
                 return True
+        return False
+
+
+class Misread_Preach(Reaction):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
+        for book in us.inventory:
+                us.queue_emote("preach", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PARENT,
+                               on_emote_done=us.read_book,
+                               on_emote_done_args={"book": book, "predetermined_triggers": MESSAGE_TRIGGER_QUOTE|MESSAGE_TRIGGER_PARENT, "quote": True})
+                return True
+        return False
+
+
+class Quote_Remember(Reaction):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
+        if(len(text) > 0):
+            us.to_quote.append({"speaker": speaker, "text": text})
+        return False
+
+
+class Quote_Reply(Reaction):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
+        if(len(us.to_quote) > 0):
+            to_quote_obj = random.choice(us.to_quote)
+            us.to_quote.remove(to_quote_obj)
+
+            quotee = to_quote_obj["speaker"]
+            sentence = to_quote_obj["text"]
+
+            us.quote(quotee, sentence, predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_QUOTE)
+            return True
+        return False
+
+
+class Copycat(Reaction):
+    incompatible_tags = []
+
+    def on_invoke(self, us, speaker, text):
+        if(len(text) > 0):
+            us.quote(speaker, text, predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_QUOTE|MESSAGE_TRIGGER_OFFENSIVE)
+            return True
         return False
 
 
@@ -1553,16 +1737,15 @@ class Book(Item):
         self.text = text
         self.ideology = creator.ideology_name
 
-        self.read_by_names = [creator]  # We can't convince us with our own book.
+        self.read_by_names = [creator.name]  # We can't convince us with our own book.
 
         all_books.append(self)
 
     def can_use(self, user, target):
-        return target.name.lower() not in self.read_by_names
+        return target.name not in self.read_by_names
 
     def use(self, user, target):
-        print(user.name, "READS A BOOK")
-        self.read_by_names.append(target)
+        self.read_by_names.append(target.name)
 
         target.hear(self.created_by, "writes", self.text, MESSAGE_TRIGGER_NONE)
         to_chat("<span class='emote_name'>" + target.name + "</span>" +
@@ -1573,8 +1756,8 @@ class Book(Item):
 
 init_reference_lists()
 
-# citizens_to_spawn = 25
-citizens_to_spawn = 2
+citizens_to_spawn = 25
+# citizens_to_spawn = 2
 citizens_spawned = 0
 citizens = []
 
@@ -1582,7 +1765,7 @@ from characters_presets import PRESET_CITIZENS
 
 CITIZENS_TO_IMPORT = "All"  # Either "All", "None" or [citizen_name_to_import_1, citizen_name_to_import_2, ...]
 # CITIZENS_TO_IMPORT = "None"
-CITIZENS_TO_IMPORT = ["Luduk", "Co11y"]
+# CITIZENS_TO_IMPORT = ["Luduk", "Co11y"]
 
 if(CITIZENS_TO_IMPORT == "All"):
     for citizen_name in PRESET_CITIZENS:
@@ -1650,6 +1833,7 @@ def citizen_speech():
                     reaction["verb"],
                     reaction["sentence"],
                     reaction["predetermined_triggers"],
+                    reaction["proxy_speaker"],
                     reaction["on_hear_done"],
                     reaction["on_hear_done_args"]
                     )
