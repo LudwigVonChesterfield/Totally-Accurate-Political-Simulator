@@ -1,6 +1,6 @@
-WORD_UPPERCASE_NONE = 0
-WORD_UPPERCASE_CAPITALIZE = 1
-WORD_UPPERCASE_UPPER = 2
+WORD_UPPERCASE_NONE = "NONE"
+WORD_UPPERCASE_CAPITALIZE = "CAPITALIZE"
+WORD_UPPERCASE_UPPER = "UPPER"
 
 WORD_UPPERCASE_POSSIBILITIES = [WORD_UPPERCASE_NONE, WORD_UPPERCASE_CAPITALIZE, WORD_UPPERCASE_UPPER]
 
@@ -34,6 +34,15 @@ NAME_LETTERS = ["A", "a"]  # Is used when we have a name collision.
 POS_NAMES = ["Andrew", "Ann", "Arnold", "Amy",
 			 "Barney", "Bob", "Bill",
 			 "Jebediah", "Jimmy"]
-POS_SURNAMES = ["Aqua",
-				"Black",
-				"Jasper"]
+POS_SURNAMES = ["Aqua", "Aero", "Apricot", "Almond",
+				"Black", "Beige", "Blue",
+				"Jasper", "Jade"]
+
+SERVER_PERMISSION_NONE = 0
+
+SERVER_PERMISSION_BASIC = 1  # Basic permissions for users. Such as the help command.
+SERVER_PERMISSION_MOD = 2  # Ban, kick, save, load permissions for admins.
+SERVER_PERMISSION_FUN = 4  # Allows to force_speak, and other such fun stuff.
+
+SERVER_PERMISSION_ADMIN = 3
+SERVER_PERMISSION_ALL = 7

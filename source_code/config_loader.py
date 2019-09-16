@@ -9,7 +9,7 @@ also if you don't credit me you're a big meanie
 
 import os
 import glob
-# import json
+import json
 import random
 random = random.SystemRandom()
 
@@ -24,6 +24,7 @@ def get_random_string(length=12, allowed_chars='abcdefghijklmnopqrstuvwxyzABCDEF
     """
     return ''.join(random.choice(allowed_chars) for i in range(length))
 
+
 def get_secret_key():
     """
     Create a random secret key.
@@ -33,13 +34,33 @@ def get_secret_key():
     chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
     return get_random_string(50, chars)
 
+
 def str_to_bool(s):
-    if s == 'True':
+    if(s == 'True'):
          return True
-    elif s == 'False':
+    elif(s == 'False'):
          return False
     else:
          raise ValueError("Cannot covert {} to a bool".format(s)) # evil ValueError that doesn't tell you what the wrong value was
+
+
+def str_to_list(s):
+    retVal = json.loads(s)
+
+    if(retVal is not list):
+        raise ValueError("Cannot convert {} to a list".format(s))
+        return
+
+    return retVal
+
+
+def str_to_list_or_str(s):
+    retVal = json.loads(s)
+
+    if(retVal is not list):
+        return str(s).strp("\"")
+    return retVal
+
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
     # Figure out how 'wide' each range is
@@ -71,7 +92,9 @@ Before we even try to parse anything we check if we didn't screw up with the cod
 class Start_Check_Failed(Exception):
     pass
 
+
 pre_load_messages = []
+
 
 def before_start_check(CONFIG_REQUEST):
     retVal = type(CONFIG) is dict and type(CONFIG_REQUEST) is dict and len(CONFIG_REQUEST) > 0
@@ -159,6 +182,22 @@ CONFIG_ACCEPTED_TYPES = {
         "clamp": lambda x, min_, max_ : x,
         "def_min": False,
         "def_max": True,
+        },
+
+    "list": {
+        "def": [],
+        "parse": lambda x : str_to_list(x),
+        "clamp": lambda x, min_, max_ : x,
+        "def_min": 0,
+        "def_max": 0,
+        },
+
+    "list_or_str": {
+        "def": "",
+        "parse": lambda x : str_to_list_or_str(x),
+        "clamp": lambda x, min_, max_ : x,
+        "def_min": 0,
+        "def_max": 0,
         },
 
     "key": {

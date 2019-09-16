@@ -30,8 +30,7 @@ class Viewpoint:
     neg_offended_by = []
 
     def __init__(self):
-        # self.value = 0 # This is how it's intended to be, but it's not so interesting.
-        self.value = random.randrange(-100, 101)  # From 100(Left part of name) to -100(Right)
+        self.value = 0  # From 100(Left part of name) to -100(Right)
         self.stubborness = 1.0  # A rate at which we can change this view of the person.
         self.persuasiveness = 1.0  # A rate at which we can convince others of this view.
 
@@ -90,6 +89,27 @@ class Viewpoint:
             return pos_color
         else:
             return neg_color
+
+    def get_save_state(self):
+        saveObject = {}
+        saveObject["type"] = self.__class__.__name__
+
+        saveObject["value"] = self.value
+        saveObject["stubborness"] = self.stubborness
+        saveObject["persuasiveness"] = self.persuasiveness
+
+        return saveObject
+
+    def load_save_state(saveObject):
+        from politics import str_to_class
+
+        me = str_to_class(saveObject["type"])()
+
+        me.value = saveObject["value"]
+        me.stubborness = saveObject["stubborness"]
+        me.persuasiveness = saveObject["persuasiveness"]
+
+        return me
 
 
 class Lib_Aut(Viewpoint):

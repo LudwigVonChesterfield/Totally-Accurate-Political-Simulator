@@ -189,6 +189,9 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  # """Centrists""".
                  "Centrism": "Centrism",
 
+                 # Wacky.
+                 "Post-Cosmic Anarcho-Nihilism": "Post-Cosmic Anarcho-Nihilism",
+
                  # Communists.
                  "Communism": "Communism",
                  "Anarcho-communism": "Anarcho-communism",
@@ -286,6 +289,9 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  # """Centrists""".
                  "Centrism": "Центризм",
 
+                 # Wacky.
+                 "Post-Cosmic Anarcho-Nihilism": "Пост-Космический Анархо-Нигилизм",
+
                  # Communists.
                  "Communism": "Коммунизм",
                  "Anarcho-communism": "Анархо-коммунизм",
@@ -382,6 +388,9 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
 
                  # """Centrists""".
                  "Centrism": "Centrismus",
+
+                 # Wacky.
+                 "Post-Cosmic Anarcho-Nihilism": "Пост-Космический Анархо-Нигилизм",
 
                  # Communists.
                  "Communism": "Communismus",

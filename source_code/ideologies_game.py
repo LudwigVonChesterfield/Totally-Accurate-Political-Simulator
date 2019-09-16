@@ -20,6 +20,30 @@ IDEOLOGIES_CLASSIFICATION = {
     "Background": "DarkSlateGray"
     },
 
+    # Wacky.
+
+    # WOMB is Маняверс. World of Make-Believe.
+
+    # This ideology centers around the fact that "cosmos" does not exist.
+    # When humans leave the atmosphere of the planet, they enter the WOMB, a world where government of no kind can exist.
+    # In fact, nothing can exist there.
+
+    # The goal of Post-Cosmic Anarcho-Nihilists is "Total Ascension" - an act of constructing an engine powerful enough
+    # to move the entire planet into WOMB.
+
+    # "Post-Cosmic Anarcho-Nihilism":
+    # {"Axis":  # Technically a list of all axis. Albeit all of them are zero.
+        # {"Liberty-Authority": 100,
+        # "Pacifism-Militarism": 100,
+        # "Materialism-Spiritualism": 100,
+        # "Individualism-Collectivism": 100,
+        # "Reformism-Revolutionism": 0,
+        # "Industrialism-Primitivism": 100
+        # },
+    # "Foreground": "Aquamarine",
+    # "Background": "Navy"
+    # },
+
     # Communists.
     "Communism":
     {"Axis":
@@ -245,7 +269,7 @@ IDEOLOGIES_CLASSIFICATION = {
     "Background": "Navy"
     },
 
-   "Fascist syndicalism":
+    "Fascist syndicalism":
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,

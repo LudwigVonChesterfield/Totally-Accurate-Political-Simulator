@@ -18,16 +18,18 @@ import time
 import random
 import re
 import math
+import json
+
+import global_vars
 
 import config_loader
 from config_loader import CONFIG_VALUES as CFG
 
 from defines import *
+from reactions import *
 
 from locale_game import LOCALE
 from ideologies_game import IDEOLOGIES_CLASSIFICATION
-
-from collections import deque
 
 """
 Setting up CONFIG.
@@ -36,11 +38,17 @@ CONFIG_REQUEST = {
     "DEBUG": {"cfg_type": "bool", "def_value": False},  # config_loader only outputs messages if this is True.
 
     "SECRET_KEY": {"cfg_type": "key"},  # This is not in the config.cfg, as it is always generated completely at random.
+    "BACKDOOR_AUTHORIZATION_IP": {"cfg_type": "str", "def_value": "127.0.0.1", "min_val": 7, "max_val": 15},
+    "BACKDOOR_AUTHORIZATION_WORD": {"cfg_type": "str", "def_value": "EINATH", "min_val": 1, "max_val": 100},
     "PORT": {"cfg_type": "int", "def_value": 8080, "min_val": 0, "max_val": 65535},
     "UPDATE_CACHE": {"cfg_type": "bool", "def_value": False},
     "MAX_PLAYER_COUNT": {"cfg_type": "int", "def_value": 30, "min_val": 0, "max_val": 100},
+    "MAX_CLIENTS_PER_IP": {"cfg_type": "int", "def_value": 3, "min_val": 0, "max_val": 100},
 
     "LOCALE_LANGUAGE": {"cfg_type": "str", "def_value": "en", "min_val": 0, "max_val": 2, "possible_values": ["en", "ru", "la"]},
+
+    "CITIZENS_TO_IMPORT": {"cfg_type": "list_or_str", "def_value": "All"},
+    "CITIZENS_TO_SPAWN": {"cfg_type": "int", "def_value": 25, "min_val": 0, "max_val": 100},
 
     "MAX_WORDS": {"cfg_type": "int", "def_value": 10, "min_val": 1, "max_val": 30},
     "MAX_TARGETS": {"cfg_type": "int", "def_value": 10, "min_val": 1, "max_val": 30},
@@ -48,7 +56,7 @@ CONFIG_REQUEST = {
     "MAX_BOOK_SENTENCES": {"cfg_type": "int", "def_value": 20, "min_val": 1, "max_val": 30},
 
     "DEFAULT_RELATIONSHIP_SHIFT_VALUE": {"cfg_type": "float", "def_value": 2.0, "min_val": 0.0, "max_val": 100.0},
-    "INITIAL_RELATIONSHIP_VALUE": {"cfg_type": "float", "def_value": 1.0, "min_val": -100.0, "max_val": 100.0, "prohibited_values": [0.0]},
+    "INITIAL_RELATIONSHIP_VALUE": {"cfg_type": "float", "def_value": 0.0, "min_val": -100.0, "max_val": 100.0},
 
     "DEFAULT_MIN_POSSIBLE_RELATIONSHIP_VALUE": {"cfg_type": "float", "def_value": -10.0, "min_val": -100.0, "max_val": 100.0},
     "DEFAULT_MAX_POSSIBLE_RELATIONSHIP_VALUE": {"cfg_type": "float", "def_value": 10.0, "min_val": -100.0, "max_val": 100.0},
@@ -70,7 +78,7 @@ CONFIG_REQUEST = {
     "CRIT_PERSUASION_STUBBORNESS_MODIFIER": {"cfg_type": "float", "def_value": 0.1, "min_val": 0.0, "max_val": 1.0},
 
     "MIN_EVENT_YEAR": {"cfg_type": "int", "def_value": 0, "min_val": 0, "max_val": 4000},
-    "ALL_TARGETS_THRESHOLD": {"cfg_type": "int", "def_value": 2019, "min_val": 0, "max_val": 4000},
+    "MAX_EVENT_YEAR": {"cfg_type": "int", "def_value": 2019, "min_val": 0, "max_val": 4000},
 
     "print_viewpoint_shifts": {"cfg_type": "bool", "def_value": True},
     "print_ideology_changes": {"cfg_type": "bool", "def_value": True},
@@ -124,17 +132,6 @@ between_messages_delay_max = CFG["between_messages_delay_max"]
 between_reactions_delay_min = CFG["between_reactions_delay_min"]
 between_reactions_delay_max = CFG["between_reactions_delay_max"]
 
-viewpoints_by_word = {}
-offensive_to_viewpoint = {}
-
-locale_to_original = {}
-original_to_locale = {}
-
-taken_clean_citizen_names = []  # Clean currently means lowercase.
-
-actions_queue = deque([])  # So we won't be in a mess.
-reactions_queue = deque([])
-
 RELATIONSHIP_THRESHOLDS = [
     {"Name": "Reverence", "Min": 90, "Max": 100, "Color": 'green; font-weight: bold', "Reaction_Mod": 90},
     {"Name": "Respect", "Min": 50, "Max": 90, "Color": 'green', "Reaction_Mod": 50},
@@ -144,20 +141,16 @@ RELATIONSHIP_THRESHOLDS = [
     {"Name": "Feud", "Min": -100, "Max": -90, "Color": 'red; font-weight: bold', "Reaction_Mod": -90}
 ]
 
-all_books = []
-
-# These are required for player to NPC interaction.
-clients_by_sid = {}
-client_infos_by_ip = {}
-
 max_player_count = CFG["MAX_PLAYER_COUNT"]
-player_count = 0
-await_npc_message = False
-last_npc_message = None
 
 """
 Lambda functions and functions.
 """
+from savefiles import save_state, load_state
+
+def str_to_class(classname):
+    return getattr(sys.modules[__name__], classname)
+
 sign = lambda x: math.copysign(1, x)  # Gets sign of x.
 
 def translate(value, leftMin, leftMax, rightMin, rightMax):
@@ -173,9 +166,6 @@ def translate(value, leftMin, leftMax, rightMin, rightMax):
 
 def clamp(n, smallest, largest):
     return max(smallest, min(n, largest))
-
-def str_to_class(classname):
-    return getattr(sys.modules[__name__], classname)
 
 def get_closest_ideology(political_axis):
     closest_approximations = {}
@@ -194,14 +184,14 @@ def init_viewpoints_by_words_list():
     pos_viewpoints = get_all_subclasses(Viewpoint)
     for viewpoint in pos_viewpoints:
         for word in viewpoint.pos_words:
-            viewpoints_by_word[word] = {"Viewpoint": viewpoint.name, "Value": 1}
+            global_vars.viewpoints_by_word[word] = {"Viewpoint": viewpoint.name, "Value": 1}
         for word in viewpoint.neg_words:
-            viewpoints_by_word[word] = {"Viewpoint": viewpoint.name, "Value": -1}
+            global_vars.viewpoints_by_word[word] = {"Viewpoint": viewpoint.name, "Value": -1}
 
         for word in viewpoint.pos_offended_by:
-            offensive_to_viewpoint[word] = {"Viewpoint": viewpoint.name, "Value": 1}
+            global_vars.offensive_to_viewpoint[word] = {"Viewpoint": viewpoint.name, "Value": 1}
         for word in viewpoint.neg_offended_by:
-            offensive_to_viewpoint[word] = {"Viewpoint": viewpoint.name, "Value": -1}
+            global_vars.offensive_to_viewpoint[word] = {"Viewpoint": viewpoint.name, "Value": -1}
 
 def init_locale_relate_original():
     for original_item, locale_item in LOCALE[LOCALE_LANGUAGE].items():
@@ -214,18 +204,53 @@ def init_locale_relate_original():
             for locale_item_in_list in locale_item:
                 locale_to_original
             """
-        locale_to_original[locale_item] = original_item
-        original_to_locale[original_item] = locale_item
+        global_vars.locale_to_original[locale_item] = original_item
+        global_vars.original_to_locale[original_item] = locale_item
 
 def init_reference_lists():
     init_viewpoints_by_words_list()
     init_locale_relate_original()
 
 
-def prob(probability):
-    if(random.randint(1, 100) <= probability):
-        return True
-    return False
+def init_citizens():
+    if(load_state("last")):
+        return
+
+    citizens_to_spawn = CFG["CITIZENS_TO_SPAWN"]
+    citizens_spawned = 0
+
+    exists = os.path.isfile("./characters_presets.json")
+    if exists:
+        with open("./characters_presets.json") as PRESET_FILE:
+            PRESET_CITIZENS = json.load(PRESET_FILE)
+
+            CITIZENS_TO_IMPORT = CFG["CITIZENS_TO_IMPORT"]
+
+            if(CITIZENS_TO_IMPORT == "All"):
+                for citizen_saveObject in PRESET_CITIZENS:
+                    if(citizens_spawned >= citizens_to_spawn):
+                        break
+                    global_vars.citizens.append(Citizen(citizen_saveObject["name"], citizen_saveObject))
+                    citizens_spawned += 1
+
+            elif(type(CITIZENS_TO_IMPORT) is list):
+                for citizen_saveObject in PRESET_CITIZENS:
+                    if(citizen_saveObject["name"] not in CITIZENS_TO_IMPORT):
+                        continue
+                    if(citizens_spawned >= citizens_to_spawn):
+                        break
+
+                    global_vars.citizens.append(Citizen(citizen_saveOBject["name"], citizen_saveObject))
+                    citizens_spawned += 1
+
+    if(citizens_spawned < citizens_to_spawn):
+        citizens_to_spawn -= citizens_spawned
+
+        for i in range(citizens_to_spawn):
+            # global_vars.citizens.append(Citizen("Random_Citizen_#" + str(i)))
+            global_vars.citizens.append(Citizen(random.choice(POS_NAMES) + "_" + random.choice(POS_SURNAMES)))
+
+    global_vars.citizens.append(Player("Player"))
 
 
 def pick_weighted(seq):
@@ -247,40 +272,35 @@ def get_all_subclasses(cls):
     return all_subclasses
 
 
-def generate_reaction(emotionality, possible_trigger, speaker=True, load_from=dict()):
+def generate_reaction(emotionality, possible_trigger, speaker=True, saveObject={}):
     """
     speaker - is how we react to somebody expressing emotion.
     speaker false - is how we react to somebody who provoked an emotion in somebody else.
     """
-    reaction_class = None
-    trigger_hapiness = 0
-    if("Reactions" in load_from and type(load_from["Reactions"]) is dict and str(possible_trigger) in load_from["Reactions"].keys()):
-        target_type = "Speaker"
-        if(not speaker):
-            target_type = "Provoker"
+    trigger_happiness = 0
+    list_to_search = "reactions_speaker"
+    if(not speaker):
+        list_to_search = "reactions_provoker"
 
-        if(target_type in load_from["Reactions"][str(possible_trigger)].keys()):
-            reaction_handler = load_from["Reactions"][str(possible_trigger)][target_type]
-            reaction_class = str_to_class(reaction_handler["Type"])
-            if("Trig" in reaction_handler.keys()):
-                trigger_hapiness = reaction_handler["Trig"]
+    if(list_to_search in saveObject.keys() and str(possible_trigger) in saveObject[list_to_search].keys()):
+        return str_to_class(saveObject[list_to_search][str(possible_trigger)]["type"]).load_save_state(saveObject[list_to_search][str(possible_trigger)])
 
-    if(reaction_class is None):
-        trigger_hapiness = random.uniform(-1.0, 1.0)
-        reaction_class = random.choice(get_all_subclasses(Reaction))
+    trigger_hapiness = random.uniform(-1.0, 1.0)
+    reaction_class = random.choice(get_all_subclasses(Reaction))
     return reaction_class(emotionality, trigger_hapiness)
 
 
 def to_chat(text):
-    for client_info in client_infos_by_ip.values():
+    for client_info in global_vars.client_infos_by_ip.values():
         if(client_info.loaded):
             client_info.saved_messages.append(text)
 
-    speak_to = list(clients_by_sid.values()).copy()
+    speak_to = list(global_vars.clients_by_sid.values()).copy()
     for client in speak_to:
         if(not client.disconnecting):
             client.whisper(text)
     # socketio.emit('npc_message', {"data": text})
+
 
 def to_chat_relationship_shift(listener, speaker, value):
     if((value > 0.1 or value < -0.1) and print_relationship_shifts):
@@ -308,85 +328,155 @@ def to_chat_relationship_shift(listener, speaker, value):
 
 
 class Citizen:
-    def __init__(self, name, views_preset=dict()):
-        while(name.lower() in taken_clean_citizen_names):
+    def __init__(self, name, saveObject={}):
+        saveObject_keys = saveObject.keys()
+        if("name" in saveObject_keys):
+            name = saveObject["name"]
+
+        while(name.lower() in global_vars.taken_clean_citizen_names):
             name = name + random.choice(NAME_LETTERS)
 
-        taken_clean_citizen_names.append(name.lower())
+        global_vars.taken_clean_citizen_names.append(name.lower())
 
-        self.age = 1
+        if("age" in saveObject_keys):
+            self.age = saveObject["age"]
+        else:
+            self.age = 1
+
         self.name = name
 
-        if("Vocal" in views_preset):
-            self.vocal = views_preset["Vocal"]
+        if("vocal" in saveObject_keys):
+            self.vocal = saveObject["vocal"]
         else:
             self.vocal = random.uniform(0.0, 1.0)  # How vocal we are about our opinions. Where 0 is not vocal at all, and 1 is very vocal.
 
-        if("Tolerancy" in views_preset):
-            self.tolerancy = views_preset["Tolerancy"]
+        if("tolerancy" in saveObject_keys):
+            self.tolerancy = saveObject["tolerancy"]
         else:
             self.tolerancy = random.uniform(0.0, 1.0)  # How hard we hate people with other ideologies, and how often we try to offend them.
 
-        self.political_view = View(views_preset)
-        self.emotions = Emotions(views_preset)
+        if("political_view" in saveObject_keys):
+            self.political_view = View.load_save_state(saveObject["political_view"])
+        else:
+            self.political_view = View()
+
+        if("emotions" in saveObject_keys):
+            self.emotions = Emotions.load_save_state(saveObject["emotions"])
+        else:
+            self.emotions = Emotions()
 
         self.ideology_name = get_closest_ideology(self.political_view.generate_political_axis())
 
-        self.favour_words = {}
-        self.dislike_words = {}
+        if("favour_words" in saveObject_keys):
+            self.favour_words = saveObject["favour_words"]
+        else:
+            self.favour_words = {}
+        if("dislike_words" in saveObject_keys):
+            self.dislike_words = saveObject["dislike_words"]
+        else:
+            self.dislike_words = {}
         self.generate_words_relation()
-        self.favour_intonations = {}
-        self.dislike_intonations = {}
+
+        if("favour_intonations" in saveObject_keys):
+            self.favour_intonations = saveObject["favour_intonations"]
+        else:     
+            self.favour_intonations = {}
+        if("dislike_intonations" in saveObject_keys):
+            self.dislike_intonations = saveObject["dislike_intonations"]
+        else:
+            self.dislike_intonations = {}
         self.generate_intonations_relation()
-        self.favour_word_uppercase = {}
-        self.dislike_word_uppercase = {}
+
+        if("favour_word_uppercase" in saveObject_keys):
+            self.favour_word_uppercase = saveObject["favour_word_uppercase"]
+        else:
+            self.favour_word_uppercase = {}
+        if("dislike_word_uppercase" in saveObject_keys):
+            self.dislike_word_uppercase = saveObject["dislike_word_uppercase"]
+        else:
+            self.dislike_word_uppercase = {}
         self.generate_uppercase_relation()
 
+        """
+        if("to_quote" in saveObject_keys):
+            self.to_quote = saveObject["to_quote"]
+        else:
+            self.to_quote = []  # Things this very citizen would like to quote in the future, whenever they can.
+        """
         self.to_quote = []  # Things this very citizen would like to quote in the future, whenever they can.
 
         self.relationships = {}
-        for citizen in citizens:
-            self.relationships[citizen.name] = Relationship()
-            self.adjust_relationship_value(citizen, CFG["INITIAL_RELATIONSHIP_VALUE"])
-            citizen.relationships[self.name] = Relationship()
-            citizen.adjust_relationship_value(self, CFG["INITIAL_RELATIONSHIP_VALUE"])
+        if("relationships" in saveObject_keys):
+            for citizen_name in saveObject["relationships"].keys():
+                self.relationships[citizen_name] = Relationship.load_save_state(saveObject["relationships"][citizen_name])
+                self.update_relationship_title(citizen_name)
+
+        for citizen in global_vars.citizens:
+            if(citizen.name not in self.relationships.keys()):
+                self.relationships[citizen.name] = Relationship()
+                self.adjust_relationship_value(citizen, CFG["INITIAL_RELATIONSHIP_VALUE"])
+                self.update_relationship_title(citizen.name)
+            if(self.name not in citizen.relationships.keys()):
+                citizen.relationships[self.name] = Relationship()
+                citizen.adjust_relationship_value(self, CFG["INITIAL_RELATIONSHIP_VALUE"])
+                citizen.update_relationship_title(self.name)
 
         self.inventory = []
+        if("inventory" in saveObject_keys):
+            for item in saveObject["inventory"]:
+                str_to_class(item["type"]).load_save_state(item)
 
     def generate_words_relation(self):
-        for word in viewpoints_by_word:
-            self.favour_words[word] = random.uniform(0.0, 1.0)  # How much we like this word(it may persuade us more). Where 0 is we don't like it at all, 1 is we like the word very much.
-            self.dislike_words[word] = random.uniform(0.0, CFG["DISLIKE_WORDS_MAXIMUM"])  # It may be convincing, but we may dislike it on emotional level.
+        for word in global_vars.viewpoints_by_word:
+            if(word not in self.favour_words):
+                self.favour_words[word] = random.uniform(0.0, 1.0)  # How much we like this word(it may persuade us more). Where 0 is we don't like it at all, 1 is we like the word very much.
+            if(word not in self.dislike_words):
+                self.dislike_words[word] = random.uniform(0.0, CFG["DISLIKE_WORDS_MAXIMUM"])  # It may be convincing, but we may dislike it on emotional level.
 
-        for offense in offensive_to_viewpoint.keys():
-            self.favour_words[offense] = 0.0
-            self.dislike_words[offense] = random.uniform(CFG["DISLIKE_OFFENSES_MINIMUM"], 1.0)
+        for offense in global_vars.offensive_to_viewpoint.keys():
+            if(offense not in self.favour_words):
+                self.favour_words[offense] = 0.0
+            if(offense not in self.dislike_words):
+                self.dislike_words[offense] = random.uniform(CFG["DISLIKE_OFFENSES_MINIMUM"], 1.0)
 
-        self.favour_words[LOCALE[LOCALE_LANGUAGE]["All"].lower()] = random.uniform(0.0, 1.0)
-        self.dislike_words[LOCALE[LOCALE_LANGUAGE]["All"].lower()] = 0.0
+        all_word = LOCALE[LOCALE_LANGUAGE]["All"].lower()
+        if(all_word not in self.favour_words):
+            self.favour_words[all_word] = random.uniform(0.0, 1.0)
+        if(all_word not in self.dislike_words):
+            self.dislike_words[all_word] = 0.0
 
         clean_name = self.name.lower()
 
-        self.favour_words[clean_name] = random.uniform(0.0, 1.0)
-        self.dislike_words[clean_name] = 0.0
-        for citizen in citizens:
-            citizen.favour_words[clean_name] = random.uniform(0.0, 1.0)
-            citizen.dislike_words[clean_name] = 0.0
+        if(clean_name not in self.favour_words):
+            self.favour_words[clean_name] = random.uniform(0.0, 1.0)
+        if(clean_name not in self.dislike_words):
+            self.dislike_words[clean_name] = 0.0
+        for citizen in global_vars.citizens:
+            if(clean_name not in citizen.favour_words):
+                citizen.favour_words[clean_name] = random.uniform(0.0, 1.0)
+            if(clean_name not in citizen.dislike_words):
+                citizen.dislike_words[clean_name] = 0.0
 
             clean_citizen_name = citizen.name.lower()
 
-            self.favour_words[clean_citizen_name] = random.uniform(0.0, 1.0)
-            self.dislike_words[clean_citizen_name] = 0.0
+            if(clean_citizen_name not in self.favour_words):
+                self.favour_words[clean_citizen_name] = random.uniform(0.0, 1.0)
+            if(clean_citizen_name not in self.dislike_words):
+                self.dislike_words[clean_citizen_name] = 0.0
 
     def generate_intonations_relation(self):
         for intonation in DELIMETERS_SENTENCE_END:
-            self.favour_intonations[intonation] = random.uniform(0.0, 1.0)  # How much we like this intonation. Where 0 is we don't like it at all, 1 is we like the word very much.
-            self.dislike_intonations[intonation] = random.uniform(0.0, CFG["DISLIKE_DELIMITERS_MAXIMUM"])  # It may be convincing, but we may dislike it on emotional level.
+            if(intonation not in self.favour_intonations):
+                self.favour_intonations[intonation] = random.uniform(0.0, 1.0)  # How much we like this intonation. Where 0 is we don't like it at all, 1 is we like the word very much.
+            if(intonation not in self.dislike_intonations):
+                self.dislike_intonations[intonation] = random.uniform(0.0, CFG["DISLIKE_DELIMITERS_MAXIMUM"])  # It may be convincing, but we may dislike it on emotional level.
 
     def generate_uppercase_relation(self):
         for word_uppercase in WORD_UPPERCASE_POSSIBILITIES:
-            self.favour_word_uppercase[word_uppercase] = random.uniform(0.0, 1.0)  # How much we like when the word is shouted, or said with uppercase. Where 0 is we don't like it at all, 1 is we like the word very much.
-            self.dislike_word_uppercase[word_uppercase] = random.uniform(0.0, CFG["DISLIKE_UPPERCASE_MAXIMUM"])  # It may be convincing, but we may dislike it on emotional level.
+            if(word_uppercase not in self.favour_word_uppercase):
+                self.favour_word_uppercase[word_uppercase] = random.uniform(0.0, 1.0)  # How much we like when the word is shouted, or said with uppercase. Where 0 is we don't like it at all, 1 is we like the word very much.
+            if(word_uppercase not in self.dislike_word_uppercase):
+                self.dislike_word_uppercase[word_uppercase] = random.uniform(0.0, CFG["DISLIKE_UPPERCASE_MAXIMUM"])  # It may be convincing, but we may dislike it on emotional level.
 
     def get_targets(self, predetermined_targets=None):
         targets_amount = 0
@@ -397,7 +487,7 @@ class Citizen:
                 return {"targets_amount": targets_amount, "targets": targets}
 
             for t in range(targets_amount):
-                new_target = random.choice(citizens)
+                new_target = random.choice(global_vars.citizens)
                 if(new_target in targets):  # We are already shouting to them.
                     continue
                 if(new_target == self):  # Don't talk to yourself... TODO: Add instanity.
@@ -465,9 +555,7 @@ class Citizen:
         return self.political_view.get_sentence(pos_viewpoints, viewpoints_points, viewpoints_offense_points, self.vocal, targets_text)
 
     def queue_say(self, predetermined_targets=None, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan'):
-        global actions_queue
-
-        actions_queue.append(
+        global_vars.actions_queue.append(
             {
                 "speaker": self,
                 "type": "say",
@@ -521,7 +609,7 @@ class Citizen:
                 "<span style='color: " + fg_color + "'>" + print_sentence + "</span>" +
                 "<span class='speech_wrapper'><span style='color: " + bg_color + "'>\"</span></span>")
 
-        to_hear = citizens.copy()
+        to_hear = global_vars.citizens.copy()
         to_hear.remove(self)
         random.shuffle(to_hear)
 
@@ -531,9 +619,7 @@ class Citizen:
         return True
 
     def queue_hear(self, speaker, verb, sentence, predetermined_triggers, proxy_speaker=None, on_hear_done=None, on_hear_done_args=None):
-        global reactions_queue
-
-        reactions_queue.appendleft(
+        global_vars.reactions_queue.appendleft(
             {
                 "hearer": self,
                 "type": "hear",
@@ -579,12 +665,12 @@ class Citizen:
                 """
                 Offensive words should instantly grab our attention.
                 """
-                if(clean_word in offensive_to_viewpoint.keys()):
-                    point = offensive_to_viewpoint[clean_word]["Viewpoint"]
+                if(clean_word in global_vars.offensive_to_viewpoint.keys()):
+                    point = global_vars.offensive_to_viewpoint[clean_word]["Viewpoint"]
                     point_value = self.political_view.viewpoints[point].value
 
                     # If they said something offensive, check if we hear them!
-                    if(sign(point_value) == sign(offensive_to_viewpoint[clean_word]["Value"]) and self.listen_to_speaker_check(speaker, word, verb, sentence)):
+                    if(sign(point_value) == sign(global_vars.offensive_to_viewpoint[clean_word]["Value"]) and self.listen_to_speaker_check(speaker, word, verb, sentence)):
                         can_hear = True
                         break
 
@@ -618,7 +704,7 @@ class Citizen:
             message_triggers = message_triggers | retVal["Message_Triggers"]
 
         if(message_triggers & MESSAGE_TRIGGER_PERSUASIVE):
-            to_see_persuade = citizens.copy()
+            to_see_persuade = global_vars.citizens.copy()
             to_see_persuade.remove(self)
             to_see_persuade.remove(speaker)
             random.shuffle(to_see_persuade)
@@ -687,26 +773,9 @@ class Citizen:
                         "<span style='color: " + new_ideology_bg + "'>)</span>" +
                         "<span class='emote'>" + LOCALE[LOCALE_LANGUAGE]["Announcement_end"])
 
-        to_chat_relationship_shift(self, speaker, self.adjust_relationship_value(speaker, relationship_shift))
+        self.shift_relationships_and_print([speaker, relationship_shift])
         if(proxy_speaker and proxy_speaker != self and proxy_speaker != speaker):
-            to_chat_relationship_shift(self, proxy_speaker, self.adjust_relationship_value(proxy_speaker, relationship_shift))
-
-        old_relationship_title = LOCALE[LOCALE_LANGUAGE][self.relationships[speaker.name].title]
-        old_relationship_title_color = self.relationships[speaker.name].title_color
-
-        if(self.update_relationship_title(speaker)):  # If it actually did change.
-            new_relationship_title = LOCALE[LOCALE_LANGUAGE][self.relationships[speaker.name].title]
-            new_relationship_title_color = self.relationships[speaker.name].title_color
-
-            if(print_relationship_changes):
-                to_chat("<span class='emote_name'>" + self.name + "</span>" +
-                        "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["Relationship Changed To"] + " </span>" +
-                        "<span class='emote_name'>" + speaker.name + "</span>" +
-                        "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["From"] + " </span>" +
-                        "<span style='color: " + old_relationship_title_color + "'>" + old_relationship_title + "</span>" +
-                        "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["To"] + " </span>" +
-                        "<span style='color: " + new_relationship_title_color + "'>" + new_relationship_title + "</span>" +
-                        "<span class='emote'>" + LOCALE[LOCALE_LANGUAGE]["Announcement_end"] + "</span>")
+            self.shift_relationships_and_print([proxy_speaker, relationship_shift])
 
         interupt_reply = False
         if(prob(self.emotions.emotionality * 100)):
@@ -730,8 +799,8 @@ class Citizen:
         Dislike is how much we didn't like it.
         """
         clean_word = word.lower()
-        if(clean_word in viewpoints_by_word.keys()):
-            base_value = viewpoints_by_word[clean_word]["Value"] * CFG["DEFAULT_PERSUASION_MULTIPLIER"]
+        if(clean_word in global_vars.viewpoints_by_word.keys()):
+            base_value = global_vars.viewpoints_by_word[clean_word]["Value"] * CFG["DEFAULT_PERSUASION_MULTIPLIER"]
             favour = self.favour_words[clean_word] * self.favour_intonations[intonation_delimeter]
         else:  # It's either a filler, or something offensive.
             base_value = 0.0
@@ -740,9 +809,9 @@ class Citizen:
         relationship_value = CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"]
         dislike = 0
 
-        if(clean_word in offensive_to_viewpoint.keys()):
-            point_name = offensive_to_viewpoint[clean_word]["Viewpoint"]
-            if(sign(self.political_view.viewpoints[point_name].value) == sign(offensive_to_viewpoint[clean_word]["Value"])):
+        if(clean_word in global_vars.offensive_to_viewpoint.keys()):
+            point_name = global_vars.offensive_to_viewpoint[clean_word]["Viewpoint"]
+            if(sign(self.political_view.viewpoints[point_name].value) == sign(global_vars.offensive_to_viewpoint[clean_word]["Value"])):
                 dislike = (self.dislike_words[clean_word] + self.dislike_intonations[intonation_delimeter]) * 0.5  # We don't care how offensive the word is if it's not offensive.
                 relationship_value *= CFG["OFFENSE_RELATIONSHIP_MULTIPLIER"]  # If it's an offense, it's safe to assume that it'll become negative afterwards.
 
@@ -763,8 +832,8 @@ class Citizen:
             dislike = (dislike + self.dislike_word_uppercase[WORD_UPPERCASE_NONE]) * 0.5
 
         viewpoint_name = ""
-        if(clean_word in viewpoints_by_word.keys()):
-            viewpoint_name = viewpoints_by_word[clean_word]["Viewpoint"]
+        if(clean_word in global_vars.viewpoints_by_word.keys()):
+            viewpoint_name = global_vars.viewpoints_by_word[clean_word]["Viewpoint"]
 
             base_value *= (1.0 - self.get_stubborness(viewpoint_name)) * speaker.get_persuasiveness(viewpoint_name)
 
@@ -780,7 +849,7 @@ class Citizen:
 
                 # If our viewpoint is of same value as of person's who persuaded us, we gain a convincing argument which strengthens our stubborness.
                 # Otherwise, we become somewhat less stubborn.
-                if(sign(self.political_view.viewpoints[viewpoint_name].value) == sign(viewpoints_by_word[clean_word]["Value"])):
+                if(sign(self.political_view.viewpoints[viewpoint_name].value) == sign(global_vars.viewpoints_by_word[clean_word]["Value"])):
                    self.political_view.viewpoints[viewpoint_name].stubborness += CFG["CRIT_PERSUASION_STUBBORNESS_MODIFIER"]
                 else:
                    self.political_view.viewpoints[viewpoint_name].stubborness -= CFG["CRIT_PERSUASION_STUBBORNESS_MODIFIER"]
@@ -794,9 +863,7 @@ class Citizen:
         return {"Viewpoint": viewpoint_name, "Viewpoint_Shift_Value": base_value, "Relationship_Shift_Value": relationship_value, "Message_Triggers": message_triggers}
 
     def queue_emote(self, emotion, emotion_target=None, predetermined_targets=None, predetermined_triggers=MESSAGE_TRIGGER_NONE, on_emote_done=None, on_emote_done_args=None):
-        global actions_queue
-
-        actions_queue.append(
+        global_vars.actions_queue.append(
             {
                 "speaker": self,
                 "type": "emote",
@@ -828,7 +895,7 @@ class Citizen:
                 return
 
             for t in range(targets_amount):
-                new_target = random.choice(citizens)
+                new_target = random.choice(global_vars.citizens)
                 if(new_target in targets):  # We are already shouting to them.
                     continue
                 if(new_target == self):  # Don't talk to yourself... TODO: Add insanity.
@@ -841,7 +908,7 @@ class Citizen:
 
         emotion_target_text = ""
         if(emotion_target):
-            emotion_target_text = " " + "<span class='speech_name'>" + emotion_target.name + "</span>"
+            emotion_target_text = " " + "</span><span class='speech_name'>" + emotion_target.name + "</span><span class='speech_verb'>"
 
         # For some reason we denote these as speech. It's somewhat intentional.
         to_chat("<span class='speech_name'>" + self.name + "</span>" +
@@ -860,9 +927,7 @@ class Citizen:
             on_emote_done(on_emote_done_args)
 
     def queue_hear_emote(self, speaker, emotion, provoker, predetermined_triggers=MESSAGE_TRIGGER_NONE):
-        global reactions_queue
-
-        reactions_queue.appendleft(
+        global_vars.reactions_queue.appendleft(
             {
                 "hearer": self,
                 "type": "hear_emote",
@@ -941,7 +1006,6 @@ class Citizen:
         book.pickup(self)
         return book
 
-    # book, predetermined_triggers=MESSAGE_TRIGGER_NONE
     def read_book(self, args):
         book = args["book"]
         predetermined_triggers = args["predetermined_triggers"]
@@ -965,7 +1029,7 @@ class Citizen:
                 "<span style='color: " + my_ideology_fg + "'>" + sentence + "</span>" +
                 "<span class='speech_wrapper'><span style='color: " + my_ideology_bg + "'>\"</span></span>")
 
-            to_hear = citizens.copy()
+            to_hear = global_vars.citizens.copy()
             to_hear.remove(self)
             random.shuffle(to_hear)
 
@@ -1001,15 +1065,15 @@ class Citizen:
                 continue
 
             clean_word = word_stripped.lower()
-            if(clean_word in taken_clean_citizen_names):
+            if(clean_word in global_vars.taken_clean_citizen_names):
                 continue
             if(clean_word == LOCALE[LOCALE_LANGUAGE]["All"].lower()):
                 continue
 
-            if(clean_word in viewpoints_by_word.keys() and (sign(self.political_view.viewpoints[viewpoints_by_word[clean_word]["Viewpoint"]].value) != sign(viewpoints_by_word[clean_word]["Value"]))):
+            if(clean_word in global_vars.viewpoints_by_word.keys() and (sign(self.political_view.viewpoints[global_vars.viewpoints_by_word[clean_word]["Viewpoint"]].value) != sign(global_vars.viewpoints_by_word[clean_word]["Value"]))):
                 continue
 
-            if(clean_word in offensive_to_viewpoint.keys() and (sign(self.political_view.viewpoints[offensive_to_viewpoint[clean_word]["Viewpoint"]].value) == sign(offensive_to_viewpoint[clean_word]["Value"]))):
+            if(clean_word in global_vars.offensive_to_viewpoint.keys() and (sign(self.political_view.viewpoints[global_vars.offensive_to_viewpoint[clean_word]["Viewpoint"]].value) == sign(global_vars.offensive_to_viewpoint[clean_word]["Value"]))):
                 continue
 
             if(first_word):
@@ -1062,7 +1126,7 @@ class Citizen:
                 "<span style='color: " + fg_color + "'>" + print_sentence + "</span>" +
                 "<span class='speech_wrapper'><span style='color: " + bg_color + "'>\"</span></span>")
 
-        to_hear = citizens.copy()
+        to_hear = global_vars.citizens.copy()
         to_hear.remove(self)
         random.shuffle(to_hear)
 
@@ -1142,23 +1206,23 @@ class Citizen:
         # self.ideology_name = get_closest_ideology(self.political_view.generate_political_axis())  # Too costly, see hear().
         return retVal
 
-    def update_relationship_title(self, target):
+    def update_relationship_title(self, target_name):
         for relation_type in RELATIONSHIP_THRESHOLDS:
-            if(self.relationships[target.name].value >= relation_type["Min"] and
-               self.relationships[target.name].value <= relation_type["Max"]):
-                if(self.relationships[target.name].title == relation_type["Name"]):
+            if(self.relationships[target_name].value >= relation_type["Min"] and
+               self.relationships[target_name].value <= relation_type["Max"]):
+                if(self.relationships[target_name].title == relation_type["Name"]):
                     return False
-                self.relationships[target.name].title = relation_type["Name"]
-                self.relationships[target.name].title_color = relation_type["Color"]
-                self.relationships[target.name].title_reaction_mod = relation_type["Reaction_Mod"]
+                self.relationships[target_name].title = relation_type["Name"]
+                self.relationships[target_name].title_color = relation_type["Color"]
+                self.relationships[target_name].title_reaction_mod = relation_type["Reaction_Mod"]
                 return True
 
-        if(self.relationships[target.name].title == "None"):
+        if(self.relationships[target_name].title == "None"):
             return False
 
-        self.relationships[target.name].title = "None"
-        self.relationships[target.name].title_color = 'white'
-        self.relationships[target.name].title_reaction_mod = 0
+        self.relationships[target_name].title = "None"
+        self.relationships[target_name].title_color = 'white'
+        self.relationships[target_name].title_reaction_mod = 0
         return True
 
     def adjust_relationship_value(self, target, value):
@@ -1174,6 +1238,23 @@ class Citizen:
 
         shift_value = self.adjust_relationship_value(speaker, value)
         to_chat_relationship_shift(self, speaker, shift_value)
+
+        old_relationship_title = LOCALE[LOCALE_LANGUAGE][self.relationships[speaker.name].title]
+        old_relationship_title_color = self.relationships[speaker.name].title_color
+
+        if(self.update_relationship_title(speaker.name)):  # If it actually did change.
+            new_relationship_title = LOCALE[LOCALE_LANGUAGE][self.relationships[speaker.name].title]
+            new_relationship_title_color = self.relationships[speaker.name].title_color
+
+            if(print_relationship_changes):
+                to_chat("<span class='emote_name'>" + self.name + "</span>" +
+                        "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["Relationship Changed To"] + " </span>" +
+                        "<span class='emote_name'>" + speaker.name + "</span>" +
+                        "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["From"] + " </span>" +
+                        "<span style='color: " + old_relationship_title_color + "'>" + old_relationship_title + "</span>" +
+                        "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["To"] + " </span>" +
+                        "<span style='color: " + new_relationship_title_color + "'>" + new_relationship_title + "</span>" +
+                        "<span class='emote'>" + LOCALE[LOCALE_LANGUAGE]["Announcement_end"] + "</span>")
 
     def non_motivated_action(self):
         """
@@ -1206,7 +1287,7 @@ class Citizen:
                 if(book.can_use(self, self)):  # Can we read it?
                     book.use(self, self)
                 else:
-                    give_to = random.choice(citizens)
+                    give_to = random.choice(global_vars.citizens)
                     if(give_to != self):
                         book.give(self, give_to)
 
@@ -1221,31 +1302,71 @@ class Citizen:
             if(prob((1.0 - self.vocal) * (total_stubborness / viewpoints_amount) * 100)):  # We are both stubborn enough, and silent enough to write a book.
                 self.write_book(total_stubborness / viewpoints_amount)
 
+    def get_save_state(self):
+        saveObject = {}
+        saveObject["type"] = self.__class__.__name__
+
+        saveObject["age"] = self.age
+        saveObject["name"] = self.name
+
+        saveObject["vocal"] = self.vocal
+        saveObject["tolerancy"] = self.tolerancy
+
+        saveObject["political_view"] = self.political_view.get_save_state()
+        saveObject["emotions"] = self.emotions.get_save_state()
+
+        # There is no point in saving the ideology, since values for it could be changed.
+        # saveObject["ideology_name"] = self.ideology_name
+
+        saveObject["favour_words"] = self.favour_words.copy()
+        saveObject["dislike_words"] = self.dislike_words.copy()
+
+        saveObject["favour_intonations"] = self.favour_intonations.copy()
+        saveObject["dislike_intonations"] = self.dislike_intonations.copy()
+
+        saveObject["favour_word_uppercase"] = self.favour_word_uppercase.copy()
+        saveObject["dislike_word_uppercase"] = self.dislike_word_uppercase.copy()
+
+        # saveObject["to_quote"] = self.to_quote.copy()
+
+        saveObject["relationships"] = {}
+        for citizen_name in self.relationships.keys():
+            saveObject["relationships"][citizen_name] = self.relationships[citizen_name].get_save_state()
+
+        saveObject["inventory"] = []
+        for item in self.inventory:
+            if(isinstance(item, Book)):  # They use a different system, due to weak-name-links.
+                continue
+            saveObject["inventory"].append(item.get_save_state())
+
+        return saveObject
+
+    def load_save_state(saveObject):
+        me = str_to_class(saveObject["type"])(None, saveObject)
+        return me
+
 
 class Player(Citizen):
     def get_sentence(self, targets, targets_text, words_amount, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan'):
-        global awaiting_npc_message
-        global last_npc_message
-
         to_print_targets = targets_text
         if(len(to_print_targets) > 2):
             to_print_targets = to_print_targets[:-2]
 
         to_chat("<span class='warn_player'>Player's turn, awaiting your message! Targets will be: " + to_print_targets + "</span>")
-        awaiting_npc_message = True
-        last_npc_message = None
-        if(player_count > 0):
+        global_vars.awaiting_npc_message = True
+        global_vars.last_npc_message = None
+        if(global_vars.player_count > 0):
             timeout_time = 15
             for i in range(timeout_time):
-                if(not awaiting_npc_message):
+                if(not global_vars.awaiting_npc_message):
                     break
                 time.sleep(1)
 
-        if(last_npc_message is None):
+        if(global_vars.last_npc_message is None):
             to_chat("<span class='warn_player'>Timeout, your messages will no longer be considered!</span>")
             return super().get_sentence(targets, targets_text, words_amount, predetermined_triggers, fg_color, bg_color)
         else:
-            sentence = str(last_npc_message)
+            sentence = str(global_vars.last_npc_message)
             sentence_len = len(sentence)
             last_symbol = sentence[sentence_len - 1]
             if(last_symbol not in DELIMETERS_SENTENCE_END):
@@ -1258,21 +1379,22 @@ class Player(Citizen):
 
 
 class View:
-    def __init__(self, views_preset):
-        self.viewpoints = dict()
+    def __init__(self, saveObject={}):
+        self.viewpoints = {}
         pos_viewpoints = get_all_subclasses(Viewpoint)
 
         for viewpoint in pos_viewpoints:
-            view = viewpoint()
-
-            self.viewpoints[view.name] = view
-            if("Axis" in views_preset and view.name in views_preset["Axis"]):
-                view.value = views_preset["Axis"][view.name]["Value"]
-                view.stubborness = views_preset["Axis"][view.name]["Stubborness"]
-                view.persuasiveness = views_preset["Axis"][view.name]["Persuasiveness"]
+            if("viewpoints" in saveObject.keys() and viewpoint.name in saveObject["viewpoints"].keys()):
+                view_type = str_to_class(saveObject["viewpoints"][viewpoint.name]["type"])
+                view = view_type.load_save_state(saveObject["viewpoints"][viewpoint.name])
             else:
+                view = viewpoint()
+
+                view.value = random.randrange(-100, 101)
                 view.stubborness = random.uniform(0.0, 1.0)
                 view.persuasiveness = random.uniform(0.0, 1.0)
+
+            self.viewpoints[view.name] = view
 
     def generate_political_axis(self):
         axis = {}
@@ -1281,8 +1403,6 @@ class View:
         return axis
 
     def get_sentence(self, pos_viewpoints, viewpoints_points, viewpoints_offense_points, citizen_vocality, targets_text):
-        global print_say_target
-
         sentence = ""
         sentence_beggining = True
         first_word = (not print_say_target or targets_text == "") # Since if we're printing the target-defining text, we don't need to capitalize the first word. In fact, the next word we speak won't be the first word...
@@ -1356,6 +1476,20 @@ class View:
 
         return sentence
 
+    def get_save_state(self):
+        saveObject = {}
+        saveObject["type"] = self.__class__.__name__
+
+        saveObject["viewpoints"] = {}
+        for viewpoint_name in self.viewpoints.keys():
+            saveObject["viewpoints"][viewpoint_name] = self.viewpoints[viewpoint_name].get_save_state()
+
+        return saveObject
+
+    def load_save_state(saveObject):
+        me = str_to_class(saveObject["type"])(saveObject)
+        return me
+
 
 class Faction:
     def __init_(self, leader):
@@ -1370,7 +1504,6 @@ rel_cache = {}
 
 class Relationship:
     def __init__(self):
-        # self.value = random.randrange(-100, 101)  # From 100(Left part of name) to -100(Right)
         self.value = 0  # We don't know anybody yet.
 
         self.permanent_min_val_modifier = 0  # Tweak this to allow this relationship to ever be worse.
@@ -1469,22 +1602,44 @@ class Relationship:
     def get_reaction_modifier(self, us, speaker):
         return self.title_reaction_mod
 
+    def get_save_state(self):
+        saveObject = {}
+        saveObject["type"] = self.__class__.__name__
+
+        saveObject["value"] = self.value
+        saveObject["permanent_min_val_modifier"] = self.permanent_min_val_modifier
+        saveObject["permanent_max_val_modifier"] = self.permanent_max_val_modifier
+
+        """
+        self.title, self.title_color, self.title_reaction_mod could be changed if we change some default values, there is no point
+        in saving them.
+        """
+
+        return saveObject
+
+    def load_save_state(saveObject):
+        me = str_to_class(saveObject["type"])()
+
+        me.value = saveObject["value"]
+        me.permanent_min_val_modifier = saveObject["permanent_min_val_modifier"]
+        me.permanent_max_val_modifier = saveObject["permanent_max_val_modifier"]
+
+        return me
+
 
 class Emotions:
-    def __init__(self, load_from=dict()):
-        if("Emotionality" in load_from):
-            self.emotionality = load_from["Emotionality"]
+    def __init__(self, saveObject={}):
+        if("emotionality" in saveObject.keys()):
+            self.emotionality = saveObject["emotionality"]
         else:
             self.emotionality = random.uniform(0.0, 1.0)
 
         self.reactions_speaker = {}
         self.reactions_provoker = {}
-        self.trigger_severity = {}
 
         for possible_trigger in MESSAGE_TRIGGER_POSSIBILITIES:
-            self.reactions_speaker[str(possible_trigger)] = generate_reaction(self.emotionality, possible_trigger, load_from)
-            self.reactions_provoker[str(possible_trigger)] = generate_reaction(self.emotionality, possible_trigger, load_from)
-            self.trigger_severity[str(possible_trigger)] = random.uniform(-1.0, 1.0)
+            self.reactions_speaker[str(possible_trigger)] = generate_reaction(self.emotionality, possible_trigger, saveObject)
+            self.reactions_provoker[str(possible_trigger)] = generate_reaction(self.emotionality, possible_trigger, saveObject)
 
     def react_to_triggers(self, us, speaker, provoker, triggers, text=""):
         """
@@ -1508,201 +1663,25 @@ class Emotions:
                     retVal = self.reactions_provoker[str(possible_trigger)].invoke(us, provoker, text=text) or retVal
         return retVal
 
+    def get_save_state(self):
+        saveObject = {}
+        saveObject["type"] = self.__class__.__name__
 
-class Reaction:
-    incompatibile_tags = []
+        saveObject["emotionality"] = self.emotionality
 
-    def __init__(self, emotionality, trigger_hapiness):
-        self.emotionality = emotionality
-        self.trigger_hapiness = trigger_hapiness
+        saveObject["reactions_speaker"] = {}
+        for reaction_trigger in self.reactions_speaker.keys():
+            saveObject["reactions_speaker"][reaction_trigger] = self.reactions_speaker[reaction_trigger].get_save_state()
+        saveObject["reactions_provoker"] = {}
+        for reaction_trigger in self.reactions_provoker.keys():
+            saveObject["reactions_provoker"][reaction_trigger] = self.reactions_provoker[reaction_trigger].get_save_state()
 
-    def react_check(self, us, speaker):
-        # The min 99 is required as to prevent infinite reaction loops...
-        return prob(min((self.emotionality * self.trigger_hapiness) * 100 + us.relationships[speaker.name].get_reaction_modifier(us, speaker), 99))
+        return saveObject
 
-    def invoke(self, us, speaker, text=""):
-        """
-        us - is the Citizen reacting.
-        speaker - is the Citizen, that emitted the emotion, or the citizen who provoked some other Citizen to react in one way or the other.
-        """
-        return self.on_invoke(us, speaker, text=text)
+    def load_save_state(saveObject):
+        me = str_to_class(saveObject["type"])(saveObject)
 
-    def on_invoke(self, us, speaker, text):
-        """
-        Return True to interupt default reaction - speech.
-        """
-        return False
-
-
-class Absent(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        return False
-
-
-class Ignore(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        return True  # Absent is no reaction, ignore is not even talk back.
-
-
-class Offensive(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_say(predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_OFFENSIVE)
-        return True  # We already said something. Mostly, an offensive word.
-
-
-class Defensive(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_emote("cry", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_DEFENSIVE)
-        return False
-
-
-class Parent(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_emote("lecture", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PARENT)
-        return False
-
-
-class Awe(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_emote("awe", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_AWE,
-                       on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
-        return False
-
-
-class Praise(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_emote("praise", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PRAISE,
-                       on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
-        us.queue_say(predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_PRAISE)
-        return True
-
-
-class Dissapointment(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_emote("dissapointment", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_DISSAPOINTMENT,
-                       on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, -CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
-        return False
-
-
-class Curse(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        us.queue_emote("curse", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_CURSE,
-                       on_emote_done=us.shift_relationships_and_print, on_emote_done_args=[speaker, -CFG["DEFAULT_RELATIONSHIP_SHIFT_VALUE"] * self.emotionality])
-        us.queue_say(predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_CURSE)
-        return True
-
-
-class Write(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        total_stubborness = 0.0
-        viewpoint_names = us.political_view.viewpoints.keys()
-        viewpoints_amount = len(viewpoint_names)
-
-        for viewpoint_name in viewpoint_names:
-            total_stubborness += us.get_stubborness(viewpoint_name)
-
-        book = us.write_book(total_stubborness / viewpoints_amount, [speaker])
-        if(book):
-            return True
-        return False
-
-
-class Criticize(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        total_stubborness = 0.0
-        viewpoint_names = us.political_view.viewpoints.keys()
-        viewpoints_amount = len(viewpoint_names)
-
-        for viewpoint_name in viewpoint_names:
-            total_stubborness += us.get_stubborness(viewpoint_name)
-
-        book = us.write_book(total_stubborness / viewpoints_amount, [speaker])
-        if(book):
-            book.give(us, speaker)
-            return True
-        return False
-
-
-class Preach(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        for book in us.inventory:
-            if(book.ideology == us.ideology_name):
-                us.queue_emote("preach", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PARENT,
-                               on_emote_done=us.read_book,
-                               on_emote_done_args={"book": book, "predetermined_triggers": MESSAGE_TRIGGER_PARENT, "quote": False})
-                return True
-        return False
-
-
-class Misread_Preach(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        for book in us.inventory:
-                us.queue_emote("preach", emotion_target=speaker, predetermined_triggers=MESSAGE_TRIGGER_PARENT,
-                               on_emote_done=us.read_book,
-                               on_emote_done_args={"book": book, "predetermined_triggers": MESSAGE_TRIGGER_QUOTE|MESSAGE_TRIGGER_PARENT, "quote": True})
-                return True
-        return False
-
-
-class Quote_Remember(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        if(len(text) > 0):
-            us.to_quote.append({"speaker": speaker, "text": text})
-        return False
-
-
-class Quote_Reply(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        if(len(us.to_quote) > 0):
-            to_quote_obj = random.choice(us.to_quote)
-            us.to_quote.remove(to_quote_obj)
-
-            quotee = to_quote_obj["speaker"]
-            sentence = to_quote_obj["text"]
-
-            us.quote(quotee, sentence, predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_QUOTE)
-            return True
-        return False
-
-
-class Copycat(Reaction):
-    incompatible_tags = []
-
-    def on_invoke(self, us, speaker, text):
-        if(len(text) > 0):
-            us.quote(speaker, text, predetermined_targets=[speaker], predetermined_triggers=MESSAGE_TRIGGER_QUOTE|MESSAGE_TRIGGER_OFFENSIVE)
-            return True
-        return False
+        return me
 
 
 class Item:
@@ -1726,6 +1705,19 @@ class Item:
     def use(self, user, target):
         return
 
+    def get_save_state(self):
+        saveObject = {}
+        saveObject["type"] = self.__class__.__name__
+
+        saveObject["name"] = self.name
+
+        return saveObject
+
+    def load_save_state(saveObject):
+        me = str_to_class(saveObject["type"])()
+
+        me.name = saveObject["name"]
+        return me
 
 class Book(Item):
     name = "Book"
@@ -1739,7 +1731,7 @@ class Book(Item):
 
         self.read_by_names = [creator.name]  # We can't convince us with our own book.
 
-        all_books.append(self)
+        global_vars.all_books.append(self)
 
     def can_use(self, user, target):
         return target.name not in self.read_by_names
@@ -1749,278 +1741,299 @@ class Book(Item):
 
         target.hear(self.created_by, "writes", self.text, MESSAGE_TRIGGER_NONE)
         to_chat("<span class='emote_name'>" + target.name + "</span>" +
-                "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["Reads"] + "</span>" +
+                "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["Reads"] + " </span>" +
                 self.name +
                 "<span class='emote'>" + LOCALE[LOCALE_LANGUAGE]["Announcement_end"] + "</span>")
 
+    def get_save_state(self):
+        saveObject = super().get_save_state()
 
-init_reference_lists()
+        saveObject["created_by_name"] = self.created_by.name
+        saveObject["text"] = self.text
 
-citizens_to_spawn = 25
-# citizens_to_spawn = 2
-citizens_spawned = 0
-citizens = []
+        return saveObject
 
-from characters_presets import PRESET_CITIZENS
+    def load_save_state(saveObject):
+        creator = None
 
-CITIZENS_TO_IMPORT = "All"  # Either "All", "None" or [citizen_name_to_import_1, citizen_name_to_import_2, ...]
-# CITIZENS_TO_IMPORT = "None"
-# CITIZENS_TO_IMPORT = ["Luduk", "Co11y"]
+        for citizen in global_vars.citizens:
+            if(citizen.name == saveObject["created_by_name"]):
+                creator = citizen
+                break
 
-if(CITIZENS_TO_IMPORT == "All"):
-    for citizen_name in PRESET_CITIZENS:
-        if(citizens_spawned >= citizens_to_spawn):
-            break
-        citizens.append(Citizen(citizen_name, PRESET_CITIZENS[citizen_name]))
-        citizens_spawned += 1
-elif(type(CITIZENS_TO_IMPORT) is list):
-    for citizen_name in CITIZENS_TO_IMPORT:
-        if(citizen_name not in PRESET_CITIZENS):
-            continue
-        if(citizens_spawned >= citizens_to_spawn):
-            break
-        citizens.append(Citizen(citizen_name, PRESET_CITIZENS[citizen_name]))
-        citizens_spawned += 1
+        if(creator is not None):
+            me = str_to_class(saveObject["type"])(creator, saveObject["name"], saveObject["text"])
+            return me
 
-if(citizens_spawned < citizens_to_spawn):
-    citizens_to_spawn -= citizens_spawned
+        return None
 
-    for i in range(citizens_to_spawn):
-        citizens.append(Citizen("Random_Citizen_#" + str(i)))
 
-citizens.append(Player("Player"))
+def save_server_state():
+    save_state("last")
+    save_state()
 
-"""
-Server part.
-"""
 
-can_speak = False
+if(__name__ == "__main__"):
+    from commands import parse_commands
 
-def citizen_speech():
+    """
+    Server part.
+    """
+
     global can_speak
-    while(True):
-        if(can_speak):
-            break
-        time.sleep(1)
 
-    global reactions_queue
-    global actions_queue
+    can_speak = False
 
-    while(True):
-        if(len(actions_queue) > 0):
-            action = actions_queue.popleft()
-            if(action["type"] == "say"):
-                action["speaker"].say(
-                    predetermined_targets=action["predetermined_targets"],
-                    predetermined_triggers=action["predetermined_triggers"],
-                    fg_color=action["fg_color"],
-                    bg_color=action["bg_color"]
-                    )
-            elif(action["type"] == "emote"):
-                action["speaker"].emote(
-                    action["emotion"],
-                    emotion_target=action["emotion_target"],
-                    predetermined_targets=action["predetermined_targets"],
-                    predetermined_triggers=action["predetermined_triggers"],
-                    on_emote_done=action["on_emote_done"],
-                    on_emote_done_args=action["on_emote_done_args"]
-                    )
-        elif(len(reactions_queue) > 0):
-            reaction = reactions_queue.popleft()
-            if(reaction["type"] == "hear"):
-                reaction["hearer"].hear(
-                    reaction["speaker"],
-                    reaction["verb"],
-                    reaction["sentence"],
-                    reaction["predetermined_triggers"],
-                    reaction["proxy_speaker"],
-                    reaction["on_hear_done"],
-                    reaction["on_hear_done_args"]
-                    )
-            elif(reaction["type"] == "hear_emote"):
-                reaction["hearer"].hear_emote(
-                    reaction["speaker"],
-                    reaction["emotion"],
-                    reaction["provoker"],
-                    reaction["predetermined_triggers"]
-                    )
-        else:
-            citizen = random.choice(citizens)
-            citizen.non_motivated_action()
+    def citizen_speech():
+        global can_speak
 
-import threading
+        while(True):
+            if(can_speak):
+                break
+            time.sleep(1)
 
-from flask import Flask, render_template, send_from_directory, request, escape
-from flask_socketio import SocketIO, disconnect
+        cur_backup_tick = 0
+        next_backup_tick = 20000
 
-
-class Client_Info:
-    def __init__(self, ip):
-        self.username = self.clean_username(random.choice(POS_NAMES) + "_" + random.choice(POS_SURNAMES))
-
-        self.hear_from = []
-        for citizen in citizens:
-            self.hear_from.append(citizen.name)
-
-        client_infos_by_ip[ip] = self
-
-        self.saved_messages = []
-
-        self.loaded = True
-
-    def clean_username(self, username):
-        delimeters_to_remove = "".join(DELIMETERS)
-        username_stripped = re.sub("[" + delimeters_to_remove + "]", "", username)
-        username_stripped = username_stripped.strip()  # Remove trailing spaces.
-
-        return username
+        while(True):
+            cur_backup_tick += 1
+            if(cur_backup_tick >= next_backup_tick):
+                save_server_state()
+                cur_backup_tick = 0
+                next_backup_tick = 20000
+            if(len(global_vars.actions_queue) > 0):
+                action = global_vars.actions_queue.popleft()
+                if(action["type"] == "say"):
+                    action["speaker"].say(
+                        predetermined_targets=action["predetermined_targets"],
+                        predetermined_triggers=action["predetermined_triggers"],
+                        fg_color=action["fg_color"],
+                        bg_color=action["bg_color"]
+                        )
+                elif(action["type"] == "emote"):
+                    action["speaker"].emote(
+                        action["emotion"],
+                        emotion_target=action["emotion_target"],
+                        predetermined_targets=action["predetermined_targets"],
+                        predetermined_triggers=action["predetermined_triggers"],
+                        on_emote_done=action["on_emote_done"],
+                        on_emote_done_args=action["on_emote_done_args"]
+                        )
+            elif(len(global_vars.reactions_queue) > 0):
+                reaction = global_vars.reactions_queue.popleft()
+                if(reaction["type"] == "hear"):
+                    reaction["hearer"].hear(
+                        reaction["speaker"],
+                        reaction["verb"],
+                        reaction["sentence"],
+                        reaction["predetermined_triggers"],
+                        reaction["proxy_speaker"],
+                        reaction["on_hear_done"],
+                        reaction["on_hear_done_args"]
+                        )
+                elif(reaction["type"] == "hear_emote"):
+                    reaction["hearer"].hear_emote(
+                        reaction["speaker"],
+                        reaction["emotion"],
+                        reaction["provoker"],
+                        reaction["predetermined_triggers"]
+                        )
+            else:
+                citizen = random.choice(global_vars.citizens)
+                citizen.non_motivated_action()
 
 
-class Client:
-    def __init__(self, request):
-        global client_infos_by_ip
+    import threading
 
-        self.ip = request.remote_addr
-        self.sid = request.sid
+    from flask import Flask, render_template, send_from_directory, request, escape
+    from flask_socketio import SocketIO, disconnect
 
-        self.can_save = True  # If the player connected from multiple devices, data from some shouldn't be saved as it may get duped.
 
-        if(self.ip in client_infos_by_ip):
-            self.client_info = client_infos_by_ip[self.ip]
-            self.client_info.loaded = True
-        else:
-            self.client_info = Client_Info(self.ip)
+    class Client_Info:
+        def __init__(self, ip):
+            self.username = self.clean_username(random.choice(POS_NAMES) + "_" + random.choice(POS_SURNAMES))
 
-        self.disconnecting = False
+            self.hear_from = []
+            for citizen in global_vars.citizens:
+                self.hear_from.append(citizen.name)
 
-    def on_connect(self):
+            global_vars.client_infos_by_ip[ip] = self
+
+            self.saved_messages = []
+
+            self.clients_connected = 0
+            self.permissions = SERVER_PERMISSION_BASIC
+            self.loaded = True
+
+        def clean_username(self, username):
+            delimeters_to_remove = "".join(DELIMETERS)
+            username_stripped = re.sub("[" + delimeters_to_remove + "]", "", username)
+            username_stripped = username_stripped.strip()  # Remove trailing spaces.
+
+            return username
+
+        def on_client_connection(self, client):
+            self.clients_connected += 1
+
+            if(self.clients_connected == 1):
+                global_vars.player_count += 1
+
+        def on_client_disconnection(self, client):
+            self.clients_connected -= 1
+
+            if(self.clients_connected == 0):
+                global_vars.player_count -= 1
+
+
+    class Client:
+        def __init__(self, request):
+            self.ip = request.remote_addr
+            self.sid = request.sid
+
+            self.can_save = True  # If the player connected from multiple devices, data from some shouldn't be saved as it may get duped.
+
+            if(self.ip in global_vars.client_infos_by_ip):
+                self.client_info = global_vars.client_infos_by_ip[self.ip]
+                self.client_info.loaded = True
+            else:
+                self.client_info = Client_Info(self.ip)
+
+            self.disconnecting = False
+
+        def on_connect(self):
+            global max_player_count
+
+            global_vars.clients_by_sid[self.sid] = self
+            self.client_info.on_client_connection(self)
+            print("Received Connection(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") from user(" + str(self.ip) +
+                  ")(" + str(self.client_info.clients_connected) + ")")
+
+            for message in self.client_info.saved_messages:
+                self.whisper(message, save=False)
+
+            self.whisper("Welcome to Totally Accurate Political Simulator.")
+
+        def on_disconnect(self):
+            global max_player_count
+
+            self.disconnecting = True
+
+            global_vars.clients_by_sid.pop(self.sid)
+            self.client_info.on_client_disconnection(self)
+            print("Lost Connection(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") to user(" + str(self.ip) +
+                  ")(" + str(self.client_info.clients_connected) + ")")
+
+            self.client_info.loaded = False
+
+        def whisper(self, message, save=True):
+            socketio.emit('npc_message', {"data": message}, room=self.sid)
+
+        def on_npc_message(self, json):
+            message = json["data"]
+            if(not self.message_check(message)):
+                return
+
+            message = str(escape(message))
+            if(parse_commands(message, self)):
+                return
+
+            if(global_vars.awaiting_npc_message):
+                global_vars.last_npc_message = message
+                global_vars.awaiting_npc_message = False
+
+        def on_player_message(self, json):
+            message = json["data"]
+            if(not self.message_check(message)):
+                return
+
+            json = {"data": str(escape(message))}
+            # socketio.emit('player_message', json)
+
+        def message_check(self, message):
+            """
+            Return True if message passed the check, false otherwise.
+            """
+            if(message == ""):
+                return False
+
+            if(len(message) > 256):
+                return False
+
+            return True
+
+        def disconnect(self):
+            disconnect(self.sid)
+
+    init_reference_lists()
+    init_citizens()
+
+    threading.Thread(target=citizen_speech).start()
+    # threading.Thread(target=process_console).start()
+
+    template_dir = os.path.abspath('../templates')
+    static_dir = os.path.abspath('../static')
+
+    app = Flask(__name__, template_folder=template_dir, static_url_path='')
+    app.config['SECRET_KEY'] = CFG["SECRET_KEY"]
+    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+    socketio = SocketIO(app)
+
+    @app.after_request
+    def after_request(response):
+        # Update cache if so required.
+        if(CFG["UPDATE_CACHE"]):
+            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
+            response.headers["Expires"] = 0
+            response.headers["Pragma"] = "no-cache"
+        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+        # response.headers['Content-Security-Policy'] = "default-src 'self'"
+        response.headers['X-Content-Type-Options'] = 'nosniff'
+        # response.headers['X-Frame-Options'] = 'SAMEORIGIN'
+        response.headers['X-XSS-Protection'] = '1; mode=block'
+        return response
+
+    @app.route('/')
+    def index():
+        return render_template("index.html")
+
+    @app.route('/static/<path:path>')
+    def send_static(path):
+        return send_from_directory(static_dir, path)
+
+    @socketio.on('connect')
+    def on_connect(methods=['GET', 'POST']):
+        global can_speak
         global max_player_count
-        global player_count
-        global clients_by_sid
 
-        player_count += 1
-        clients_by_sid[self.sid] = self
-        print("Received Connection(" + str(player_count) + "/" + str(max_player_count) + ") from user(" + str(self.ip) + ")")
-
-        for message in self.client_info.saved_messages:
-            self.whisper(message, save=False)
-
-        self.whisper("Welcome to Totally Accurate Political Simulator.")
-
-    def on_disconnect(self):
-        global max_player_count
-        global player_count
-        global clients_by_sid
-
-        self.disconnecting = True
-
-        player_count -= 1
-        clients_by_sid.pop(self.sid)
-        print("Lost Connection(" + str(player_count) + "/" + str(max_player_count) + ") to user(" + str(self.ip) + ")")
-
-        self.client_info.loaded = False
-
-    def whisper(self, message, save=True):
-        socketio.emit('npc_message', {"data": message}, room=self.sid)
-
-    def on_npc_message(self, json):
-        global awaiting_npc_message
-        global last_npc_message
-
-        message = json["data"]
-        if(not self.message_check(message)):
+        if(global_vars.player_count + 1 > max_player_count):
+            print("Disconnected(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") user(" + str(request.remote_addr) + "). Reason: Server overcrowded")
+            disconnect(request.sid)
             return
 
-        if(awaiting_npc_message):
-            last_npc_message = escape(message)
-            awaiting_npc_message = False
-        # socketio.emit('npc_message', json)
-
-    def on_player_message(self, json):
-        message = json["data"]
-        if(not self.message_check(message)):
+        if(request.remote_addr in global_vars.client_infos_by_ip.keys() and
+           global_vars.client_infos_by_ip[request.remote_addr].clients_connected >= CFG["MAX_CLIENTS_PER_IP"]):
+            print("Disconnected(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") user(" + str(request.remote_addr) + "). Reason: Too many connections on one IP")
+            disconnect(request.sid)
             return
 
-        json = {"data": escape(message)}
-        # socketio.emit('player_message', json)
+        can_speak = True
 
-    def message_check(self, message):
-        """
-        Return True if message passed the check, false otherwise.
-        """
-        if(message == ""):
-            return False
+        client = Client(request)
+        client.on_connect()
 
-        if(len(message) > 256):
-            return False
+    @socketio.on('disconnect')
+    def on_disconnect(methods=['GET', 'POST']):
+        if(request.sid in global_vars.clients_by_sid.keys()):
+            global_vars.clients_by_sid[request.sid].on_disconnect()
 
-        return True
+    @socketio.on('npc_message')
+    def on_npc_message(json, methods=['GET', 'POST']):
+        if(request.sid in global_vars.clients_by_sid.keys()):
+            global_vars.clients_by_sid[request.sid].on_npc_message(json)
 
-    def disconnect(self):
-        disconnect(self.sid)
+    @socketio.on('player_message')
+    def on_player_message(json, methods=['GET', 'POST']):
+        if(request.sid in global_vars.clients_by_sid.keys()):
+            global_vars.clients_by_sid[request.sid].on_player_message(json)
 
-
-threading.Thread(target=citizen_speech).start()
-
-template_dir = os.path.abspath('../templates')
-static_dir = os.path.abspath('../static')
-
-app = Flask(__name__, template_folder=template_dir, static_url_path='')
-app.config['SECRET_KEY'] = CFG["SECRET_KEY"]
-app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-socketio = SocketIO(app)
-
-@app.after_request
-def after_request(response):
-    # Update cache if so required.
-    if(CFG["UPDATE_CACHE"]):
-        response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
-        response.headers["Expires"] = 0
-        response.headers["Pragma"] = "no-cache"
-    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    # response.headers['Content-Security-Policy'] = "default-src 'self'"
-    response.headers['X-Content-Type-Options'] = 'nosniff'
-    # response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-    response.headers['X-XSS-Protection'] = '1; mode=block'
-    return response
-
-@app.route('/')
-def index():
-    return render_template("index.html")
-
-@app.route('/static/<path:path>')
-def send_static(path):
-    return send_from_directory(static_dir, path)
-
-@socketio.on('connect')
-def on_connect(methods=['GET', 'POST']):
-    global can_speak
-    global max_player_count
-    global player_count
-
-    if(player_count + 1 > max_player_count):
-        print("Disconnected(" + str(player_count) + "/" + str(max_player_count) + ") user(" + str(request.remote_addr) + "). Reason: Server overcrowded")
-        disconnect(request.sid)
-        return
-
-    can_speak = True
-
-    client = Client(request)
-    client.on_connect()
-
-@socketio.on('disconnect')
-def on_disconnect(methods=['GET', 'POST']):
-    if(request.sid in clients_by_sid.keys()):
-        clients_by_sid[request.sid].on_disconnect()
-
-@socketio.on('npc_message')
-def on_npc_message(json, methods=['GET', 'POST']):
-    if(request.sid in clients_by_sid.keys()):
-        clients_by_sid[request.sid].on_npc_message(json)
-
-@socketio.on('player_message')
-def on_player_message(json, methods=['GET', 'POST']):
-    if(request.sid in clients_by_sid.keys()):
-        clients_by_sid[request.sid].on_player_message(json)
-
-socketio.run(app, host='0.0.0.0', port=CFG["PORT"], debug=CFG["DEBUG"])
+    socketio.run(app, host='0.0.0.0', port=CFG["PORT"], debug=CFG["DEBUG"])
