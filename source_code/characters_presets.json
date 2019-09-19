@@ -14,8 +14,8 @@
                 	"type": "Paci_Mili",
                 	"value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
-                "Materialism-Spiritualism": {
-                	"type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                	"type": "Int_Ext",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
                 "Individualism-Collectivism": {
@@ -24,10 +24,14 @@
                 },
                 "Reformism-Revolutionism": {
                 	"type": "Ref_Rev",
-                	"value": 100, "stubborness": 1.0, "persuasiveness": 1.0
+                	"value": -100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
-                "Industrialism-Primitivism": {
-                	"type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                	"type": "Con_Ess",
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
@@ -70,8 +74,8 @@
                     "type": "Paci_Mili",
                     "value": -100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": -100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
                 "Individualism-Collectivism": {
@@ -80,10 +84,14 @@
                 },
                 "Reformism-Revolutionism": {
                     "type": "Ref_Rev",
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
+                },
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": -100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
                     "value": -100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
@@ -126,8 +134,8 @@
                     "type": "Paci_Mili",
                     "value": -80, "stubborness": 0.8, "persuasiveness": 0.7
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 100, "stubborness": 0.2, "persuasiveness": 0.0
                 },
                 "Individualism-Collectivism": {
@@ -138,8 +146,8 @@
                     "type": "Ref_Rev",
                     "value": -100, "stubborness": 0.5, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 70, "stubborness": 0.3, "persuasiveness": 0.1
                 }
             }
@@ -168,8 +176,8 @@
                     "type": "Paci_Mili",
                     "value": 100, "stubborness": 0.5, "persuasiveness": 1.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": -50, "stubborness": 0.5, "persuasiveness": 0.0
                 },
                 "Individualism-Collectivism": {
@@ -180,8 +188,8 @@
                     "type": "Ref_Rev",
                     "value": 100, "stubborness": 0.5, "persuasiveness": 1.0
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": -50, "stubborness": 0.5, "persuasiveness": 0.0
                 }
             }
@@ -210,8 +218,8 @@
                     "type": "Paci_Mili",
                     "value": -100, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": -50, "stubborness": 0.25, "persuasiveness": 0.25
                 },
                 "Individualism-Collectivism": {
@@ -222,8 +230,8 @@
                     "type": "Ref_Rev",
                     "value": -100, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": -50, "stubborness": 0.25, "persuasiveness": 0.25
                 }
             }
@@ -252,8 +260,8 @@
                     "type": "Paci_Mili",
                     "value": 10, "stubborness": 0.0, "persuasiveness": 1.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 50, "stubborness": 0.0, "persuasiveness": 1.0
                 },
                 "Individualism-Collectivism": {
@@ -264,9 +272,13 @@
                     "type": "Ref_Rev",
                     "value": 100, "stubborness": 0.0, "persuasiveness": 1.0
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": -50, "stubborness": 0.0, "persuasiveness": 1.0
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
         },
@@ -312,8 +324,8 @@
                     "type": "Paci_Mili",
                     "value": 30, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 100, "stubborness": 0.25, "persuasiveness": 0.25
                 },
                 "Individualism-Collectivism": {
@@ -324,8 +336,8 @@
                     "type": "Ref_Rev",
                     "value": -50, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
@@ -354,8 +366,8 @@
                     "type": "Paci_Mili",
                     "value": -25, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 75, "stubborness": 1.0, "persuasiveness": 0.25
                 },
                 "Individualism-Collectivism": {
@@ -366,8 +378,8 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 0.5
                 }
             }
@@ -396,8 +408,8 @@
                     "type": "Paci_Mili",
                     "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
                 },
                 "Individualism-Collectivism": {
@@ -408,9 +420,13 @@
                     "type": "Ref_Rev",
                     "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.9
                 }
             }
         },
@@ -438,8 +454,8 @@
                     "type": "Paci_Mili",
                     "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
                 },
                 "Individualism-Collectivism": {
@@ -450,8 +466,8 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 0.1
                 }
             }
@@ -480,8 +496,8 @@
                     "type": "Paci_Mili",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 50, "stubborness": 0.75, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -492,8 +508,8 @@
                     "type": "Ref_Rev",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 75, "stubborness": 0.9, "persuasiveness": 0.75
                 }
             }
@@ -522,8 +538,8 @@
                     "type": "Paci_Mili",
                     "value": -75, "stubborness": 0.0, "persuasiveness": 0.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": -75, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -534,8 +550,8 @@
                     "type": "Ref_Rev",
                     "value": 90, "stubborness": 0.9, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 50, "stubborness": 0.0, "persuasiveness": 0.0
                 }
             }
@@ -564,8 +580,8 @@
                     "type": "Paci_Mili",
                     "value": 0, "stubborness": 0.0, "persuasiveness": 0.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": -50, "stubborness": 0.0, "persuasiveness": 0.0
                 },
                 "Individualism-Collectivism": {
@@ -576,8 +592,8 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 0.0, "persuasiveness": 0.0
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 0.0
                 }
             }
@@ -606,8 +622,8 @@
                     "type": "Paci_Mili",
                     "value": 50, "stubborness": 0.5, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 0.0
                 },
                 "Individualism-Collectivism": {
@@ -618,8 +634,8 @@
                     "type": "Ref_Rev",
                     "value": 75, "stubborness": 0.75, "persuasiveness": 0.25
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 50, "stubborness": 0.5, "persuasiveness": 0.1
                 }
             }
@@ -642,15 +658,15 @@
             "viewpoints": {
                 "Liberty-Authority": {
                     "type": "Lib_Aut",
-                    "value": 25, "stubborness": 0.5, "persuasiveness": 0.25
+                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.25
                 },
                 "Pacifism-Militarism": {
                     "type": "Paci_Mili",
-                    "value": -25, "stubborness": 0.5, "persuasiveness": 0.1
+                    "value": 25, "stubborness": 0.5, "persuasiveness": 0.1
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
-                    "value": 75, "stubborness": 0.75, "persuasiveness": 0.5
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
+                    "value": -75, "stubborness": 0.75, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
                     "type": "Ind_Col",
@@ -660,9 +676,13 @@
                     "type": "Ref_Rev",
                     "value": 25, "stubborness": 0.5, "persuasiveness": 0.0
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 0.9, "persuasiveness": 0.5
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
         },
@@ -690,8 +710,8 @@
                     "type": "Paci_Mili",
                     "value": -100, "stubborness": 0.9, "persuasiveness": 0.5
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 0, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -702,8 +722,8 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 0.9, "persuasiveness": 0.5
                 }
             }
@@ -732,8 +752,8 @@
                     "type": "Paci_Mili",
                     "value": 25, "stubborness": 0.9, "persuasiveness": 0.5
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 0, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -744,9 +764,13 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 50, "stubborness": 0.9, "persuasiveness": 0.9
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
         },
@@ -774,8 +798,8 @@
                     "type": "Paci_Mili",
                     "value": -25, "stubborness": 0.5, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
                 "Individualism-Collectivism": {
@@ -786,8 +810,8 @@
                     "type": "Ref_Rev",
                     "value": -50, "stubborness": 0.25, "persuasiveness": 0.75
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 50, "stubborness": 0.5, "persuasiveness": 0.5
                 }
             }
@@ -816,8 +840,8 @@
                     "type": "Paci_Mili",
                     "value": -25, "stubborness": 0.25, "persuasiveness": 0.25
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 0.75
                 },
                 "Individualism-Collectivism": {
@@ -828,8 +852,8 @@
                     "type": "Ref_Rev",
                     "value": 75, "stubborness": 0.75, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 0.75, "persuasiveness": 0.9
                 }
             }
@@ -858,8 +882,8 @@
                     "type": "Paci_Mili",
                     "value": 75, "stubborness": 0.9, "persuasiveness": 0.1
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": -10, "stubborness": 0.1, "persuasiveness": 0.1
                 },
                 "Individualism-Collectivism": {
@@ -870,8 +894,8 @@
                     "type": "Ref_Rev",
                     "value": 75, "stubborness": 0.7, "persuasiveness": 0.7
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": -10, "stubborness": 0.0, "persuasiveness": 0.0
                 }
             }
@@ -900,8 +924,8 @@
                     "type": "Paci_Mili",
                     "value": 75, "stubborness": 1.0, "persuasiveness": 0.5
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 75, "stubborness": 1.0, "persuasiveness": 0.25
                 },
                 "Individualism-Collectivism": {
@@ -912,8 +936,8 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 0.1, "persuasiveness": 0.75
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 25, "stubborness": 0.1, "persuasiveness": 0.25
                 }
             }
@@ -942,8 +966,8 @@
                     "type": "Paci_Mili",
                     "value": 75, "stubborness": 0.75, "persuasiveness": 0.75
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 75, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -954,8 +978,8 @@
                     "type": "Ref_Rev",
                     "value": 50, "stubborness": 0.25, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 75, "stubborness": 0.9, "persuasiveness": 0.5
                 }
             }
@@ -984,8 +1008,8 @@
                     "type": "Paci_Mili",
                     "value": -25, "stubborness": 0.75, "persuasiveness": 0.1
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 0, "stubborness": 0.75, "persuasiveness": 0.0
                 },
                 "Individualism-Collectivism": {
@@ -996,8 +1020,8 @@
                     "type": "Ref_Rev",
                     "value": -100, "stubborness": 0.7, "persuasiveness": 0.1
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 0.9
                 }
             }
@@ -1026,8 +1050,8 @@
                     "type": "Paci_Mili",
                     "value": 100, "stubborness": 0.9, "persuasiveness": 0.75
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 50, "stubborness": 0.75, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -1038,8 +1062,8 @@
                     "type": "Ref_Rev",
                     "value": -75, "stubborness": 0.5, "persuasiveness": 0.75
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 50, "stubborness": 1.0, "persuasiveness": 0.5
                 }
             }
@@ -1112,8 +1136,8 @@
                     "type": "Paci_Mili",
                     "value": 50, "stubborness": 0.1, "persuasiveness": 0.5
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 75, "stubborness": 0.1, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -1124,8 +1148,8 @@
                     "type": "Ref_Rev",
                     "value": -75, "stubborness": 0.9, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 90, "stubborness": 0.25, "persuasiveness": 0.9
                 }
             }
@@ -1154,8 +1178,8 @@
                     "type": "Paci_Mili",
                     "value": 75, "stubborness": 0.5, "persuasiveness": 0.5
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 75, "stubborness": 0.5, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
@@ -1166,8 +1190,8 @@
                     "type": "Ref_Rev",
                     "value": -25, "stubborness": 0.25, "persuasiveness": 0.1
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 50, "stubborness": 0.25, "persuasiveness": 0.25
                 }
             }
@@ -1196,8 +1220,8 @@
                     "type": "Paci_Mili",
                     "value": 90, "stubborness": 0.1, "persuasiveness": 1.0
                 },
-                "Materialism-Spiritualism": {
-                    "type": "Mat_Spi",
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
                     "value": 50, "stubborness": 0.5, "persuasiveness": 1.0
                 },
                 "Individualism-Collectivism": {
@@ -1208,8 +1232,8 @@
                     "type": "Ref_Rev",
                     "value": -100, "stubborness": 1.0, "persuasiveness": 0.5
                 },
-                "Industrialism-Primitivism": {
-                    "type": "Ind_Pri",
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
                     "value": 100, "stubborness": 0.1, "persuasiveness": 0.5
                 }
             }

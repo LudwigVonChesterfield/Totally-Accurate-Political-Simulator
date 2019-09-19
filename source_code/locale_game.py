@@ -12,26 +12,31 @@ EN_AUTHORITY_WORDS = ["authority", "laws", "governance", "guidance", "control",
                       "submission"]
 EN_AUTHORITY_OFFENSIVE_WORDS = ["opressors", "enslavers", "megalomaniac", "bootlicker", "sheeple"]
 
-EN_PACIFISM_WORDS = ["pacifism", "peace", "peacemaker", "peacemonger", "understanding",
-                     "tolerance", "agreements", "friendship"]
+EN_PACIFISM_WORDS = ["pacifism", "peace", "peacemaker", "understanding", "tolerance",
+                     "agreements", "friendship"]
 EN_PACIFISM_OFFENSIVE_WORDS = ["peacemonger", "coward", "spineless"]
 
 EN_MILITARISM_WORDS = ["militarism", "war", "defense", "assault", "weapon",
                        "protection", "enemies", "attack", "capture", "bloody"]
 EN_MILITARISM_OFFENSIVE_WORDS = ["warmonger", "bloodletter"]
 
-EN_MATERIALISM_WORDS = ["materialism", "prosperity", "resources", "acquisition", "science",
-                        "education", "cognition", "naturalness", "universe", "objective"]
-EN_MATERIALISM_OFFENSIVE_WORDS = ["scrooge", "faithless"]
+EN_INTENSIVISM_WORDS = ["intensivism", "distribution", "economy", "efficency", "management"]
+EN_INTENSIVISM_OFFENSIVE_WORDS = ["scrooge"]
 
-EN_SPIRITUALISM_WORDS = ["spiritualism", "deity", "worship", "extrasensory", "insight",
-                         "faith", "religion", "prophecy", "spirit", "paranormal"]
-EN_SPIRITUALISM_OFFENSIVE_WORDS = ["fanatic", "zealot", "bigot"]
+EN_EXTENSIVISM_WORDS = ["extensivism", "acquisition", "resources", "accession", "expansion"]
+EN_EXTENSIVISM_OFFENSIVE_WORDS = ["wastrel"]
+
+# EN_MATERIALISM_WORDS = ["materialism", "prosperity", "resources", "acquisition", "science",
+#                         "education", "cognition", "naturalness", "universe", "objective"]
+# EN_MATERIALISM_OFFENSIVE_WORDS = ["scrooge", "faithless"]
+
+# EN_SPIRITUALISM_WORDS = ["spiritualism", "deity", "worship", "extrasensory", "insight",
+#                          "faith", "religion", "prophecy", "spirit", "paranormal"]
+# EN_SPIRITUALISM_OFFENSIVE_WORDS = ["fanatic", "zealot", "bigot"]
 
 EN_INDIVIDUALISM_WORDS = ["individualism", "personality", "uniqueness", "speciality", "eccentric",
                           "expression", "entrepreneurship", "private"]
 EN_INDIVIDUALISM_OFFENSIVE_WORDS = ["egocentric", "snowflake"]
-
 
 EN_COLLECTIVISM_WORDS = ["collectivism", "unity", "gathering", "coherent", "collectively",
                          "together", "union", "alliance", "public"]
@@ -41,16 +46,29 @@ EN_REFORMISM_WORDS = ["reformism", "legislation", "reform", "stability", "discus
                       "compromise", "gradually"]
 EN_REFORMISM_OFFENSIVE_WORDS = ["indecisive"]
 
-
 EN_REVOLUTIONISM_WORDS =["revolutionism", "negation", "coup", "change", "riot",
                          "protest", "abruptly", "revolution"]
 EN_REVOLUTIONISM_OFFENSIVE_WORDS = ["reactionery"]
 
-EN_INDUSTRIALISM_WORDS = ["industrialism", "urbanization", "efficency", "industry", "business"]
-EN_INDUSTRIALISM_OFFENSIVE_WORDS = ["geek"]
+EN_CONSTRUCTIVISM_WORDS = ["constructivism", "industry", "goal", "artificial", "crafted",
+                           "custom", "synthesis", "elaborate"]
+EN_CONSTRUCTIVISM_OFFENSIVE_WORDS = ["geek", "pervert"]
 
-EN_PRIMITIVISM_WORDS = ["primitivism", "nature", "ecology", "animals", "extinction"]
-EN_PRIMITIVISM_OFFENSIVE_WORDS = ["neanderthal", "mowgli", "hillbilly"]
+EN_ESSENTIALISM_WORDS = ["essentialism", "nature", "essence", "natural", "genuine",
+                           "normal", "life", "simple"]
+EN_ESSENTIALISM_OFFENSIVE_WORDS = ["hillbilly", "retrograde"]
+
+EN_DENIAL_WORDS = ["denial", "absence", "void", "nothing", "non-existance", "non-conformity", "wordly", "destructive"]
+EN_DENIAL_OFFENSIVE_WORDS = ["cynic", "degenerate", "unscrupulous"]
+
+EN_ACCEPTANCE_WORDS = ["acceptance", "presence", "embrace", "everything", "existance", "conformity", "sacred", "constructive"]
+EN_ACCEPTANCE_OFFENSIVE_WORDS = ["idealist"]
+
+# EN_HEDONISM_WORDS = ["hedonism", "lust", "joy", "excess", "pleasure", "happiness"]
+# EN_HEDONISM_OFFENSIVE_WORDS = ["deviant", "snob", "nymphomaniac", "sybarite", "glutton", "chad"]
+
+# EN_ASCETICISM_WORDS = ["asceticism", "purity", "moderation", "abstinence", "cleanliness", "restraint"]
+# EN_ASCETICISM_OFFENSIVE_WORDS = ["prude", "virgin"]
 
 
 
@@ -69,13 +87,19 @@ RU_MILITARISM_WORDS = ["милитаризм", "война", "защита", "н
                        "оборона", "враги", "атака", "захват", "кровавый"]
 RU_MILITARISM_OFFENSIVE_WORDS = ["варвар", "кровопроливец"]
 
-RU_MATERIALISM_WORDS = ["материализм", "процветание", "ресурсы", "добыча", "наука",
-                        "образование", "познание", "естественность", "вселенная", "объективный"]
-RU_MATERIALISM_OFFENSIVE_WORDS = ["скряга", "безбожник"]
+RU_INTENSIVISM_WORDS = ["интенсивизм", "распределение", "экономия", "эффективность", "менеджмент"]
+RU_INTENSIVISM_OFFENSIVE_WORDS = ["скряга"]
 
-RU_SPIRITUALISM_WORDS = ["спиритуализм", "божество", "поклонение", "эзотерика", "прозрение",
-                         "вера", "религия", "пророчество", "дух", "сверхестественность"]
-RU_SPIRITUALISM_OFFENSIVE_WORDS = ["фанатик", "изувер", "мракобес"]
+RU_EXTENSIVISM_WORDS = ["экстенсивизм", "добыча", "ресурсы", "доступ", "экспансия"]
+RU_EXTENSIVISM_OFFENSIVE_WORDS = ["транжира"]
+
+# RU_MATERIALISM_WORDS = ["материализм", "процветание", "ресурсы", "добыча", "наука",
+#                        "образование", "познание", "естественность", "вселенная", "объективный"]
+# RU_MATERIALISM_OFFENSIVE_WORDS = ["скряга", "безбожник"]
+
+# RU_SPIRITUALISM_WORDS = ["спиритуализм", "божество", "поклонение", "эзотерика", "прозрение",
+#                         "вера", "религия", "пророчество", "дух", "сверхестественность"]
+# RU_SPIRITUALISM_OFFENSIVE_WORDS = ["фанатик", "изувер", "мракобес"]
 
 RU_INDIVIDUALISM_WORDS = ["индивидуализм", "личность", "уникальность", "эксцентричный",
                           "самовыражение", "предпринимательство", "частный"]
@@ -93,11 +117,23 @@ RU_REVOLUTIONISM_WORDS =["революционизм", "переговоры", "
                          "протест", "резко", "революция"]
 RU_REVOLUTIONISM_OFFENSIVE_WORDS = ["реакционер"]
 
-RU_INDUSTRIALISM_WORDS = ["индустриализм", "урбанизация", "эффективность", "индустрия", "бизнес"]
-RU_INDUSTRIALISM_OFFENSIVE_WORDS = ["задрот"]
+RU_CONSTRUCTIVISM_WORDS = ["конструктивизм", "урбанизация", "эффективность", "индустрия", "бизнес"]
+RU_CONSTRUCTIVISM_OFFENSIVE_WORDS = ["задрот", "извращенец"]
 
-RU_PRIMITIVISM_WORDS = ["примитивизм", "природа", "экология", "животные", "вымирание"]
-RU_PRIMITIVISM_OFFENSIVE_WORDS = ["неандерталец", "маугли", "деревенщина"]
+RU_ESSENTIALISM_WORDS = ["эссенциализм", "природа", "экология", "животные", "вымирание"]
+RU_ESSENTIALISM_OFFENSIVE_WORDS = ["деревенщина", "ретроград"]
+
+RU_DENIAL_WORDS = ["отрицание", "отсутствие", "пустота", "ничего", "несуществование", "нонконформизм", "мирской", "деструктивный"]
+RU_DENIAL_OFFENSIVE_WORDS = ["циник", "дегенерат", "бессовестный"]
+
+RU_ACCEPTANCE_WORDS = ["принятие", "присутствие", "принимание", "всё", "существование", "конформизм", "сакральный", "конструктивный"]
+RU_ACCEPTANCE_OFFENSIVE_WORDS = ["идеалист", "мракобес"]
+
+# RU_HEDONISM_WORDS = ["гедонизм", "блуд", "радость", "излишество", "удовольствие", "счастье"]
+# RU_HEDONISM_OFFENSIVE_WORDS = ["девиант", "сноб", "нимфоман", "сибарит", "чревоугодец", "чад"]
+
+# RU_ASCETICISM_WORDS = ["аскетизм", "непорочность", "скромность", "воздержание", "чистота", "сдержанность"]
+# RU_ASCETICISM_OFFENSIVE_WORDS = ["святоша", "девственник"]
 
 
 
@@ -116,13 +152,19 @@ LA_MILITARISM_WORDS = ["militarismus", "bellum", "defensio", "aggressura", "arma
                        "protectio", "hostibus", "impetum", "occupatio", "crudus"]
 LA_MILITARISM_OFFENSIVE_WORDS = ["barbarus", "suco"]
 
-LA_MATERIALISM_WORDS = ["materialismus", "prosperitas", "copiae", "extraction", "scientia",
-                        "educatio", "cognitio", "naturalitas", "universum", "objectivus"]
-LA_MATERIALISM_OFFENSIVE_WORDS = ["trahax", "impius"]
+LA_INTENSIVISM_WORDS = ["интенсивизм", "распределение", "экономия", "эффективность", "менеджмент"]
+LA_INTENSIVISM_OFFENSIVE_WORDS = ["скряга"]
 
-LA_SPIRITUALISM_WORDS = ["spiritualismus", "divinitatem", "idololatria", "immaterialismus", "viderio",
-                         "fides", "religio", "divinaria", "spiritus", "extranaturalis"]
-LA_SPIRITUALISM_OFFENSIVE_WORDS = ["fanaticum", "falsus", "cacodaemon"]
+LA_EXTENSIVISM_WORDS = ["экстенсивизм", "добыча", "ресурсы", "доступ", "экспансия"]
+LA_EXTENSIVISM_OFFENSIVE_WORDS = ["транжира"]
+
+# LA_MATERIALISM_WORDS = ["materialismus", "prosperitas", "copiae", "extraction", "scientia",
+#                         "educatio", "cognitio", "naturalitas", "universum", "objectivus"]
+# LA_MATERIALISM_OFFENSIVE_WORDS = ["trahax", "impius"]
+
+# LA_SPIRITUALISM_WORDS = ["spiritualismus", "divinitatem", "idololatria", "immaterialismus", "viderio",
+#                          "fides", "religio", "divinaria", "spiritus", "extranaturalis"]
+# LA_SPIRITUALISM_OFFENSIVE_WORDS = ["fanaticum", "falsus", "cacodaemon"]
 
 LA_INDIVIDUALISM_WORDS = ["individualismus", "persona", "unictatem", "eccentricus",
                           "auto-expressio", "mercatorum", "privatus"]
@@ -140,11 +182,23 @@ LA_REVOLUTIONISM_WORDS =["revolutionismus", "actiones", "eversio", "mutationis",
                          "interdictum", "acriter", "revolutio"]
 LA_REVOLUTIONISM_OFFENSIVE_WORDS = ["reactiator"]
 
-LA_INDUSTRIALISM_WORDS = ["industrialismus", "urbanisatio", "effectivus", "industria", "negotium"]
-LA_INDUSTRIALISM_OFFENSIVE_WORDS = ["technomator"]
+LA_CONSTRUCTIVISM_WORDS = ["constructivismus", "urbanisatio", "effectivus", "industria", "negotium"]
+LA_CONSTRUCTIVISM_OFFENSIVE_WORDS = ["technomator", "извращенец"]
 
-LA_PRIMITIVISM_WORDS = ["primitivismus", "natura", "oecologia", "animali", "exstinctionem"]
-LA_PRIMITIVISM_OFFENSIVE_WORDS = ["simlicitium", "lupus", "biberius"]
+LA_ESSENTIALISM_WORDS = ["essentialismus", "natura", "oecologia", "animali", "exstinctionem"]
+LA_ESSENTIALISM_OFFENSIVE_WORDS = ["biberius", "ретроград"]
+
+LA_DENIAL_WORDS = ["отрицание", "отсутствие", "пустота", "ничего", "несуществование", "нонконформизм", "сакральный", "дестркутивный"]
+LA_DENIAL_OFFENSIVE_WORDS = ["циник", "дегенерат", "бессовестный"]
+
+LA_ACCEPTANCE_WORDS = ["принятие", "присутствие", "принимание", "всё", "существование", "конформизм", "мирской", "конструктивный"]
+LA_ACCEPTANCE_OFFENSIVE_WORDS = ["идеалист", "мракобес"]
+
+# LA_HEDONISM_WORDS = ["гедонизм", "блуд", "радость", "излишество", "удовольствие", "счастье"]
+# LA_HEDONISM_OFFENSIVE_WORDS = ["девиант", "сноб", "нимфоман", "сибарит", "чревоугодец", "чад"]
+
+# LA_ASCETICISM_WORDS = ["аскетизм", "непорочность", "скромность", "воздержание", "чистота", "сдержанность"]
+# LA_ASCETICISM_OFFENSIVE_WORDS = ["святоша", "девственник"]
 
 
 
@@ -152,14 +206,20 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Liberty_Offensive": EN_LIBERTY_OFFENSIVE_WORDS, "Authority_Offensive": EN_AUTHORITY_OFFENSIVE_WORDS,
                  "Pacifism": EN_PACIFISM_WORDS, "Militarism": EN_MILITARISM_WORDS,
                  "Pacifism_Offensive": EN_PACIFISM_OFFENSIVE_WORDS, "Militarism_Offensive": EN_MILITARISM_OFFENSIVE_WORDS,
-                 "Materialism": EN_MATERIALISM_WORDS, "Spiritualism": EN_SPIRITUALISM_WORDS,
-                 "Materialism_Offensive": EN_MATERIALISM_OFFENSIVE_WORDS, "Spiritualism_Offensive": EN_SPIRITUALISM_OFFENSIVE_WORDS,
+                 "Intensivism": EN_INTENSIVISM_WORDS, "Extensivism": EN_EXTENSIVISM_WORDS,
+                 "Intensivism_Offensive": EN_INTENSIVISM_OFFENSIVE_WORDS, "Extensivism_Offensive": EN_EXTENSIVISM_OFFENSIVE_WORDS,
+                 # "Materialism": EN_MATERIALISM_WORDS, "Spiritualism": EN_SPIRITUALISM_WORDS,
+                 # "Materialism_Offensive": EN_MATERIALISM_OFFENSIVE_WORDS, "Spiritualism_Offensive": EN_SPIRITUALISM_OFFENSIVE_WORDS,
                  "Individualism": EN_INDIVIDUALISM_WORDS, "Collectivism": EN_COLLECTIVISM_WORDS,
                  "Individualism_Offensive": EN_INDIVIDUALISM_OFFENSIVE_WORDS, "Collectivism_Offensive": EN_COLLECTIVISM_OFFENSIVE_WORDS,
                  "Reformism": EN_REFORMISM_WORDS, "Revolutionism": EN_REVOLUTIONISM_WORDS,
                  "Reformism_Offensive": EN_REFORMISM_OFFENSIVE_WORDS, "Revolutionism_Offensive": EN_REVOLUTIONISM_OFFENSIVE_WORDS,
-                 "Industrialism": EN_INDUSTRIALISM_WORDS, "Primitivism": EN_PRIMITIVISM_WORDS,
-                 "Industrialism_Offensive": EN_INDUSTRIALISM_OFFENSIVE_WORDS, "Primitivism_Offensive": EN_PRIMITIVISM_OFFENSIVE_WORDS,
+                 "Constructivism": EN_CONSTRUCTIVISM_WORDS, "Essentialism": EN_ESSENTIALISM_WORDS,
+                 "Constructivism_Offensive": EN_CONSTRUCTIVISM_OFFENSIVE_WORDS, "Essentialism_Offensive": EN_ESSENTIALISM_OFFENSIVE_WORDS,
+                 "Denial": EN_DENIAL_WORDS, "Acceptance": EN_ACCEPTANCE_WORDS,
+                 "Denial_Offensive": EN_DENIAL_OFFENSIVE_WORDS, "Acceptance_Offensive": EN_ACCEPTANCE_OFFENSIVE_WORDS,
+                 # "Hedonism": EN_HEDONISM_WORDS, "Asceticism": EN_ASCETICISM_WORDS,
+                 # "Hedonism_Offensive": EN_HEDONISM_OFFENSIVE_WORDS, "Asceticism_Offensive": EN_ASCETICISM_OFFENSIVE_WORDS,
 
                  "Book_Titles": ["The %s Manifesto", "The Book of %s", "The %s Book", "A Short Guide to %s", "%s Manual"],
 
@@ -190,7 +250,8 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Centrism": "Centrism",
 
                  # Wacky.
-                 "Post-Cosmic Anarcho-Nihilism": "Post-Cosmic Anarcho-Nihilism",
+                 "Post-cosmic anarcho-nihilism": "Post-cosmic anarcho-nihilism",
+                 "Trans anarcho-pacifism": "Trans anarcho-pacifism",
 
                  # Communists.
                  "Communism": "Communism",
@@ -219,6 +280,8 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Fascist syndicalism": "Fascist syndicalism",
 
                  # Government enthusiasts.
+                 "Monarchism": "Monarchism",
+                 "Imperialism": "Imperialism",
                  "Statism": "Statism",
                  "Minarchism": "Minarchism",
                  "Social democracy": "Social democracy",
@@ -253,14 +316,20 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Liberty_Offensive": RU_LIBERTY_OFFENSIVE_WORDS, "Authority_Offensive": RU_AUTHORITY_OFFENSIVE_WORDS,
                  "Pacifism": RU_PACIFISM_WORDS, "Militarism": RU_MILITARISM_WORDS,
                  "Pacifism_Offensive": RU_PACIFISM_OFFENSIVE_WORDS, "Militarism_Offensive": RU_MILITARISM_OFFENSIVE_WORDS,
-                 "Materialism": RU_MATERIALISM_WORDS, "Spiritualism": RU_SPIRITUALISM_WORDS,
-                 "Materialism_Offensive": RU_MATERIALISM_OFFENSIVE_WORDS, "Spiritualism_Offensive": RU_SPIRITUALISM_OFFENSIVE_WORDS,
+                 "Intensivism": RU_INTENSIVISM_WORDS, "Extensivism": RU_EXTENSIVISM_WORDS,
+                 "Intensivism_Offensive": RU_INTENSIVISM_OFFENSIVE_WORDS, "Extensivism_Offensive": RU_EXTENSIVISM_OFFENSIVE_WORDS,
+                 # "Materialism": RU_MATERIALISM_WORDS, "Spiritualism": RU_SPIRITUALISM_WORDS,
+                 # "Materialism_Offensive": RU_MATERIALISM_OFFENSIVE_WORDS, "Spiritualism_Offensive": RU_SPIRITUALISM_OFFENSIVE_WORDS,
                  "Individualism": RU_INDIVIDUALISM_WORDS, "Collectivism": RU_COLLECTIVISM_WORDS,
                  "Individualism_Offensive": RU_INDIVIDUALISM_OFFENSIVE_WORDS, "Collectivism_Offensive": RU_COLLECTIVISM_OFFENSIVE_WORDS,
                  "Reformism": RU_REFORMISM_WORDS, "Revolutionism": RU_REVOLUTIONISM_WORDS,
                  "Reformism_Offensive": RU_REFORMISM_OFFENSIVE_WORDS, "Revolutionism_Offensive": RU_REVOLUTIONISM_OFFENSIVE_WORDS,
-                 "Industrialism": RU_INDUSTRIALISM_WORDS, "Primitivism": RU_PRIMITIVISM_WORDS,
-                 "Industrialism_Offensive": RU_INDUSTRIALISM_OFFENSIVE_WORDS, "Primitivism_Offensive": RU_PRIMITIVISM_OFFENSIVE_WORDS,
+                 "Constructivism": RU_CONSTRUCTIVISM_WORDS, "Essentialism": RU_ESSENTIALISM_WORDS,
+                 "Constructivism_Offensive": RU_CONSTRUCTIVISM_OFFENSIVE_WORDS, "Essentialism_Offensive": RU_ESSENTIALISM_OFFENSIVE_WORDS,
+                 "Denial": RU_DENIAL_WORDS, "Acceptance": RU_ACCEPTANCE_WORDS,
+                 "Denial_Offensive": RU_DENIAL_OFFENSIVE_WORDS, "Acceptance_Offensive": RU_ACCEPTANCE_OFFENSIVE_WORDS,
+                 # "Hedonism": RU_HEDONISM_WORDS, "Asceticism": RU_ASCETICISM_WORDS,
+                 # "Hedonism_Offensive": RU_HEDONISM_OFFENSIVE_WORDS, "Asceticism_Offensive": RU_ASCETICISM_OFFENSIVE_WORDS,
 
                  "Book_Titles": ["Манифест %s", "Книга о %s", "Книга %s", "Краткое Пособие к %s", "Мануал %s"],
 
@@ -290,7 +359,8 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Centrism": "Центризм",
 
                  # Wacky.
-                 "Post-Cosmic Anarcho-Nihilism": "Пост-Космический Анархо-Нигилизм",
+                 "Post-cosmic anarcho-nihilism": "Пост-космический анархо-нигилизм",
+                 "Trans anarcho-pacifism": "Транс анархо-пацифизм",
 
                  # Communists.
                  "Communism": "Коммунизм",
@@ -319,6 +389,8 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Fascist syndicalism": "Фашистский синдикализм",
 
                  # Government enthusiasts.
+                 "Monarchism": "Монархизм",
+                 "Imperialism": "Империализм",
                  "Statism": "Этатизм",
                  "Minarchism": "Минархизм",
                  "Social democracy": "Социальная-демократия",
@@ -347,20 +419,27 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Conservatism": "Консерватизм",
                  "Accelerationism": "Акселерационизм",
                  "Transhumanism": "Трансгуманизм",
+                 "Nihilism": "Нигилизм"
                 },
 
           "la": {"Liberty": LA_LIBERTY_WORDS, "Authority": LA_AUTHORITY_WORDS,
                  "Liberty_Offensive": LA_LIBERTY_OFFENSIVE_WORDS, "Authority_Offensive": LA_AUTHORITY_OFFENSIVE_WORDS,
                  "Pacifism": LA_PACIFISM_WORDS, "Militarism": LA_MILITARISM_WORDS,
                  "Pacifism_Offensive": LA_PACIFISM_OFFENSIVE_WORDS, "Militarism_Offensive": LA_MILITARISM_OFFENSIVE_WORDS,
-                 "Materialism": LA_MATERIALISM_WORDS, "Spiritualism": LA_SPIRITUALISM_WORDS,
-                 "Materialism_Offensive": LA_MATERIALISM_OFFENSIVE_WORDS, "Spiritualism_Offensive": LA_SPIRITUALISM_OFFENSIVE_WORDS,
+                 "Intensivism": LA_INTENSIVISM_WORDS, "Extensivism": LA_EXTENSIVISM_WORDS,
+                 "Intensivism_Offensive": LA_INTENSIVISM_OFFENSIVE_WORDS, "Extensivism_Offensive": LA_EXTENSIVISM_OFFENSIVE_WORDS,
+                 # "Materialism": LA_MATERIALISM_WORDS, "Spiritualism": LA_SPIRITUALISM_WORDS,
+                 # "Materialism_Offensive": LA_MATERIALISM_OFFENSIVE_WORDS, "Spiritualism_Offensive": LA_SPIRITUALISM_OFFENSIVE_WORDS,
                  "Individualism": LA_INDIVIDUALISM_WORDS, "Collectivism": LA_COLLECTIVISM_WORDS,
                  "Individualism_Offensive": LA_INDIVIDUALISM_OFFENSIVE_WORDS, "Collectivism_Offensive": LA_COLLECTIVISM_OFFENSIVE_WORDS,
                  "Reformism": LA_REFORMISM_WORDS, "Revolutionism": LA_REVOLUTIONISM_WORDS,
                  "Reformism_Offensive": LA_REFORMISM_OFFENSIVE_WORDS, "Revolutionism_Offensive": LA_REVOLUTIONISM_OFFENSIVE_WORDS,
-                 "Industrialism": LA_INDUSTRIALISM_WORDS, "Primitivism": LA_PRIMITIVISM_WORDS,
-                 "Industrialism_Offensive": LA_INDUSTRIALISM_OFFENSIVE_WORDS, "Primitivism_Offensive": LA_PRIMITIVISM_OFFENSIVE_WORDS,
+                 "Constructivism": LA_CONSTRUCTIVISM_WORDS, "Essentialism": LA_ESSENTIALISM_WORDS,
+                 "Constructivism_Offensive": LA_CONSTRUCTIVISM_OFFENSIVE_WORDS, "Essentialism_Offensive": LA_ESSENTIALISM_OFFENSIVE_WORDS,
+                 "Denial": LA_DENIAL_WORDS, "Acceptance": LA_ACCEPTANCE_WORDS,
+                 "Denial_Offensive": LA_DENIAL_OFFENSIVE_WORDS, "Acceptance_Offensive": LA_ACCEPTANCE_OFFENSIVE_WORDS,
+                 # "Hedonism": LA_HEDONISM_WORDS, "Asceticism": LA_ASCETICISM_WORDS,
+                 # "Hedonism_Offensive": LA_HEDONISM_OFFENSIVE_WORDS, "Asceticism_Offensive": LA_ASCETICISM_OFFENSIVE_WORDS,
 
                  "Book_Titles": ["Манифест %s", "Книга о %s", "Книга %s", "Краткое Пособие к %s", "Мануал %s"],
 
@@ -390,7 +469,8 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Centrism": "Centrismus",
 
                  # Wacky.
-                 "Post-Cosmic Anarcho-Nihilism": "Пост-Космический Анархо-Нигилизм",
+                 "Post-cosmic anarcho-nihilism": "Пост-космический анархо-нигилизм",
+                 "Trans anarcho-pacifism": "Транс анархо-пацифизм",
 
                  # Communists.
                  "Communism": "Communismus",
@@ -419,6 +499,8 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Fascist syndicalism": "Syndicalismus fascistis",
 
                  # Government enthusiasts.
+                 "Monarchism": "Монархизм",
+                 "Imperialism": "Империализм",
                  "Statism": "Civitismus",
                  "Minarchism": "Minauctorismus",
                  "Social democracy": "Populiauctorismus socialis",
@@ -428,10 +510,10 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
 
                  # "Greens".
                  "Green politics": "Politica virida",
-                 "Anarcho-individualism": "Primitivismus irauctoris",
+                 "Anarcho-primitivism": "Primitivismus irauctoris",
 
                  # EGO.
-                 "Anarcho-individualism": "Primitivismus irauctoris",
+                 "Anarcho-individualism": "Individualismus irauctoris",
                  "Meritocracy": "Dignauctoria",
                  "Technocracy": "Arsauctoria",
 
@@ -447,5 +529,6 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Conservatism": "Conservatismus",
                  "Accelerationism": "Accelerationismus",
                  "Transhumanism": "Transhumanismus",
+                 "Nihilism": "Нигилизм"
                 }
 }

@@ -554,18 +554,21 @@ class Citizen:
 
         return self.political_view.get_sentence(pos_viewpoints, viewpoints_points, viewpoints_offense_points, self.vocal, targets_text)
 
-    def queue_say(self, predetermined_targets=None, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan'):
+    def queue_say(self, verb=None, predetermined_targets=None, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan', on_say_done=None, on_say_done_args=None):
         global_vars.actions_queue.append(
             {
                 "speaker": self,
+                "verb": verb,
                 "type": "say",
                 "predetermined_targets": predetermined_targets,
                 "predetermined_triggers": predetermined_triggers,
                 "fg_color": fg_color,
-                "bg_color": bg_color
+                "bg_color": bg_color,
+                "on_say_done": on_say_done,
+                "on_say_done_args": on_say_done_args
             })
 
-    def say(self, predetermined_targets=None, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan'):
+    def say(self, verb=None, predetermined_targets=None, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan', on_say_done=None, on_say_done_args=None):
         """
         Returns False if we didn't say anything.
         Returns True if we did say something.
@@ -587,7 +590,10 @@ class Citizen:
         targets_text = self.get_targets_text(targets_amount, targets)
 
         sentence = self.get_sentence(targets, targets_text, words_amount, predetermined_triggers=MESSAGE_TRIGGER_NONE, fg_color='white', bg_color='cyan')
-        verb = self.get_verb(sentence)
+        if(verb is None):
+            verb = self.get_verb(sentence)
+        else:
+            verb = LOCALE[LOCALE_LANGUAGE][verb]
 
         if(len(sentence) == 0):
             sentence = "..."
@@ -615,6 +621,9 @@ class Citizen:
 
         for citizen in to_hear:
             citizen.queue_hear(self, verb, sentence, predetermined_triggers)
+
+        if(on_say_done is not None):
+            on_say_done(on_say_done_args)
 
         return True
 
@@ -1739,6 +1748,16 @@ class Book(Item):
     def use(self, user, target):
         self.read_by_names.append(target.name)
 
+        all_read = True
+        for citizen in global_vars.citizens:
+            if(citizen not in self.read_by_names):
+                all_read = False
+                break
+
+        if(all_read):
+            all_books.remove(self)
+            user.inventory.remove(self)
+
         target.hear(self.created_by, "writes", self.text, MESSAGE_TRIGGER_NONE)
         to_chat("<span class='emote_name'>" + target.name + "</span>" +
                 "<span class='emote'> " + LOCALE[LOCALE_LANGUAGE]["Reads"] + " </span>" +
@@ -1805,10 +1824,13 @@ if(__name__ == "__main__"):
                 action = global_vars.actions_queue.popleft()
                 if(action["type"] == "say"):
                     action["speaker"].say(
+                        verb=action["verb"],
                         predetermined_targets=action["predetermined_targets"],
                         predetermined_triggers=action["predetermined_triggers"],
                         fg_color=action["fg_color"],
-                        bg_color=action["bg_color"]
+                        bg_color=action["bg_color"],
+                        on_say_done=action["on_say_done"],
+                        on_say_done_args=action["on_say_done_args"]
                         )
                 elif(action["type"] == "emote"):
                     action["speaker"].emote(

@@ -11,48 +11,55 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":  # Technically a list of all axis. Albeit all of them are zero.
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Silver",
     "Background": "DarkSlateGray"
     },
 
     # Wacky.
+    "Post-cosmic anarcho-nihilism":
+    {"Axis":
+        {"Liberty-Authority": 100,
+         "Pacifism-Militarism": 0,
+         "Intensivism-Extensivism": 0,
+         "Individualism-Collectivism": 0,
+         "Reformism-Revolutionism": -100,
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 100,
+        },
+    "Foreground": "Aquamarine",
+    "Background": "Navy"
+    },
 
-    # WOMB is Маняверс. World of Make-Believe.
-
-    # This ideology centers around the fact that "cosmos" does not exist.
-    # When humans leave the atmosphere of the planet, they enter the WOMB, a world where government of no kind can exist.
-    # In fact, nothing can exist there.
-
-    # The goal of Post-Cosmic Anarcho-Nihilists is "Total Ascension" - an act of constructing an engine powerful enough
-    # to move the entire planet into WOMB.
-
-    # "Post-Cosmic Anarcho-Nihilism":
-    # {"Axis":  # Technically a list of all axis. Albeit all of them are zero.
-        # {"Liberty-Authority": 100,
-        # "Pacifism-Militarism": 100,
-        # "Materialism-Spiritualism": 100,
-        # "Individualism-Collectivism": 100,
-        # "Reformism-Revolutionism": 0,
-        # "Industrialism-Primitivism": 100
-        # },
-    # "Foreground": "Aquamarine",
-    # "Background": "Navy"
-    # },
+    "Trans anarcho-pacifism":
+    {"Axis":
+        {"Liberty-Authority": 100,
+         "Pacifism-Militarism": 100,
+         "Intensivism-Extensivism": 0,
+         "Individualism-Collectivism": 100,
+         "Reformism-Revolutionism": 0,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 100,
+        },
+    "Foreground": "Purple",
+    "Background": "Navy"
+    },
 
     # Communists.
     "Communism":
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Red",
     "Background": "Red"
@@ -62,10 +69,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Red",
     "Background": "Navy"
@@ -75,23 +83,25 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
-    "Foreground": "White",
-    "Background": "FireBrick"
+    "Foreground": "FireBrick",
+    "Background": "White"
     },
 
     "Anarcho-trotskyism":
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "FireBrick",
     "Background": "Navy",
@@ -101,10 +111,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 100,
         },
     "Foreground": "Yellow",
     "Background": "FireBrick"
@@ -114,10 +125,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 100,
         },
     "Foreground": "FireBrick",
     "Background": "Navy"
@@ -128,10 +140,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 100,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": 100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Yellow",
     "Background": "Yellow"
@@ -141,10 +154,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 50,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 100,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": 100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Yellow",
     "Background": "LightSlateGrey"
@@ -154,10 +168,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 100,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": 100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Yellow",
     "Background": "Navy"
@@ -168,10 +183,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Sienna",
     "Background": "Sienna"
@@ -181,10 +197,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Sienna",
     "Background": "Navy"
@@ -194,10 +211,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 100,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Sienna",
     "Background": "Yellow"
@@ -207,10 +225,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": -100,
+         "Constructivism-Essentialism": -100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Sienna",
     "Background": "Green"
@@ -220,10 +239,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 100,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0,
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Sienna",
     "Background": "Blue"
@@ -233,10 +253,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": -100,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0,
+         "Constructivism-Essentialism": -100,
+         "Denial-Acceptance": -100,
         },
     "Foreground": "Sienna",
     "Background": "Purple"
@@ -247,10 +268,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "FireBrick",
     "Background": "Navy"  # Look at Anarcho-syndicalism. Do you see the joke?
@@ -260,10 +282,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "FireBrick",
     "Background": "Navy"
@@ -273,24 +296,54 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": -100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "FireBrick",
     "Background": "Sienna"
     },
 
     # Government enthusiasts.
+    "Monarchism":
+    {"Axis":
+        {"Liberty-Authority": -100,
+         "Pacifism-Militarism": 0,
+         "Intensivism-Extensivism": 0,
+         "Individualism-Collectivism": 0,
+         "Reformism-Revolutionism": 100,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": -100,
+        },
+    "Foreground": "White",
+    "Background": "Purple"
+    },
+
+    "Imperialism":
+    {"Axis":
+        {"Liberty-Authority": -100,
+         "Pacifism-Militarism": -100,
+         "Intensivism-Extensivism": -100,
+         "Individualism-Collectivism": 0,
+         "Reformism-Revolutionism": 0,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
+        },
+    "Foreground": "White",
+    "Background": "Red"
+    },
+
     "Statism":
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Red",
     "Background": "Blue"
@@ -300,10 +353,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -50,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -50,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Yellow",
     "Background": "Blue"
@@ -313,10 +367,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -50,
          "Pacifism-Militarism": 50,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -50,
-         "Reformism-Revolutionism": 50,
-         "Industrialism-Primitivism": 0
+         "Reformism-Revolutionism": -50,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Blue",
     "Background": "Yellow"
@@ -327,10 +382,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 100,
          "Individualism-Collectivism": 0,
-         "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 100
+         "Reformism-Revolutionism": -50,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Silver",
     "Background": "Navy"
@@ -341,10 +397,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 100,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": -50
+         "Constructivism-Essentialism": -50,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Green",
     "Background": "White"
@@ -354,10 +411,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": -100
+         "Constructivism-Essentialism": -100,
+         "Denial-Acceptance": 100,
         },
     "Foreground": "Green",
     "Background": "Navy"
@@ -368,10 +426,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Cyan",
     "Background": "Navy"
@@ -381,10 +440,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Cyan",
     "Background": "Red"
@@ -394,10 +454,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 100,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 100,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Cyan",
     "Background": "Blue"
@@ -408,10 +469,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": -100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": -100,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": -100,
+         "Denial-Acceptance": -100,
         },
     "Foreground": "Purple",
     "Background": "Purple"
@@ -419,12 +481,13 @@ IDEOLOGIES_CLASSIFICATION = {
 
     "Liberation theology":
     {"Axis":
-        {"Liberty-Authority": -50,
+        {"Liberty-Authority": -100,
          "Pacifism-Militarism": 50,
-         "Materialism-Spiritualism": -100,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": -50,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": -100,
+         "Denial-Acceptance": -100,
         },
     "Foreground": "Purple",
     "Background": "Red"
@@ -435,10 +498,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 50,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "LightSlateGrey",
     "Background": "LightSlateGrey"
@@ -450,10 +514,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 100,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Navy",
     "Background": "Navy"  # Sadly I use black for background, so Anarchists will have to be "Navy", until a better solution is found...
@@ -463,10 +528,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 100,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 0,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 100,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Blue",
     "Background": "Blue"
@@ -476,10 +542,11 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": 100,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "Dodgerblue",
     "Background": "Dodgerblue"
@@ -489,12 +556,27 @@ IDEOLOGIES_CLASSIFICATION = {
     {"Axis":
         {"Liberty-Authority": 0,
          "Pacifism-Militarism": 0,
-         "Materialism-Spiritualism": 0,
+         "Intensivism-Extensivism": 0,
          "Individualism-Collectivism": 0,
          "Reformism-Revolutionism": -100,
-         "Industrialism-Primitivism": 0
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 0,
         },
     "Foreground": "White",
     "Background": "White"
+    },
+
+    "Nihilism":
+    {"Axis":
+        {"Liberty-Authority": 0,
+         "Pacifism-Militarism": 0,
+         "Intensivism-Extensivism": 0,
+         "Individualism-Collectivism": 0,
+         "Reformism-Revolutionism": 0,
+         "Constructivism-Essentialism": 0,
+         "Denial-Acceptance": 100,
+        },
+    "Foreground": "Aquamarine",
+    "Background": "Aquamarine"
     },
 }

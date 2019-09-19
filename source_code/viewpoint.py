@@ -113,6 +113,10 @@ class Viewpoint:
 
 
 class Lib_Aut(Viewpoint):
+    """
+    Liberty is the movement for lesser intrusion into each individual's life in any shape or form. Be it government, corporative, etc...
+    Authority is thus, the complete opposite.
+    """
     name = "Liberty-Authority"
 
     pos_name = "Liberty"
@@ -127,6 +131,10 @@ class Lib_Aut(Viewpoint):
 
 
 class Paci_Mili(Viewpoint):
+    """
+    Pacifism is not disregard for war, but for violence and violent methods of ANYTHING in general.
+    Militarism is thus, the opposite.
+    """
     name = "Pacifism-Militarism"
 
     pos_name = "Pacifism"
@@ -140,7 +148,29 @@ class Paci_Mili(Viewpoint):
     neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Militarism_Offensive"]
 
 
+class Int_Ext(Viewpoint):
+    """
+    Intensivism is the practice of thoughtfully distributing limited resources.
+    Extensivism is the practice of gathering MORE resources each time they are not abundant.
+    """
+    name = "Intensivism-Extensivism"
+
+    pos_name = "Intensivism"
+    pos_color = "Yellow"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Intensivism"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Intensivism_Offensive"]
+
+    neg_name = "Extensivism"
+    neg_color = "Red"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Extensivism"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Extensivism_Offensive"]
+
+"""
 class Mat_Spi(Viewpoint):
+    '''
+    Materialism is the denial of non-material essences, objects, subjects, phenomena.
+    Spiritualism is the acceptance, and even embracement of the non-material.
+    '''
     name = "Materialism-Spiritualism"
 
     pos_name = "Materialism"
@@ -152,9 +182,13 @@ class Mat_Spi(Viewpoint):
     neg_color = "Purple"
     neg_words = LOCALE[LOCALE_LANGUAGE]["Spiritualism"]
     neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Spiritualism_Offensive"]
-
+"""
 
 class Ind_Col(Viewpoint):
+    """
+    Individualism is the focus on needs of an individual, as opposed to...
+    Collectivism is the focus on needs of THE group, THE "majority", THE "all".
+    """
     name = "Individualism-Collectivism"
 
     pos_name = "Individualism"
@@ -169,6 +203,10 @@ class Ind_Col(Viewpoint):
 
 
 class Ref_Rev(Viewpoint):
+    """
+    Reformism is a movement for saving the status-quo, and the less invasive forms and methods of change.
+    Revolutionism is an opposite to Reformism.
+    """
     name = "Reformism-Revolutionism"
 
     pos_name = "Reformism"
@@ -182,15 +220,56 @@ class Ref_Rev(Viewpoint):
     neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Revolutionism_Offensive"]
 
 
-class Ind_Pri(Viewpoint):
-    name = "Industrialism-Primitivism"
+class Con_Ess(Viewpoint):
+    """
+    Constructivism is the movement that say solutions to problems lie in man-made anything.
+    Essentialism is the movement that suggests that such solutions are already out there, and we only need to discover them.
+    """
+    name = "Constructivism-Essentialism"
 
-    pos_name = "Industrialism"
+    pos_name = "Constructivism"
     pos_color = "Yellow"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Industrialism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Industrialism_Offensive"]
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Constructivism"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Constructivism_Offensive"]
 
-    neg_name = "Primitivism"
+    neg_name = "Essentialism"
     neg_color = "Green"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Primitivism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Primitivism_Offensive"]
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Essentialism"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Essentialism_Offensive"]
+
+
+class Den_Acc(Viewpoint):
+    """
+    Denial is in a sense, a form of nihilism, denial of anything: reason, logic, truth.
+    Acceptance is the claim that all of the above actually are true, or do exist.
+    """
+    name = "Denial-Acceptance"
+
+    pos_name = "Denial"
+    pos_color = "Blue"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Denial"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Denial_Offensive"]
+
+    neg_name = "Acceptance"
+    neg_color = "Red"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Acceptance"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Acceptance_Offensive"]
+
+"""
+class Hed_Asc(Viewpoint):
+    '''
+    Hedonism is embracing any lustful activity an individual, or a collective can perform.
+    Asceticism is a form of restraint from those activities.
+    '''
+    name = "Hedonism-Asceticism"
+
+    pos_name = "Hedonism"
+    pos_color = "Purple"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Hedonism"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Hedonism_Offensive"]
+
+    neg_name = "Asceticism"
+    neg_color = "Grey"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Asceticism"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Asceticism_Offensive"]
+"""
