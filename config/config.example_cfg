@@ -5,6 +5,7 @@
 # This variable enables some funky stuff, such as config_loader output.
 DEBUG = False
 
+SECRET_KEY = "HERE LIES A KEY THAT'S HARD TO GUESS"
 # Only this IP can use the BACKDOOR_AUTHORIZATION_WORD, unless set to 0.0.0.0... Then anyone can use the backdoor. Default is 127.0.0.1.
 BACKDOOR_AUTHORIZATION_IP = "127.0.0.1"
 # A super important word that if typed into somewhere correctly grants you full access. Use something secure. Default is EINATH.
@@ -17,6 +18,11 @@ UPDATE_CACHE = False
 MAX_PLAYER_COUNT = 30
 # What is the max amount of clients connected with one IP. Default is 3.
 MAX_CLIENTS_PER_IP = 3
+
+# These are required for Discord authentication.
+DISCORD_OAUTH2_CLIENT_ID = ""
+DISCORD_OAUTH2_CLIENT_SECRET = ""
+DISCORD_OAUTH2_REDIRECT_URI = ""
 
 # What language to use when running the program. Default is "en", allowed are: "en", "ru", "la".
 LOCALE_LANGUAGE = "en"

@@ -37,13 +37,17 @@ Setting up CONFIG.
 CONFIG_REQUEST = {
     "DEBUG": {"cfg_type": "bool", "def_value": False},  # config_loader only outputs messages if this is True.
 
-    "SECRET_KEY": {"cfg_type": "key"},  # This is not in the config.cfg, as it is always generated completely at random.
+    "SECRET_KEY": {"cfg_type": "str", "def_value": "1111", "min_val": 1, "max_val": 100},  # This is not in the config.cfg, as it is always generated completely at random.
     "BACKDOOR_AUTHORIZATION_IP": {"cfg_type": "str", "def_value": "127.0.0.1", "min_val": 7, "max_val": 15},
     "BACKDOOR_AUTHORIZATION_WORD": {"cfg_type": "str", "def_value": "EINATH", "min_val": 1, "max_val": 100},
     "PORT": {"cfg_type": "int", "def_value": 8080, "min_val": 0, "max_val": 65535},
     "UPDATE_CACHE": {"cfg_type": "bool", "def_value": False},
     "MAX_PLAYER_COUNT": {"cfg_type": "int", "def_value": 30, "min_val": 0, "max_val": 100},
     "MAX_CLIENTS_PER_IP": {"cfg_type": "int", "def_value": 3, "min_val": 0, "max_val": 100},
+
+    "DISCORD_OAUTH2_CLIENT_ID": {"cfg_type": "str", "def_value": "", "min_val": 0, "max_val": 100},
+    "DISCORD_OAUTH2_CLIENT_SECRET": {"cfg_type": "str", "def_value": "", "min_val": 0, "max_val": 100},
+    "DISCORD_OAUTH2_REDIRECT_URI": {"cfg_type": "str", "def_value": "", "min_val": 0, "max_val": 100},
 
     "LOCALE_LANGUAGE": {"cfg_type": "str", "def_value": "en", "min_val": 0, "max_val": 2, "possible_values": ["en", "ru", "la"]},
 
@@ -140,8 +144,6 @@ RELATIONSHIP_THRESHOLDS = [
     {"Name": "Hate", "Min": -90, "Max": -50, "Color": 'red', "Reaction_Mod": -50},
     {"Name": "Feud", "Min": -100, "Max": -90, "Color": 'red; font-weight: bold', "Reaction_Mod": -90}
 ]
-
-max_player_count = CFG["MAX_PLAYER_COUNT"]
 
 """
 Lambda functions and functions.
@@ -291,15 +293,15 @@ def generate_reaction(emotionality, possible_trigger, speaker=True, saveObject={
 
 
 def to_chat(text):
-    for client_info in global_vars.client_infos_by_ip.values():
-        if(client_info.loaded):
-            client_info.saved_messages.append(text)
+    for ip_client_info in global_vars.client_infos_by_ip.values():
+        for client_info in ip_client_info:
+            if(client_info.loaded):
+                client_info.saved_messages.append(text)
 
     speak_to = list(global_vars.clients_by_sid.values()).copy()
     for client in speak_to:
         if(not client.disconnecting):
             client.whisper(text)
-    # socketio.emit('npc_message', {"data": text})
 
 
 def to_chat_relationship_shift(listener, speaker, value):
@@ -1793,269 +1795,7 @@ def save_server_state():
 
 
 if(__name__ == "__main__"):
-    from commands import parse_commands
-
-    """
-    Server part.
-    """
-
-    global can_speak
-
-    can_speak = False
-
-    def citizen_speech():
-        global can_speak
-
-        while(True):
-            if(can_speak):
-                break
-            time.sleep(1)
-
-        cur_backup_tick = 0
-        next_backup_tick = 20000
-
-        while(True):
-            cur_backup_tick += 1
-            if(cur_backup_tick >= next_backup_tick):
-                save_server_state()
-                cur_backup_tick = 0
-                next_backup_tick = 20000
-            if(len(global_vars.actions_queue) > 0):
-                action = global_vars.actions_queue.popleft()
-                if(action["type"] == "say"):
-                    action["speaker"].say(
-                        verb=action["verb"],
-                        predetermined_targets=action["predetermined_targets"],
-                        predetermined_triggers=action["predetermined_triggers"],
-                        fg_color=action["fg_color"],
-                        bg_color=action["bg_color"],
-                        on_say_done=action["on_say_done"],
-                        on_say_done_args=action["on_say_done_args"]
-                        )
-                elif(action["type"] == "emote"):
-                    action["speaker"].emote(
-                        action["emotion"],
-                        emotion_target=action["emotion_target"],
-                        predetermined_targets=action["predetermined_targets"],
-                        predetermined_triggers=action["predetermined_triggers"],
-                        on_emote_done=action["on_emote_done"],
-                        on_emote_done_args=action["on_emote_done_args"]
-                        )
-            elif(len(global_vars.reactions_queue) > 0):
-                reaction = global_vars.reactions_queue.popleft()
-                if(reaction["type"] == "hear"):
-                    reaction["hearer"].hear(
-                        reaction["speaker"],
-                        reaction["verb"],
-                        reaction["sentence"],
-                        reaction["predetermined_triggers"],
-                        reaction["proxy_speaker"],
-                        reaction["on_hear_done"],
-                        reaction["on_hear_done_args"]
-                        )
-                elif(reaction["type"] == "hear_emote"):
-                    reaction["hearer"].hear_emote(
-                        reaction["speaker"],
-                        reaction["emotion"],
-                        reaction["provoker"],
-                        reaction["predetermined_triggers"]
-                        )
-            else:
-                citizen = random.choice(global_vars.citizens)
-                citizen.non_motivated_action()
-
-
-    import threading
-
-    from flask import Flask, render_template, send_from_directory, request, escape
-    from flask_socketio import SocketIO, disconnect
-
-
-    class Client_Info:
-        def __init__(self, ip):
-            self.username = self.clean_username(random.choice(POS_NAMES) + "_" + random.choice(POS_SURNAMES))
-
-            self.hear_from = []
-            for citizen in global_vars.citizens:
-                self.hear_from.append(citizen.name)
-
-            global_vars.client_infos_by_ip[ip] = self
-
-            self.saved_messages = []
-
-            self.clients_connected = 0
-            self.permissions = SERVER_PERMISSION_BASIC
-            self.loaded = True
-
-        def clean_username(self, username):
-            delimeters_to_remove = "".join(DELIMETERS)
-            username_stripped = re.sub("[" + delimeters_to_remove + "]", "", username)
-            username_stripped = username_stripped.strip()  # Remove trailing spaces.
-
-            return username
-
-        def on_client_connection(self, client):
-            self.clients_connected += 1
-
-            if(self.clients_connected == 1):
-                global_vars.player_count += 1
-
-        def on_client_disconnection(self, client):
-            self.clients_connected -= 1
-
-            if(self.clients_connected == 0):
-                global_vars.player_count -= 1
-
-
-    class Client:
-        def __init__(self, request):
-            self.ip = request.remote_addr
-            self.sid = request.sid
-
-            self.can_save = True  # If the player connected from multiple devices, data from some shouldn't be saved as it may get duped.
-
-            if(self.ip in global_vars.client_infos_by_ip):
-                self.client_info = global_vars.client_infos_by_ip[self.ip]
-                self.client_info.loaded = True
-            else:
-                self.client_info = Client_Info(self.ip)
-
-            self.disconnecting = False
-
-        def on_connect(self):
-            global max_player_count
-
-            global_vars.clients_by_sid[self.sid] = self
-            self.client_info.on_client_connection(self)
-            print("Received Connection(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") from user(" + str(self.ip) +
-                  ")(" + str(self.client_info.clients_connected) + ")")
-
-            for message in self.client_info.saved_messages:
-                self.whisper(message, save=False)
-
-            self.whisper("Welcome to Totally Accurate Political Simulator.")
-
-        def on_disconnect(self):
-            global max_player_count
-
-            self.disconnecting = True
-
-            global_vars.clients_by_sid.pop(self.sid)
-            self.client_info.on_client_disconnection(self)
-            print("Lost Connection(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") to user(" + str(self.ip) +
-                  ")(" + str(self.client_info.clients_connected) + ")")
-
-            self.client_info.loaded = False
-
-        def whisper(self, message, save=True):
-            socketio.emit('npc_message', {"data": message}, room=self.sid)
-
-        def on_npc_message(self, json):
-            message = json["data"]
-            if(not self.message_check(message)):
-                return
-
-            message = str(escape(message))
-            if(parse_commands(message, self)):
-                return
-
-            if(global_vars.awaiting_npc_message):
-                global_vars.last_npc_message = message
-                global_vars.awaiting_npc_message = False
-
-        def on_player_message(self, json):
-            message = json["data"]
-            if(not self.message_check(message)):
-                return
-
-            json = {"data": str(escape(message))}
-            # socketio.emit('player_message', json)
-
-        def message_check(self, message):
-            """
-            Return True if message passed the check, false otherwise.
-            """
-            if(message == ""):
-                return False
-
-            if(len(message) > 256):
-                return False
-
-            return True
-
-        def disconnect(self):
-            disconnect(self.sid)
-
     init_reference_lists()
     init_citizens()
 
-    threading.Thread(target=citizen_speech).start()
-    # threading.Thread(target=process_console).start()
-
-    template_dir = os.path.abspath('../templates')
-    static_dir = os.path.abspath('../static')
-
-    app = Flask(__name__, template_folder=template_dir, static_url_path='')
-    app.config['SECRET_KEY'] = CFG["SECRET_KEY"]
-    app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-    socketio = SocketIO(app)
-
-    @app.after_request
-    def after_request(response):
-        # Update cache if so required.
-        if(CFG["UPDATE_CACHE"]):
-            response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate, public, max-age=0"
-            response.headers["Expires"] = 0
-            response.headers["Pragma"] = "no-cache"
-        response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-        # response.headers['Content-Security-Policy'] = "default-src 'self'"
-        response.headers['X-Content-Type-Options'] = 'nosniff'
-        # response.headers['X-Frame-Options'] = 'SAMEORIGIN'
-        response.headers['X-XSS-Protection'] = '1; mode=block'
-        return response
-
-    @app.route('/')
-    def index():
-        return render_template("index.html")
-
-    @app.route('/static/<path:path>')
-    def send_static(path):
-        return send_from_directory(static_dir, path)
-
-    @socketio.on('connect')
-    def on_connect(methods=['GET', 'POST']):
-        global can_speak
-        global max_player_count
-
-        if(global_vars.player_count + 1 > max_player_count):
-            print("Disconnected(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") user(" + str(request.remote_addr) + "). Reason: Server overcrowded")
-            disconnect(request.sid)
-            return
-
-        if(request.remote_addr in global_vars.client_infos_by_ip.keys() and
-           global_vars.client_infos_by_ip[request.remote_addr].clients_connected >= CFG["MAX_CLIENTS_PER_IP"]):
-            print("Disconnected(" + str(global_vars.player_count) + "/" + str(max_player_count) + ") user(" + str(request.remote_addr) + "). Reason: Too many connections on one IP")
-            disconnect(request.sid)
-            return
-
-        can_speak = True
-
-        client = Client(request)
-        client.on_connect()
-
-    @socketio.on('disconnect')
-    def on_disconnect(methods=['GET', 'POST']):
-        if(request.sid in global_vars.clients_by_sid.keys()):
-            global_vars.clients_by_sid[request.sid].on_disconnect()
-
-    @socketio.on('npc_message')
-    def on_npc_message(json, methods=['GET', 'POST']):
-        if(request.sid in global_vars.clients_by_sid.keys()):
-            global_vars.clients_by_sid[request.sid].on_npc_message(json)
-
-    @socketio.on('player_message')
-    def on_player_message(json, methods=['GET', 'POST']):
-        if(request.sid in global_vars.clients_by_sid.keys()):
-            global_vars.clients_by_sid[request.sid].on_player_message(json)
-
-    socketio.run(app, host='0.0.0.0', port=CFG["PORT"], debug=CFG["DEBUG"])
+    import server

@@ -35,6 +35,14 @@ def get_secret_key():
     return get_random_string(50, chars)
 
 
+def get_salt():
+    """
+    Create a random salt for database use.
+    """
+    chars = 'abcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*(-_=+)'
+    return get_random_string(30, chars)
+
+
 def str_to_bool(s):
     if(s == 'True'):
          return True

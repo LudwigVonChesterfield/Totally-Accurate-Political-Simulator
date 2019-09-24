@@ -58,7 +58,7 @@ def save_state(save_name=None):
     if(CFG["DEBUG"]):
         print("SAVING STATE TO: " + save_name)
 
-    with open(SAVEPATH + save_name + SAVEEXTENSION, 'w', encoding='utf8') as savefile:
+    with open(SAVEPATH + save_name + SAVEEXTENSION, 'w+', encoding='utf8') as savefile:
         json.dump(save_object, savefile, indent=4, separators=(',', ': '), sort_keys=True, ensure_ascii=False)
 
 def fix_state(saveObject):

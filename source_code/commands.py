@@ -1,5 +1,16 @@
+#  _______ _    _ ______   ____ _____ _____   _______ ____  _____   ____  
+# |__   __| |  | |  ____| |  _ \_   _/ ____| |__   __/ __ \|  __ \ / __ \
+#    | |  | |__| | |__    | |_) || || |  __     | | | |  | | |  | | |  | |
+#    | |  |  __  |  __|   |  _ < | || | |_ |    | | | |  | | |  | | |  | |
+#    | |  | |  | | |____  | |_) || || |__| |    | | | |__| | |__| | |__| |
+#    |_|  |_|  |_|______| |____/_____\_____|    |_|  \____/|_____/ \____/
+#                                                                         
+# The TODO list:
+# - Make a get_user_by_params() function, that somehow determines a single user from given IP/user_id/discord_id/etc. Otherwise it throws an error,
+#   and "kindly" informs, that there are multiplie users by these params.                                                                        
+
 from config_loader import CONFIG_VALUES as CFG
-from global_vars import all_books, citizens, clients_by_sid, client_infos_by_ip
+from global_vars import *
 from savefiles import save_state, load_state
 from politics import save_server_state
 from defines import *
@@ -124,11 +135,11 @@ def authorize_com(args=None, client=None):
 
             if(grant):
                 if(target is not None):
-                    target.client_info.permissions = SERVER_PERMISSION_ALL
+                    target.client_info.update_db(permissions=SERVER_PERMISSION_ALL)
                     target.whisper("AUTHORIZATION COMPLETE. <span class='warn_player'>ACCESS GRANTED BY MAINFRAME!</span>")
                     to_client_or_console("AUTHORIZED USER(" + target_id +")!", client)
                 elif(client is not None):
-                    client.client_info.permissions = SERVER_PERMISSION_ALL
+                    client.client_info.update_db(permissions=SERVER_PERMISSION_ALL)
                     client.whisper("AUTHORIZATION COMPLETE!")
 
 
@@ -163,7 +174,7 @@ def set_permissions_com(args=None, client=None):
         for t_client in clients_by_sid.values():
             if(t_client.ip == target_id or t_client.sid == target_id):
                 old_permissions_level = t_client.client_info.permissions
-                t_client.client_info.permissions = permissions_level
+                target.client_info.update_db(permissions=permissions_level)
 
                 t_client.whisper("Your permissions have been changed from " + str(old_permissions_level) + " to " +
                     str(t_client.client_info.permissions))
@@ -181,7 +192,7 @@ def list_users_com(args=None, client=None):
     message = "====="
 
     for client in clients_by_sid.values():
-        message += new_line_symbol + "[] U: " + client.client_info.username + "\tSID: " + client.sid + "\tIP: " + client.ip
+        message += new_line_symbol + "[] UID: " + str(client.client_info.user_id) + "\tSID: " + str(client.sid) + "\tIP: " + str(client.ip)
 
     message += new_line_symbol + "====="
 

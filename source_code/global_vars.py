@@ -11,6 +11,7 @@ citizens = []
 
 clients_by_sid = {}
 client_infos_by_ip = {}
+client_infos_by_user_id = {}
 
 viewpoints_by_word = {}
 offensive_to_viewpoint = {}

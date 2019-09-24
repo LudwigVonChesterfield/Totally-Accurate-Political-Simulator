@@ -46,3 +46,5 @@ SERVER_PERMISSION_FUN = 4  # Allows to force_speak, and other such fun stuff.
 
 SERVER_PERMISSION_ADMIN = 3
 SERVER_PERMISSION_ALL = 7
+
+USER_ID_ANONYMOUS = -1
