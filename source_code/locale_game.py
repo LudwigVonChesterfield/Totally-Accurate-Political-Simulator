@@ -310,6 +310,7 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Conservatism": "Conservatism",
                  "Accelerationism": "Accelerationism",
                  "Transhumanism": "Transhumanism",
+                 "Nihilism": "Nihilism",
                 },
 
           "ru": {"Liberty": RU_LIBERTY_WORDS, "Authority": RU_AUTHORITY_WORDS,
@@ -529,6 +530,6 @@ LOCALE = {"en": {"Liberty": EN_LIBERTY_WORDS, "Authority": EN_AUTHORITY_WORDS,
                  "Conservatism": "Conservatismus",
                  "Accelerationism": "Accelerationismus",
                  "Transhumanism": "Transhumanismus",
-                 "Nihilism": "Нигилизм"
+                 "Nihilism": "Nihilismus"
                 }
 }
