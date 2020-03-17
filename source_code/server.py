@@ -20,6 +20,7 @@ import threading
 import hashlib
 import json
 import sqlite3
+import mimetypes
 
 import global_vars
 
@@ -293,6 +294,13 @@ DISCORD_API_BASE_URL = 'https://discordapp.com/api'
 DISCORD_AUTHORIZATION_BASE_URL = DISCORD_API_BASE_URL + '/oauth2/authorize'
 DISCORD_TOKEN_URL = DISCORD_API_BASE_URL + '/oauth2/token'
 
+mimetypes.init()
+
+# So it's not system-dependant.
+mimetypes.add_type("text/css", ".css")
+mimetypes.add_type("text/javascript", ".js")
+mimetypes.add_type("text/html", ".html")
+
 app = Flask(__name__, template_folder=template_dir, static_url_path='')
 app.config['SECRET_KEY'] = CFG["SECRET_KEY"]
 # app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
@@ -370,9 +378,15 @@ def index():
     return render_template("index.html")
 
 
-@app.route('/static/<path:path>')
-def send_static(path):
-    return send_from_directory(static_dir, path)
+@app.route("/static/<path:file_path>")
+def send_static(file_path):
+    file_mimetype = mimetypes.guess_type(file_path)[0]
+
+    return send_from_directory(
+        static_dir,
+        file_path,
+        mimetype=file_mimetype
+    )
 
 
 @app.route('/login')
