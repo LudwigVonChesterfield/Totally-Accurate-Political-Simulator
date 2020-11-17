@@ -1,0 +1,240 @@
+Out of: 1000000
+Esoteric Communalism: 0.0%
+Esoteric Feudalism: 0.0%
+Esoteric IngSoc: 0.0%
+Esoteric Meritocracy: 0.0%
+Esoteric Social Darwinism: 0.0%
+Esoteric Stalinism: 0.0%
+Facsist Conservatism: 0.0%
+Facsist Liberation Theology: 0.0%
+Facsist Marxism: 0.0%
+Facsist Monarchism: 0.0%
+Facsist Nazbol: 0.0%
+Free-Market Hoppean Libertarianism: 0.0%
+Revolutionary Social Democracy: 0.0%
+AnarchoingSoc: 0.001%
+Ecocentrism: 0.001%
+Ecominarchism: 0.001%
+Esoteric Accelarationism: 0.001%
+Esoteric Agorism: 0.001%
+Esoteric Anarchism: 0.001%
+Esoteric Capitalism: 0.001%
+Esoteric Fascism: 0.001%
+Esoteric Fascist Syndicalism: 0.001%
+Esoteric Green Politics: 0.001%
+Esoteric Individualism: 0.001%
+Esoteric Liberation Theology: 0.001%
+Esoteric Marxism: 0.001%
+Esoteric Monarchism: 0.001%
+Esoteric Post-Cosmic Anarcho-Nihilism: 0.001%
+Esoteric Strasserism: 0.001%
+Esoteric Syndicalism: 0.001%
+Esoteric Theoconservatism: 0.001%
+Esoteric Theocracy: 0.001%
+Esoteric Trans Anarcho-Pacifism: 0.001%
+Esoteric Trotskyism: 0.001%
+State Communalism: 0.001%
+Ecocommunalism: 0.002%
+Ecohive-Mind Collectivism: 0.002%
+Ecosocial Democracy: 0.002%
+Esoteric Egoism: 0.002%
+Esoteric Hoppean Libertarianism: 0.002%
+Esoteric Primitivism: 0.002%
+State Hive-Mind Collectivism: 0.002%
+Anarchosocialism: 0.003%
+Anarchosocial Darwinism: 0.005%
+State Feudalism: 0.008%
+Revolutionary Communism: 0.009%
+Anarchofeudalism: 0.011%
+Ecosocialism: 0.013%
+Ecostatism: 0.014%
+EcoingSoc: 0.015%
+Ecofeudalism: 0.017%
+Revolutionary IngSoc: 0.017%
+Technoprimitivism: 0.017%
+Revolutionary Feudalism: 0.018%
+TechnoingSoc: 0.018%
+Ecosocial Darwinism: 0.019%
+State Socialism: 0.019%
+Anarchostrasserism: 0.02%
+Revolutionary Socialism: 0.02%
+Revolutionary Social Darwinism: 0.021%
+Revolutionary Statism: 0.021%
+Revolutionary Hive-Mind Collectivism: 0.022%
+Technosocial Darwinism: 0.022%
+Technostatism: 0.022%
+Technotheocracy: 0.022%
+Technofeudalism: 0.024%
+Ecostalinism: 0.026%
+Technosocialism: 0.026%
+Revolutionary Strasserism: 0.027%
+Anarchocommunism: 0.028%
+Anarchoindividualism: 0.028%
+Revolutionary Communalism: 0.028%
+State Social Darwinism: 0.028%
+State Theoconservatism: 0.028%
+Minarchism: 0.029%
+Technocommunism: 0.029%
+Ecoindividualism: 0.032%
+Ecostrasserism: 0.034%
+Anarchonihilism: 0.036%
+Revolutionary Monarchism: 0.036%
+Technoindividualism: 0.036%
+Centrism: 0.039%
+State Hoppean Libertarianism: 0.039%
+Revolutionary Individualism: 0.04%
+State Marxism: 0.041%
+Technostrasserism: 0.041%
+Anarchocapitalism: 0.042%
+Anarcholiberation Theology: 0.044%
+Anarchohive-Mind Collectivism: 0.045%
+Ecoconservatism: 0.045%
+State Transhumanism: 0.046%
+State Trotskyism: 0.046%
+Ecoanarchism: 0.047%
+Technohive-Mind Collectivism: 0.047%
+Revolutionary Stalinism: 0.048%
+State Strasserism: 0.049%
+Revolutionary Anarchism: 0.05%
+Anarchonazbol: 0.051%
+State Conservatism: 0.052%
+Technocommunalism: 0.053%
+Technogreen Politics: 0.054%
+Ecoegoism: 0.055%
+Anarchocommunalism: 0.058%
+Anarchomonarchism: 0.058%
+Ecoaccelarationism: 0.058%
+Revolutionary Marxism: 0.058%
+State Post-Cosmic Anarcho-Nihilism: 0.058%
+Revolutionary Nazbol: 0.059%
+Technotheoconservatism: 0.059%
+Anarchofascism: 0.06%
+State Agorism: 0.06%
+Revolutionary Egoism: 0.061%
+Revolutionary Meritocracy: 0.061%
+State Trans Anarcho-Pacifism: 0.061%
+Revolutionary Nihilism: 0.062%
+State Statism: 0.062%
+Ecomeritocracy: 0.063%
+Technomonarchism: 0.063%
+Econazbol: 0.064%
+State Accelarationism: 0.064%
+Technonihilism: 0.064%
+Anarchoaccelarationism: 0.066%
+State Green Politics: 0.066%
+State Theocracy: 0.066%
+Ecocapitalism: 0.067%
+State Syndicalism: 0.067%
+Technoliberation Theology: 0.067%
+Anarchotechnocracy: 0.068%
+Econihilism: 0.068%
+Revolutionary Capitalism: 0.068%
+Social Democracy: 0.068%
+Technonazbol: 0.068%
+Technocapitalism: 0.069%
+Revolutionary Green Politics: 0.07%
+Revolutionary Theocracy: 0.07%
+Technoegoism: 0.071%
+Technopost-Cosmic Anarcho-Nihilism: 0.071%
+Technostalinism: 0.072%
+Ecopost-Cosmic Anarcho-Nihilism: 0.073%
+Revolutionary Trans Anarcho-Pacifism: 0.073%
+Ecofascism: 0.074%
+Ecotrans Anarcho-Pacifism: 0.075%
+Technoanarchism: 0.075%
+Ecosyndicalism: 0.076%
+Revolutionary Post-Cosmic Anarcho-Nihilism: 0.076%
+Revolutionary Liberation Theology: 0.077%
+State Fascism: 0.077%
+Technofascism: 0.077%
+Revolutionary Fascism: 0.078%
+Ecotheocracy: 0.079%
+State Capitalism: 0.08%
+State Nazbol: 0.08%
+Anarchofascist Syndicalism: 0.081%
+Technoaccelarationism: 0.083%
+Anarchogreen Politics: 0.085%
+Revolutionary Transhumanism: 0.085%
+State Egoism: 0.085%
+Technotrans Anarcho-Pacifism: 0.085%
+Revolutionary Primitivism: 0.086%
+Ecotrotskyism: 0.087%
+Anarchopost-Cosmic Anarcho-Nihilism: 0.089%
+Ecoliberation Theology: 0.09%
+Anarchomarxism: 0.091%
+Ecohoppean Libertarianism: 0.092%
+State Monarchism: 0.093%
+Ecofascist Syndicalism: 0.095%
+Revolutionary Syndicalism: 0.095%
+State Meritocracy: 0.097%
+State Nihilism: 0.097%
+Ecoagorism: 0.098%
+Revolutionary Fascist Syndicalism: 0.098%
+Anarchoprimitivism: 0.099%
+Anarchoconservatism: 0.1%
+Technotrotskyism: 0.106%
+Revolutionary Hoppean Libertarianism: 0.109%
+Technofascist Syndicalism: 0.109%
+Ecomonarchism: 0.111%
+Technohoppean Libertarianism: 0.111%
+State Liberation Theology: 0.112%
+State Stalinism: 0.114%
+Anarchotrans Anarcho-Pacifism: 0.115%
+Revolutionary Technocracy: 0.115%
+Ecogreen Politics: 0.116%
+Ecoprimitivism: 0.117%
+Ecotheoconservatism: 0.121%
+Anarchotranshumanism: 0.131%
+Technoconservatism: 0.132%
+Technoagorism: 0.133%
+Technosyndicalism: 0.133%
+State Fascist Syndicalism: 0.135%
+Anarchotrotskyism: 0.139%
+Anarchotheoconservatism: 0.142%
+Anarchosyndicalism: 0.153%
+Anarchohoppean Libertarianism: 0.154%
+Ecomarxism: 0.182%
+State Technocracy: 0.184%
+Anarchoagorism: 0.186%
+Revolutionary Trotskyism: 0.2%
+Revolutionary Agorism: 0.21%
+Anarchoanarchism: 0.218%
+Technotechnocracy: 0.277%
+Revolutionary Accelarationism: 0.303%
+Technotranshumanism: 0.375%
+Communism: 0.554%
+IngSoc: 0.656%
+Statism: 0.666%
+Feudalism: 0.704%
+Socialism: 0.788%
+Social Darwinism: 0.839%
+Hive-Mind Collectivism: 1.191%
+Individualism: 1.341%
+Communalism: 1.438%
+Strasserism: 1.469%
+Theocracy: 1.695%
+Meritocracy: 1.845%
+Stalinism: 1.903%
+Anarchism: 2.218%
+Primitivism: 2.219%
+Egoism: 2.426%
+Nihilism: 2.506%
+Accelarationism: 2.548%
+Nazbol: 2.632%
+Capitalism: 2.686%
+Marxism: 2.706%
+Green Politics: 2.844%
+Fascism: 2.928%
+Conservatism: 2.965%
+Liberation Theology: 2.971%
+Post-Cosmic Anarcho-Nihilism: 3.008%
+Monarchism: 3.054%
+Transhumanism: 3.184%
+Trans Anarcho-Pacifism: 3.201%
+Theoconservatism: 3.241%
+Trotskyism: 3.635%
+Syndicalism: 4.063%
+Fascist Syndicalism: 4.125%
+Hoppean Libertarianism: 4.274%
+Agorism: 4.678%
+Technocracy: 4.911%

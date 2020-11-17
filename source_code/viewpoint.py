@@ -5,6 +5,8 @@ ALL CHARACTERS DESCRIBED HERE ARE FICTIONARY.
 ANY AND ALL SIMILARITIES ARE COMPLETELY COINCIDENTAL.
 """
 
+# TO-DO: rename pos-neg to left-right.
+
 import random
 
 from config_loader import CONFIG_VALUES as CFG
@@ -111,13 +113,13 @@ class Viewpoint:
 
         return me
 
-
-class Lib_Aut(Viewpoint):
+class Civility(Viewpoint):
     """
-    Liberty is the movement for lesser intrusion into each individual's life in any shape or form. Be it government, corporative, etc...
-    Authority is thus, the complete opposite.
+    Civility is a political axis that determines the actions that are allowed to an agent in opposition to the other.
+    Liberty is basically "an agent is allowed anything"
+    Authority is thus "the other controls what an agent is allowed"
     """
-    name = "Liberty-Authority"
+    name = "Civility"
 
     pos_name = "Liberty"
     pos_color = "Yellow"
@@ -125,107 +127,72 @@ class Lib_Aut(Viewpoint):
     pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Liberty_Offensive"]
 
     neg_name = "Authority"
-    neg_color = "Red"
+    neg_color = "Blue"
     neg_words = LOCALE[LOCALE_LANGUAGE]["Authority"]
     neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Authority_Offensive"]
 
-
-class Paci_Mili(Viewpoint):
+class Mastery(Viewpoint):
     """
-    Pacifism is not disregard for war, but for violence and violent methods of ANYTHING in general.
-    Militarism is thus, the opposite.
+    Mastery is a political axis that determines the ideologies view on enforcing the ideology onto others.
+    Insularity is basically "do not enforce the ideology onto others"
+    Dominance is "enforce the ideology onto others"
     """
-    name = "Pacifism-Militarism"
+    name = "Mastery"
 
-    pos_name = "Pacifism"
-    pos_color = "Green"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Pacifism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Pacifism_Offensive"]
+    pos_name = "Insularity"
+    pos_color = "Grey"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Insularity"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Insularity_Offensive"]
 
-    neg_name = "Militarism"
-    neg_color = "Red"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Militarism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Militarism_Offensive"]
+    neg_name = "Dominance"
+    neg_color = "Green"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Dominance"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Dominance_Offensive"]
 
 
-class Int_Ext(Viewpoint):
+class Impactfulness(Viewpoint):
     """
-    Intensivism is the practice of thoughtfully distributing limited resources.
-    Extensivism is the practice of gathering MORE resources each time they are not abundant.
-    """
-    name = "Intensivism-Extensivism"
-
-    pos_name = "Intensivism"
-    pos_color = "Yellow"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Intensivism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Intensivism_Offensive"]
-
-    neg_name = "Extensivism"
-    neg_color = "Red"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Extensivism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Extensivism_Offensive"]
-
-"""
-class Mat_Spi(Viewpoint):
-    '''
-    Materialism is the denial of non-material essences, objects, subjects, phenomena.
-    Spiritualism is the acceptance, and even embracement of the non-material.
-    '''
-    name = "Materialism-Spiritualism"
-
-    pos_name = "Materialism"
-    pos_color = "Yellow"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Materialism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Materialism_Offensive"]
-
-    neg_name = "Spiritualism"
-    neg_color = "Purple"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Spiritualism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Spiritualism_Offensive"]
-"""
-
-class Ind_Col(Viewpoint):
-    """
-    Individualism is the focus on needs of an individual, as opposed to...
-    Collectivism is the focus on needs of THE group, THE "majority", THE "all".
-    """
-    name = "Individualism-Collectivism"
-
-    pos_name = "Individualism"
-    pos_color = "Purple"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Individualism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Individualism_Offensive"]
-
-    neg_name = "Collectivism"
-    neg_color = "Gray"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Collectivism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Collectivism_Offensive"]
-
-
-class Ref_Rev(Viewpoint):
-    """
+    Impactfulness is a political axis that determines how the world should change to fit in with the ideology.
+    Revolutionism is about changing the status-quo as quickly as possible, direct action, and etc.
     Reformism is a movement for saving the status-quo, and the less invasive forms and methods of change.
-    Revolutionism is an opposite to Reformism.
     """
-    name = "Reformism-Revolutionism"
+    name = "Impactfulness"
 
-    pos_name = "Reformism"
-    pos_color = "Gray"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Reformism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Reformism_Offensive"]
+    pos_name = "Revolutionism"
+    pos_color = "Red"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Revolutionism"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Revolutionism_Offensive"]
 
-    neg_name = "Revolutionism"
-    neg_color = "Red"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Revolutionism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Revolutionism_Offensive"]
+    neg_name = "Reformism"
+    neg_color = "Gray"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Reformism"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Reformism_Offensive"]
 
-
-class Con_Ess(Viewpoint):
+class Proprietary(Viewpoint):
     """
-    Constructivism is the movement that say solutions to problems lie in man-made anything.
-    Essentialism is the movement that suggests that such solutions are already out there, and we only need to discover them.
+    Proprietary is an economic axis that determines who and how the stuff is owned.
+    Altruity is basically "property does not exist".
+    Avarice is basically "all the property to those who matter", where "matter" is defined by other axis.
     """
-    name = "Constructivism-Essentialism"
+    name = "Proprietary"
+
+    pos_name = "Altruity"
+    pos_color = "Red"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Altruity"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Altruity_Offensive"]
+
+    neg_name = "Avarice"
+    neg_color = "Yellow"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Avarice"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Avarice_Offensive"]
+
+class Narrative(Viewpoint):
+    """
+    Narrative is a political axis that determines the belief of how an ideology is formed and reached at.
+    Constructivism is the belief that this ideology is a product of individual/social/governmental construction.
+    Essentialism is the belief that this ideology will be naturally arrived at by any forces at play.
+    """
+    name = "Narrative"
 
     pos_name = "Constructivism"
     pos_color = "Yellow"
@@ -238,38 +205,38 @@ class Con_Ess(Viewpoint):
     neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Essentialism_Offensive"]
 
 
-class Den_Acc(Viewpoint):
+class Atomarity(Viewpoint):
     """
-    Denial is in a sense, a form of nihilism, denial of anything: reason, logic, truth.
-    Acceptance is the claim that all of the above actually are true, or do exist.
+    Atomarity is a political axis that determines at what level should anything political be viewed from.
+    Collectivism is the focus on the system as a whole.
+    Individualism is using the smallest possible atom of the thing in question.
     """
-    name = "Denial-Acceptance"
+    name = "Atomarity"
 
-    pos_name = "Denial"
-    pos_color = "Blue"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Denial"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Denial_Offensive"]
+    pos_name = "Collectivism"
+    pos_color = "Gray"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Collectivism"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Collectivism_Offensive"]
 
-    neg_name = "Acceptance"
-    neg_color = "Red"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Acceptance"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Acceptance_Offensive"]
+    neg_name = "Individualism"
+    neg_color = "Purple"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Individualism"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Individualism_Offensive"]
 
-"""
-class Hed_Asc(Viewpoint):
-    '''
-    Hedonism is embracing any lustful activity an individual, or a collective can perform.
-    Asceticism is a form of restraint from those activities.
-    '''
-    name = "Hedonism-Asceticism"
+class Wishfulness(Viewpoint):
+    """
+    Wishfulness is an axis that determines where does this ideology place it's atom in regards to "the big picture".
+    Pessimism is saying the atom doesn't matter in "the big picture".
+    Optimism is saying the atom is the only thing that matters in "the big picture".
+    """
+    name = "Wishfulness"
 
-    pos_name = "Hedonism"
-    pos_color = "Purple"
-    pos_words = LOCALE[LOCALE_LANGUAGE]["Hedonism"]
-    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Hedonism_Offensive"]
+    pos_name = "Pessimism"
+    pos_color = "Aquamarine"
+    pos_words = LOCALE[LOCALE_LANGUAGE]["Pessimism"]
+    pos_offended_by = LOCALE[LOCALE_LANGUAGE]["Pessimism_Offensive"]
 
-    neg_name = "Asceticism"
-    neg_color = "Grey"
-    neg_words = LOCALE[LOCALE_LANGUAGE]["Asceticism"]
-    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Asceticism_Offensive"]
-"""
+    neg_name = "Optimism"
+    neg_color = "Orange"
+    neg_words = LOCALE[LOCALE_LANGUAGE]["Optimism"]
+    neg_offended_by = LOCALE[LOCALE_LANGUAGE]["Optimism_Offensive"]

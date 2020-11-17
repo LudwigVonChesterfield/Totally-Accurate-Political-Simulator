@@ -28,3 +28,12 @@ reactions_queue = deque([])
 player_count = 0
 awaiting_npc_message = False
 last_npc_message = None
+
+IDEOLOGIES = {}
+
+IDE_MODS = {}
+
+# Maximal possible distance between axises. Is calculated in init module.
+IDE_MAX_POS_DIST = 0
+# Maximal possible distance for a mod to be applied. Is calculated in init module.
+IDE_MOD_MAX_DIST = 0

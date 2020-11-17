@@ -1,2 +1,2 @@
 class Question:
-    pass
+  pass

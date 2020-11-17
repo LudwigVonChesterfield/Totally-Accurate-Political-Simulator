@@ -1,0 +1,69 @@
+Out of: 10000000
+Revolutionary Esoteric Anarchogreen Politics: 0.0%
+State Technofascism: 0.01%
+Anarchomarxism: 0.02%
+Revolutionary State Transhumanism: 0.03%
+Ecofascism: 0.04%
+Ecoliberation Theology: 0.05%
+Revolutionary Stalinism: 0.06%
+Ecostalinism: 0.07%
+Revolutionary Feudalism: 0.08%
+Revolutionary Fascist Syndicalism: 0.09%
+Ecofascist Syndicalism: 0.1%
+Ecostatism: 0.11%
+Revolutionary Fascism: 0.12%
+Post-Cosmic Anarcho-Nihilism: 0.13%
+Technohoppean Libertarianism: 0.14%
+Revolutionary Communism: 0.15%
+Ecogreen Politics: 0.16%
+Technostatism: 0.17%
+Technoagorism: 0.18%
+Revolutionary Technocracy: 0.19%
+State Theoconservatism: 0.2%
+State Individualism: 0.21%
+Revolutionary Capitalism: 0.22%
+State Communism: 0.23%
+Revolutionary Syndicalism: 0.24%
+State Accelarationism: 0.25%
+State Primitivism: 0.26%
+Ecoconservatism: 0.28%
+Technocentrism: 0.29%
+State Conservatism: 0.3%
+Technosyndicalism: 0.31%
+Technocapitalism: 0.32%
+State Transhumanism: 0.33%
+Nazbol: 0.36%
+Technosocial Democracy: 0.37%
+Strasserism: 0.38%
+Liberation Theology: 0.39%
+Monarchism: 0.46%
+Technoconservatism: 0.5%
+Stalinism: 0.56%
+Technoaccelarationism: 0.61%
+Technoanarchism: 0.64%
+Fascist Syndicalism: 0.93%
+Trotskyism: 0.95%
+Feudalism: 1.11%
+Meritocracy: 1.19%
+Hoppean Libertarianism: 1.2%
+Fascism: 1.22%
+Theocracy: 1.34%
+Marxism: 1.5%
+Theoconservatism: 1.66%
+Technocracy: 1.75%
+Agorism: 1.78%
+Communism: 2.05%
+Statism: 2.41%
+Minarchism: 2.51%
+Green Politics: 2.87%
+Capitalism: 2.99%
+Socialism: 3.03%
+Primitivism: 3.11%
+Social Democracy: 3.68%
+Syndicalism: 3.77%
+Centrism: 3.86%
+Individualism: 4.64%
+Accelarationism: 7.02%
+Conservatism: 7.18%
+Anarchism: 7.76%
+Transhumanism: 7.96%

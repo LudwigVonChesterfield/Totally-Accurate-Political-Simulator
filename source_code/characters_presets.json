@@ -1,7 +1,7 @@
 [
 	{
 		"type": "Citizen",
-		"name": "Luduk",
+		"name": "Sonorous Prophet",
 
 		"political_view": {
             "type": "View",
@@ -121,127 +121,139 @@
 
     {
         "type": "Citizen",
-        "name": "UDaV73rus",
+        "name": "Incomptinence",
 
         "political_view": {
             "type": "View",
             "viewpoints": {
                 "Liberty-Authority": {
                     "type": "Lib_Aut",
-                    "value": -80, "stubborness": 0.8, "persuasiveness": 0.5
+                    "value": -80, "stubborness": 0.5, "persuasiveness": 0.5
                 },
                 "Pacifism-Militarism": {
                     "type": "Paci_Mili",
-                    "value": -80, "stubborness": 0.8, "persuasiveness": 0.7
+                    "value": 0, "stubborness": 0.1, "persuasiveness": 0.0
                 },
                 "Intensivism-Extensivism": {
                     "type": "Int_Ext",
-                    "value": 100, "stubborness": 0.2, "persuasiveness": 0.0
+                    "value": -100, "stubborness": 0.5, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
                     "type": "Ind_Col",
-                    "value": 50, "stubborness": 0.2, "persuasiveness": 0.5
+                    "value": -50, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Reformism-Revolutionism": {
                     "type": "Ref_Rev",
-                    "value": -100, "stubborness": 0.5, "persuasiveness": 0.5
+                    "value": -100, "stubborness": 0.9, "persuasiveness": 0.9
                 },
                 "Constructivism-Essentialism": {
                     "type": "Con_Ess",
-                    "value": 70, "stubborness": 0.3, "persuasiveness": 0.1
+                    "value": -50, "stubborness": 0.1, "persuasiveness": 0.1
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": -50, "stubborness": 0.5, "persuasiveness": 0.5
+                }
+            }
+        },
+        "tolerancy": 0.0,
+        "vocal": 1.0,
+
+        "emotions": {
+            "type": "Emotions",
+            "emotionality": 0.5
+        }
+    },
+
+    {
+        "type": "Citizen",
+        "name": "Generic",
+
+        "political_view": {
+            "type": "View",
+            "viewpoints": {
+                "Liberty-Authority": {
+                    "type": "Lib_Aut",
+                    "value": 100, "stubborness": 0.9, "persuasiveness": 1.0
+                },
+                "Pacifism-Militarism": {
+                    "type": "Paci_Mili",
+                    "value": -100, "stubborness": 0.9, "persuasiveness": 1.0
+                },
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
+                    "value": 0, "stubborness": 0.1, "persuasiveness": 0.1
+                },
+                "Individualism-Collectivism": {
+                    "type": "Ind_Col",
+                    "value": 100, "stubborness": 0.9, "persuasiveness": 0.1
+                },
+                "Reformism-Revolutionism": {
+                    "type": "Ref_Rev",
+                    "value": -100, "stubborness": 1.0, "persuasiveness": 1.0
+                },
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
+                    "value": 50, "stubborness": 0.1, "persuasiveness": 0.1
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
+                }
+            }
+        },
+        "tolerancy": 0.0,
+        "vocal": 1.0,
+
+        "emotions": {
+            "type": "Emotions",
+            "emotionality": 1.0
+        }
+    },
+
+    {
+        "type": "Citizen",
+        "name": "Deepwoods",
+
+        "political_view": {
+            "type": "View",
+            "viewpoints": {
+                "Liberty-Authority": {
+                    "type": "Lib_Aut",
+                    "value": 90, "stubborness": 0.6, "persuasiveness": 0.1
+                },
+                "Pacifism-Militarism": {
+                    "type": "Paci_Mili",
+                    "value": 10, "stubborness": 0.6, "persuasiveness": 0.1
+                },
+                "Intensivism-Extensivism": {
+                    "type": "Int_Ext",
+                    "value": -50, "stubborness": 0.6, "persuasiveness": 0.1
+                },
+                "Individualism-Collectivism": {
+                    "type": "Ind_Col",
+                    "value": 50, "stubborness": 0.6, "persuasiveness": 0.1
+                },
+                "Reformism-Revolutionism": {
+                    "type": "Ref_Rev",
+                    "value": 50, "stubborness": 0.6, "persuasiveness": 0.1
+                },
+                "Constructivism-Essentialism": {
+                    "type": "Con_Ess",
+                    "value": 0, "stubborness": 0.25, "persuasiveness": 0.25
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": -100, "stubborness": 0.25, "persuasiveness": 0.1
                 }
             }
         },
         "tolerancy": 0.9,
-        "vocal": 0.9,
+        "vocal": 1.0,
 
         "emotions": {
             "type": "Emotions",
-            "emotionality": 0.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Ximik",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 100, "stubborness": 0.5, "persuasiveness": 1.0
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 100, "stubborness": 0.5, "persuasiveness": 1.0
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": -50, "stubborness": 0.5, "persuasiveness": 0.0
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 1.0
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 100, "stubborness": 0.5, "persuasiveness": 1.0
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": -50, "stubborness": 0.5, "persuasiveness": 0.0
-                }
-            }
-        },
-        "tolerancy": 1.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Artik1234",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 50, "stubborness": 0.25, "persuasiveness": 0.25
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": -100, "stubborness": 0.25, "persuasiveness": 0.25
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": -50, "stubborness": 0.25, "persuasiveness": 0.25
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": -75, "stubborness": 0.25, "persuasiveness": 0.25
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -100, "stubborness": 0.25, "persuasiveness": 0.25
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": -50, "stubborness": 0.25, "persuasiveness": 0.25
-                }
-            }
-        },
-        "tolerancy": 0.5,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
+            "emotionality": 0.5
         }
     },
 
@@ -311,34 +323,38 @@
 
     {
         "type": "Citizen",
-        "name": "Garodil",
+        "name": "fosstar",
 
         "political_view": {
             "type": "View",
             "viewpoints": {
                 "Liberty-Authority": {
                     "type": "Lib_Aut",
-                    "value": -30, "stubborness": 1.0, "persuasiveness": 0.25
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.5
                 },
                 "Pacifism-Militarism": {
                     "type": "Paci_Mili",
-                    "value": 30, "stubborness": 0.25, "persuasiveness": 0.25
+                    "value": 0, "stubborness": 0.1, "persuasiveness": 0.1
                 },
                 "Intensivism-Extensivism": {
                     "type": "Int_Ext",
-                    "value": 100, "stubborness": 0.25, "persuasiveness": 0.25
+                    "value": -100, "stubborness": 1.0, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
                     "type": "Ind_Col",
-                    "value": -50, "stubborness": 1.0, "persuasiveness": 0.25
+                    "value": -100, "stubborness": 1.0, "persuasiveness": 0.5
                 },
                 "Reformism-Revolutionism": {
                     "type": "Ref_Rev",
-                    "value": -50, "stubborness": 0.25, "persuasiveness": 0.25
+                    "value": -100, "stubborness": 1.0, "persuasiveness": 0.5
                 },
                 "Constructivism-Essentialism": {
                     "type": "Con_Ess",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
+                    "value": 0, "stubborness": 0.1, "persuasiveness": 0.1
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 0, "stubborness": 0.1, "persuasiveness": 0.1
                 }
             }
         },
@@ -353,18 +369,18 @@
 
     {
         "type": "Citizen",
-        "name": "AnDan",
+        "name": "blurbo",
 
         "political_view": {
             "type": "View",
             "viewpoints": {
                 "Liberty-Authority": {
                     "type": "Lib_Aut",
-                    "value": -75, "stubborness": 0.75, "persuasiveness": 0.25
+                    "value": -100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
                 "Pacifism-Militarism": {
                     "type": "Paci_Mili",
-                    "value": -25, "stubborness": 0.25, "persuasiveness": 0.25
+                    "value": 0, "stubborness": 0.1, "persuasiveness": 0.1
                 },
                 "Intensivism-Extensivism": {
                     "type": "Int_Ext",
@@ -376,62 +392,20 @@
                 },
                 "Reformism-Revolutionism": {
                     "type": "Ref_Rev",
-                    "value": 50, "stubborness": 0.25, "persuasiveness": 0.25
+                    "value": 0, "stubborness": 0.5, "persuasiveness": 0.1
                 },
                 "Constructivism-Essentialism": {
                     "type": "Con_Ess",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.5
-                }
-            }
-        },
-        "tolerancy": 0.9,
-        "vocal": 0.75,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 0.25
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Akellazp",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.25
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 },
                 "Denial-Acceptance": {
                     "type": "Den_Acc",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.9
+                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
                 }
             }
         },
-        "tolerancy": 0.9,
-        "vocal": 1.0,
+        "tolerancy": 0.0,
+        "vocal": 0.75,
 
         "emotions": {
             "type": "Emotions",
@@ -441,393 +415,53 @@
 
     {
         "type": "Citizen",
-        "name": "Charseniy",
+        "name": "Kallin",
 
         "political_view": {
             "type": "View",
             "viewpoints": {
                 "Liberty-Authority": {
                     "type": "Lib_Aut",
-                    "value": -50, "stubborness": 1.0, "persuasiveness": 0.1
+                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Pacifism-Militarism": {
                     "type": "Paci_Mili",
-                    "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
+                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Intensivism-Extensivism": {
                     "type": "Int_Ext",
-                    "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
+                    "value": 0, "stubborness": 0.5, "persuasiveness": 0.1
                 },
                 "Individualism-Collectivism": {
                     "type": "Ind_Col",
-                    "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
+                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
                 },
                 "Reformism-Revolutionism": {
                     "type": "Ref_Rev",
-                    "value": 50, "stubborness": 1.0, "persuasiveness": 0.1
+                    "value": 0, "stubborness": 0.5, "persuasiveness": 0.1
                 },
                 "Constructivism-Essentialism": {
                     "type": "Con_Ess",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.1
-                }
-            }
-        },
-        "tolerancy": 0.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "BootManager",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 75, "stubborness": 0.9, "persuasiveness": 0.75
+                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.5
                 },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
                     "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 50, "stubborness": 0.75, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 75, "stubborness": 0.9, "persuasiveness": 0.75
-                }
-            }
-        },
-        "tolerancy": 1.0,
-        "vocal": 0.75,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Fukfuk",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 75, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": -75, "stubborness": 0.0, "persuasiveness": 0.0
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": -75, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": -75, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 90, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 50, "stubborness": 0.0, "persuasiveness": 0.0
                 }
             }
         },
         "tolerancy": 0.5,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 0.75
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "DantezZz",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 0, "stubborness": 0.0, "persuasiveness": 0.0
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 0, "stubborness": 0.0, "persuasiveness": 0.0
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": -50, "stubborness": 0.0, "persuasiveness": 0.0
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 0, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 50, "stubborness": 0.0, "persuasiveness": 0.0
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.0
-                }
-            }
-        },
-        "tolerancy": 0.9,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "WallShrub",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 25, "stubborness": 0.5, "persuasiveness": 0.25
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.25
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.0
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 25, "stubborness": 0.25, "persuasiveness": 0.1
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 75, "stubborness": 0.75, "persuasiveness": 0.25
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.1
-                }
-            }
-        },
-        "tolerancy": 0.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Alweiss",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.25
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 25, "stubborness": 0.5, "persuasiveness": 0.1
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": -75, "stubborness": 0.75, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 25, "stubborness": 0.5, "persuasiveness": 0.1
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 25, "stubborness": 0.5, "persuasiveness": 0.0
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 100, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Denial-Acceptance": {
-                    "type": "Den_Acc",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
-                }
-            }
-        },
-        "tolerancy": 0.0,
         "vocal": 0.75,
 
         "emotions": {
             "type": "Emotions",
-            "emotionality": 0.5
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "DctrMM",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": -100, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": -100, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 100, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 100, "stubborness": 0.9, "persuasiveness": 0.5
-                }
-            }
-        },
-        "tolerancy": 0.0,
-        "vocal": 0.25,
-
-        "emotions": {
-            "type": "Emotions",
             "emotionality": 1.0
         }
     },
 
     {
         "type": "Citizen",
-        "name": "Helpme911",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 0, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 25, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 0, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 25, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.9
-                },
-                "Denial-Acceptance": {
-                    "type": "Den_Acc",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
-                }
-            }
-        },
-        "tolerancy": 0.25,
-        "vocal": 0.25,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 0.5
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "DarkWater",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.75
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": -25, "stubborness": 0.5, "persuasiveness": 0.25
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 1.0
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -50, "stubborness": 0.25, "persuasiveness": 0.75
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.5
-                }
-            }
-        },
-        "tolerancy": 1.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "da_kiselev",
+        "name": "Ty the Smonk",
 
         "political_view": {
             "type": "View",
@@ -838,412 +472,36 @@
                 },
                 "Pacifism-Militarism": {
                     "type": "Paci_Mili",
-                    "value": -25, "stubborness": 0.25, "persuasiveness": 0.25
+                    "value": -50, "stubborness": 0.5, "persuasiveness": 0.5
                 },
                 "Intensivism-Extensivism": {
                     "type": "Int_Ext",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.75
+                    "value": 100, "stubborness": 0.5, "persuasiveness": 0.5
                 },
                 "Individualism-Collectivism": {
                     "type": "Ind_Col",
-                    "value": 75, "stubborness": 0.5, "persuasiveness": 0.5
+                    "value": 0, "stubborness": 1.0, "persuasiveness": 0.1
                 },
                 "Reformism-Revolutionism": {
                     "type": "Ref_Rev",
-                    "value": 75, "stubborness": 0.75, "persuasiveness": 0.5
+                    "value": -50, "stubborness": 0.75, "persuasiveness": 0.5
                 },
                 "Constructivism-Essentialism": {
                     "type": "Con_Ess",
-                    "value": 100, "stubborness": 0.75, "persuasiveness": 0.9
+                    "value": -50, "stubborness": 0.75, "persuasiveness": 0.75
+                },
+                "Denial-Acceptance": {
+                    "type": "Den_Acc",
+                    "value": 100, "stubborness": 0.5, "persuasiveness": 0.1
                 }
             }
         },
         "tolerancy": 0.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Unbidden",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.1
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 75, "stubborness": 0.9, "persuasiveness": 0.1
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": -10, "stubborness": 0.1, "persuasiveness": 0.1
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 10, "stubborness": 0.1, "persuasiveness": 0.1
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 75, "stubborness": 0.7, "persuasiveness": 0.7
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": -10, "stubborness": 0.0, "persuasiveness": 0.0
-                }
-            }
-        },
-        "tolerancy": 0.9,
-        "vocal": 0.25,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 0.25
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "PirogSema",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 25, "stubborness": 0.75, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 75, "stubborness": 1.0, "persuasiveness": 0.5
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 75, "stubborness": 1.0, "persuasiveness": 0.25
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 75, "stubborness": 0.75, "persuasiveness": 0.25
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 50, "stubborness": 0.1, "persuasiveness": 0.75
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 25, "stubborness": 0.1, "persuasiveness": 0.25
-                }
-            }
-        },
-        "tolerancy": 0.5,
         "vocal": 0.5,
 
         "emotions": {
             "type": "Emotions",
             "emotionality": 0.1
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Vlad_Kosaryov",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 75, "stubborness": 0.75, "persuasiveness": 0.75
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 75, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 50, "stubborness": 0.9, "persuasiveness": 0.25
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": 50, "stubborness": 0.25, "persuasiveness": 0.5
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 75, "stubborness": 0.9, "persuasiveness": 0.5
-                }
-            }
-        },
-        "tolerancy": 0.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Garry_Mensky",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": -100, "stubborness": 1.0, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": -25, "stubborness": 0.75, "persuasiveness": 0.1
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 0, "stubborness": 0.75, "persuasiveness": 0.0
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.9
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -100, "stubborness": 0.7, "persuasiveness": 0.1
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.9
-                }
-            }
-        },
-        "tolerancy": 0.0,
-        "vocal": 0.5,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Getup1",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 100, "stubborness": 1.0, "persuasiveness": 0.5
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 100, "stubborness": 0.9, "persuasiveness": 0.75
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 50, "stubborness": 0.75, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": -100, "stubborness": 1.0, "persuasiveness": 0.7
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -75, "stubborness": 0.5, "persuasiveness": 0.75
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 50, "stubborness": 1.0, "persuasiveness": 0.5
-                }
-            }
-        },
-        "tolerancy": 0.1,
-        "vocal": 0.25,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 0.75,
-            "reactions_speaker": {
-                "2": {
-                    "trigger_happiness": 1.0,
-                    "type": "Ignore"
-                },
-                "4": {
-                    "trigger_happiness": 1.0,
-                    "type": "Quote"
-                },
-                "8": {
-                    "trigger_happiness": 0.8,
-                    "type": "Quote"
-                },
-                "16": {
-                    "trigger_happiness": 0.5,
-                    "type": "Offensive"
-                },
-                "32": {
-                    "trigger_happiness": 1.0,
-                    "type": "Ignore"
-                },
-                "64": {
-                    "trigger_happiness": 0.75,
-                    "type": "Parent"
-                },
-                "128": {
-                    "trigger_happiness": 0.5,
-                    "type": "Offensive"
-                },
-                "256": {
-                    "trigger_happiness": 1.0,
-                    "type": "Quote"
-                },
-                "512": {
-                    "trigger_happiness": 1.0,
-                    "type": "Ignore"
-                }
-            },
-            "reactions_provoker": {
-                "1": {
-                    "trigger_happiness": 0.1,
-                    "type": "Curse"
-                }
-            }
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "Vorius",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 10, "stubborness": 1.0, "persuasiveness": 0.0
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 50, "stubborness": 0.1, "persuasiveness": 0.5
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 75, "stubborness": 0.1, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 25, "stubborness": 1.0, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -75, "stubborness": 0.9, "persuasiveness": 0.5
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 90, "stubborness": 0.25, "persuasiveness": 0.9
-                }
-            }
-        },
-        "tolerancy": 0.75,
-        "vocal": 0.25,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "orfman",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 50, "stubborness": 0.75, "persuasiveness": 0.1
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 75, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 75, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 75, "stubborness": 0.75, "persuasiveness": 0.75
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -25, "stubborness": 0.25, "persuasiveness": 0.1
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 50, "stubborness": 0.25, "persuasiveness": 0.25
-                }
-            }
-        },
-        "tolerancy": 0.0,
-        "vocal": 1.0,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
-        }
-    },
-
-    {
-        "type": "Citizen",
-        "name": "blind0",
-
-        "political_view": {
-            "type": "View",
-            "viewpoints": {
-                "Liberty-Authority": {
-                    "type": "Lib_Aut",
-                    "value": 75, "stubborness": 0.25, "persuasiveness": 0.25
-                },
-                "Pacifism-Militarism": {
-                    "type": "Paci_Mili",
-                    "value": 90, "stubborness": 0.1, "persuasiveness": 1.0
-                },
-                "Intensivism-Extensivism": {
-                    "type": "Int_Ext",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 1.0
-                },
-                "Individualism-Collectivism": {
-                    "type": "Ind_Col",
-                    "value": 50, "stubborness": 0.5, "persuasiveness": 0.5
-                },
-                "Reformism-Revolutionism": {
-                    "type": "Ref_Rev",
-                    "value": -100, "stubborness": 1.0, "persuasiveness": 0.5
-                },
-                "Constructivism-Essentialism": {
-                    "type": "Con_Ess",
-                    "value": 100, "stubborness": 0.1, "persuasiveness": 0.5
-                }
-            }
-        },
-        "tolerancy": 0.25,
-        "vocal": 1.0,
-
-        "emotions": {
-            "type": "Emotions",
-            "emotionality": 1.0
         }
     }
 ]
